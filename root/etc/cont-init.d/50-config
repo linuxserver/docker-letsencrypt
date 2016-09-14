@@ -2,7 +2,7 @@
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,etc/letsencrypt,fail2ban} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban} \
 	/var/run/fail2ban
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
