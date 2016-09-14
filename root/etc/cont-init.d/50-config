@@ -10,8 +10,8 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 [[ ! -f /config/fail2ban/jail.local ]] && \
 	cp /defaults/jail.local /config/fail2ban/jail.local
 [[ ! -d /config/fail2ban/filter.d ]] && \
-	cp /etc/fail2ban/filter.d/* /config/fail2ban/
-cp /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
+	cp -R /etc/fail2ban/filter.d /config/fail2ban/
+cp -R /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
 
@@ -84,10 +84,12 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   cd /config/keys/letsencrypt
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
-  cd /app
-  ./le-renew.sh
+  chmod /app/le-renew.sh
+  /app/le-renew.sh
 fi
 
 # saving new variables
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
 
+# Start fail2ban
+fail2ban-client -x start
