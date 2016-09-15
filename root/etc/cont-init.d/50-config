@@ -91,6 +91,10 @@ fi
 # saving new variables
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
 
+# permissions
+chown -R abc:abc \
+	/config
+
 # Start fail2ban
 touch /config/log/nginx/error.log
 fail2ban-client -x start
