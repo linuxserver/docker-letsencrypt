@@ -92,4 +92,5 @@ fi
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
 
 # Start fail2ban
+touch /config/log/nginx/error.log
 fail2ban-client -x start
