@@ -8,11 +8,12 @@ ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false
 RUN \
  apk add --no-cache \
 	certbot \
-	fail2ban
+	fail2ban && \
+
+# remove unnecessary fail2ban filters
+ rm \
+	/etc/fail2ban/jail.d/alpine-ssh.conf
 
 # add local files
 COPY root/ /
 
-# remove unnecessary fail2ban filters
-RUN \
- rm /etc/fail2ban/jail.d/alpine-ssh.conf
