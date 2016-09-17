@@ -3,6 +3,7 @@
  rotate 52
  compress
  delaycompress
+ nodateext
  missingok
  notifempty
  sharedscripts
