@@ -98,5 +98,8 @@ chown -R abc:abc \
 chmod 0644 /etc/logrotate.d/*
 
 # Start fail2ban
-touch /config/log/nginx/error.log
+[[ ! -f /config/log/nginx/error.log ]] && \
+	touch /config/log/nginx/error.log
+[[ ! -f /config/log/nginx/access.log ]] && \
+	touch /config/log/nginx/access.log
 fail2ban-client -x start
