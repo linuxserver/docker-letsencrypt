@@ -57,7 +57,7 @@ else
 fi
 
 # setting the symlink for key location
-rm /config/keys/letsencrypt
+rm -rf /config/keys/letsencrypt
 if [ "$ONLY_SUBDOMAINS" = "true" ]; then
   DOMAIN="$(echo $SUBDOMAINS | tr ',' ' ' | awk '{print $1}')"."$URL"
   ln -s /config/etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
