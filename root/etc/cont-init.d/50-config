@@ -2,7 +2,7 @@
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs} \
 	/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
@@ -14,7 +14,11 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 	cp -R /etc/fail2ban/filter.d /config/fail2ban/
 cp -R /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
+[[ ! -f /config/crontabs/root ]] && \
+	cp /etc/crontabs/root /config/crontabs/
 
+# import user crontabs
+cp /config/crontabs/* /etc/crontabs/
 
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
