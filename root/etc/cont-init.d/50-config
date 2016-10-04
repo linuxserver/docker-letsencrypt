@@ -18,6 +18,7 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /etc/crontabs/root /config/crontabs/
 
 # import user crontabs
+rm /etc/crontabs/*
 cp /config/crontabs/* /etc/crontabs/
 
 # create original config file if it doesn't exist
