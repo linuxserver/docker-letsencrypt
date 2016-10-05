@@ -3,7 +3,7 @@
 [ircurl]: https://www.linuxserver.io/index.php/irc/
 [podcasturl]: https://www.linuxserver.io/index.php/category/podcast/
 
-[![linuxserver.io](https://www.linuxserver.io/wp-content/uploads/2015/06/linuxserver_medium.png)][linuxserverurl]
+[![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)][linuxserverurl]
 
 ## This is a Container in active development by the [LinuxServer.io][linuxserverurl] team and is not recommended for use by the general public.
 
