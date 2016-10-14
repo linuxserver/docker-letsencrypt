@@ -12,7 +12,10 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 	cp /defaults/jail.local /config/fail2ban/jail.local
 [[ ! -d /config/fail2ban/filter.d ]] && \
 	cp -R /etc/fail2ban/filter.d /config/fail2ban/
+[[ ! -d /config/fail2ban/action.d ]] && \
+	cp -R /etc/fail2ban/action.d /config/fail2ban/
 cp -R /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
+cp -R /config/fail2ban/action.d/* /etc/fail2ban/action.d/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 [[ ! -f /config/crontabs/root ]] && \
 	cp /etc/crontabs/root /config/crontabs/
