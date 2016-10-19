@@ -1,6 +1,11 @@
 FROM lsiobase/alpine.nginx
 MAINTAINER aptalca
 
+# set version label
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false
 
