@@ -30,6 +30,7 @@ if [ ! -f "/config/donoteditthisfile.conf" ]; then
 fi
 
 # load original config settings
+# shellcheck disable=SC1091
 . /config/donoteditthisfile.conf
 
 # compare dhparams existence and level, create if necessary
@@ -90,7 +91,7 @@ fi
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
   certbot certonly --non-interactive --renew-by-default --standalone --standalone-supported-challenges tls-sni-01 --rsa-key-size 4096 --email $EMAIL --agree-tos $URLS
-  cd /config/keys/letsencrypt
+  cd /config/keys/letsencrypt || exit
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
   chmod +x /app/le-renew.sh
