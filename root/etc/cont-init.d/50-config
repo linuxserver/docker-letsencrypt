@@ -30,7 +30,6 @@ if [ ! -f "/config/donoteditthisfile.conf" ]; then
 fi
 
 # load original config settings
-# shellcheck disable=SC1091
 . /config/donoteditthisfile.conf
 
 # compare dhparams existence and level, create if necessary
@@ -42,9 +41,9 @@ fi
 if [ ! -f "/config/nginx/dhparams.pem" ]; then
   echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
   openssl dhparam -out /config/nginx/dhparams.pem "$DHLEVEL"
-  echo "DH parameters successfully created - " $DHLEVEL "bits"
+  echo "DH parameters successfully created - " "$DHLEVEL" "bits"
 else
-  echo $ORIGDHLEVEL "bit DH parameters present"
+  echo "$ORIGDHLEVEL" "bit DH parameters present"
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
@@ -59,7 +58,7 @@ if [ ! -z $SUBDOMAINS ]; then
   else
     URLS="-d $URL $SUBDOMAINS2"
   fi
-  echo "Sub-domains processed are:" $SUBDOMAINS2
+  echo "Sub-domains processed are:" "$SUBDOMAINS2"
 else
   echo "No subdomains defined"
   URLS="-d $URL"
