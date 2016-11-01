@@ -33,7 +33,7 @@ fi
 . /config/donoteditthisfile.conf
 
 # compare dhparams existence and level, create if necessary
-if [ ! $DHLEVEL = $ORIGDHLEVEL ]; then
+if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
   rm -rf /config/nginx/dhparams.pem
   echo "DH parameters bit setting changed. Deleting old dhparams file."
 fi
@@ -41,24 +41,24 @@ fi
 if [ ! -f "/config/nginx/dhparams.pem" ]; then
   echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
   openssl dhparam -out /config/nginx/dhparams.pem "$DHLEVEL"
-  echo "DH parameters successfully created - " "$DHLEVEL" "bits"
+  echo "DH parameters successfully created - $DHLEVEL bits"
 else
-  echo "$ORIGDHLEVEL" "bit DH parameters present"
+  echo "$ORIGDHLEVEL bit DH parameters present"
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
-if [ ! -z $SUBDOMAINS ]; then
+if [ ! -z "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
-  for job in $(echo $SUBDOMAINS | tr "," " "); do
-    export SUBDOMAINS2="$SUBDOMAINS2 -d "$job"."$URL""
+  for job in $(echo "$SUBDOMAINS" | tr "," " "); do
+    export SUBDOMAINS2="$SUBDOMAINS2 -d ${job}.${URL}"
   done
   if [ "$ONLY_SUBDOMAINS" = true ]; then
     URLS="$SUBDOMAINS2"
     echo "Only subdomains, no URL in cert"
   else
-    URLS="-d $URL $SUBDOMAINS2"
+    URLS="-d ${URL}${SUBDOMAINS2}"
   fi
-  echo "Sub-domains processed are:" "$SUBDOMAINS2"
+  echo "Sub-domains processed are: $SUBDOMAINS2"
 else
   echo "No subdomains defined"
   URLS="-d $URL"
@@ -67,17 +67,17 @@ fi
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
 if [ "$ONLY_SUBDOMAINS" = "true" ]; then
-  DOMAIN="$(echo $SUBDOMAINS | tr ',' ' ' | awk '{print $1}')"."$URL"
+  DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
   ln -s /config/etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
   ln -s /config/etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! $URL = $ORIGURL ] || [ ! $SUBDOMAINS = $ORIGSUBDOMAINS ] || [ ! $ONLY_SUBDOMAINS = $ORIGONLY_SUBDOMAINS ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ]; then
   echo "Different sub/domains entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
-    ORIGDOMAIN="$(echo $ORIGSUBDOMAINS | tr ',' ' ' | awk '{print $1}')"."$ORIGURL"
+    ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
   else
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
@@ -89,7 +89,7 @@ fi
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
-  certbot certonly --non-interactive --renew-by-default --standalone --standalone-supported-challenges tls-sni-01 --rsa-key-size 4096 --email $EMAIL --agree-tos $URLS
+  certbot certonly --non-interactive --renew-by-default --standalone --standalone-supported-challenges tls-sni-01 --rsa-key-size 4096 --email "$EMAIL" --agree-tos $URLS
   cd /config/keys/letsencrypt || exit
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
