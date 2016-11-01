@@ -10,21 +10,24 @@ The [LinuxServer.io][linuxserverurl] team brings you another container release f
 * [IRC][ircurl] on freenode at `#linuxserver.io`
 * [Podcast][podcasturl] covers everything to do with getting the most from your Linux Server plus a focus on all things Docker and containerisation!
 
-# linuxserver/<container-name>
+# linuxserver/letsencrypt
 
-Provide a short, concise description of the application. No more than two SHORT paragraphs. Link to sources where possible and include an image illustrating your point if necessary. Point users to the original applications website, as that's the best place to get support - not here.
-
-Our Plex container has immaculate docs so follow that if in doubt for layout.
+This container sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
 
 ## Usage
 
 ```
 docker create \
-  --name=<container-name> \
+  --privileged \
+  --name=letsencrypt \
   -v <path to data>:/config \
   -e PGID=<gid> -e PUID=<uid>  \
-  -p 1234:1234 \
-  linuxserver/<container-name>
+  -e EMAIL=<email> \
+  -e URL=<url> \
+  -e SUBDOMAINS=<subdomains> \
+  -p 443:443 \
+  -e TZ=<timezone> \
+  linuxserver/letsencrypt
 ```
 
 ## Parameters
@@ -35,12 +38,20 @@ So -p 8080:80 would expose port 80 from inside the container to be accessible fr
 http://192.168.x.x:8080 would show you what's running INSIDE the container on port 80.`
 
 
-* `-p 1234` - the port(s)
-* `-v /config` - explain what lives here
+* `-p 443` - the port(s)
+* `-v /config` - all the config files including the webroot reside here
+* `-e EMAIL` - your e-mail address for cert registration
+* `-e URL` - the top url you have control over ("customdomain.com" if you own it, or "customsubdomain.ddnsprovider.com" if dynamic dns)
+* `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
+* `-e TZ` - timezone ie. `America/New_York`
+* Optional:
+* `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
+* `-p 80` - Port 80 forwarding is optional (cert validation is done through 443)
+* `-e ONLY_SUBDOMAINS` - if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`
 
-It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it <container-name> /bin/bash`.
+It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it letsencrypt /bin/bash`.
 
 ### User / Group Identifiers
 
@@ -55,14 +66,18 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Setting up the application
 
-Insert a basic user guide here to get a n00b up and running with the software inside the container. DELETE ME
+* Before running this container, make sure that the url and subdomains are properly forwarded to this container's host. 
+* Port 443 on the internet side of the router should be forwarded to this container's port 443.
+* If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
+* The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
+* If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
 
 
 ## Info
 
-* Shell access whilst the container is running: `docker exec -it container-name /bin/bash`
-* To monitor the logs of the container in realtime: `docker logs -f container-name`
+* Shell access whilst the container is running: `docker exec -it letsencrypt /bin/bash`
+* To monitor the logs of the container in realtime: `docker logs -f letsencrypt`
 
 ## Versions
 
-+ **dd.MM.yyyy:** This is the standard Version type now.
++ **dd.MM.yyyy:** Initial Release
