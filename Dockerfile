@@ -8,6 +8,7 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 # install packages
 RUN \
