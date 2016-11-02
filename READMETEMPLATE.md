@@ -45,8 +45,9 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 * `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
-* `-e TZ` - timezone ie. `America/New_York`
-* Optional:
+* `-e TZ` - timezone ie. `America/New_York`  
+  
+_Optional:_
 * `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
 * `-p 80` - Port 80 forwarding is optional (cert validation is done through 443)
 * `-e ONLY_SUBDOMAINS` - if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`
@@ -77,6 +78,14 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 * Shell access whilst the container is running: `docker exec -it letsencrypt /bin/bash`
 * To monitor the logs of the container in realtime: `docker logs -f letsencrypt`
+
+* container version number 
+
+`docker inspect -f '{{ index .Config.Labels "build_version" }}' letsencrypt`
+
+* image version number
+
+`docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/letsencrypt`
 
 ## Versions
 
