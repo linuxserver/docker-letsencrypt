@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 # check to make sure that the required variables are set
-if [ -z "$URL" ] || [ -z "$EMAIL" ]; then
 # shellcheck disable=SC2153
+if [ -z "$URL" ] || [ -z "$EMAIL" ]; then
   echo "Please pass your URL and EMAIL as environment variables in your docker run command. See docker info for more details."
   exit 1
 fi
