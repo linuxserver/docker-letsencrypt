@@ -26,6 +26,8 @@ cp -R /config/fail2ban/action.d/* /etc/fail2ban/action.d/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 [[ ! -f /config/crontabs/root ]] && \
 	cp /etc/crontabs/root /config/crontabs/
+[[ ! -f /config/nginx/proxy.conf ]] && \
+	cp /defaults/proxy.conf /config/nginx/proxy.conf
 
 # import user crontabs
 rm /etc/crontabs/*
@@ -77,9 +79,9 @@ fi
 rm -rf /config/keys/letsencrypt
 if [ "$ONLY_SUBDOMAINS" = "true" ]; then
   DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
-  ln -s /config/etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
+  ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
-  ln -s /config/etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
+  ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
