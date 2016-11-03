@@ -67,6 +67,7 @@ server {
 #	client_max_body_size 0;
 #
 #	location / {
+#		auth_basic "Restricted";
 #		auth_basic_user_file /config/nginx/.htpasswd;
 #		include /config/nginx/proxy.conf;
 #		proxy_pass http://192.168.1.50:5050;	
