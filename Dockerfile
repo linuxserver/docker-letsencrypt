@@ -14,7 +14,9 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
  apk add --no-cache \
 	certbot \
-	fail2ban && \
+	curl \
+	fail2ban \
+	php5-curl && \
 
 # remove unnecessary fail2ban filters
  rm \
