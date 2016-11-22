@@ -94,4 +94,5 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **21.11.2016:** Add curl package
 + **07.11.2016:** Initial Release
