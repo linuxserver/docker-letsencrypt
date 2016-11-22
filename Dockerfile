@@ -16,7 +16,9 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
-	php5-curl && \
+	php5-curl \
+	php5-gd \
+	php5-mcrypt && \
 
 # remove unnecessary fail2ban filters
  rm \
