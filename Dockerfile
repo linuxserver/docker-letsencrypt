@@ -18,7 +18,9 @@ RUN \
 	fail2ban \
 	php5-curl \
 	php5-gd \
-	php5-mcrypt && \
+	php5-mcrypt \
+	php5-mysqli \
+	php5-pdo_mysql && \
 
 # remove unnecessary fail2ban filters
  rm \
