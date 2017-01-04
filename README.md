@@ -94,6 +94,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **04.01.2017:** Add php5-mysqli and php5-pdo_mysql
 + **22.11.2016:** Add gd and mcrypt packages
 + **21.11.2016:** Add curl package
 + **07.11.2016:** Initial Release
