@@ -16,10 +16,12 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
+	php5-ctype \
 	php5-curl \
 	php5-gd \
 	php5-mcrypt \
 	php5-mysqli \
+	php5-openssl \
 	php5-pdo_mysql && \
 
 # remove unnecessary fail2ban filters
