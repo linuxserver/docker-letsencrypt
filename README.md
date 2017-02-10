@@ -94,6 +94,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **10.02.2017:** Switch to alpine 3.5 base and php7, add php zlib module and all nginx modules
 + **13.01.2017:** Add php5-ctype and php5-openssl
 + **04.01.2017:** Add php5-mysqli and php5-pdo_mysql
 + **22.11.2016:** Add gd and mcrypt packages
