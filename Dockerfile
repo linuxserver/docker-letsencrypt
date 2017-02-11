@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx
+FROM lsiobase/alpine.nginx:3.5
 MAINTAINER aptalca
 
 # set version label
@@ -16,13 +16,29 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
-	php5-ctype \
-	php5-curl \
-	php5-gd \
-	php5-mcrypt \
-	php5-mysqli \
-	php5-openssl \
-	php5-pdo_mysql && \
+	php7-ctype \
+	php7-curl \
+	php7-gd \
+	php7-mcrypt \
+	php7-mysqli \
+	php7-mysqlnd \
+	php7-openssl \
+	php7-pdo_mysql \
+	php7-zlib \
+	nginx-mod-http-echo \
+	nginx-mod-http-fancyindex \
+	nginx-mod-http-headers-more \
+	nginx-mod-http-lua \
+	nginx-mod-http-nchan \
+	nginx-mod-http-perl \
+	nginx-mod-http-upload-progress \
+	nginx-mod-http-xslt-filter \
+	nginx-mod-mail \
+	nginx-mod-rtmp \
+	nginx-mod-stream \
+	nginx-mod-http-geoip \
+	nginx-mod-http-image-filter \
+	nginx-vim && \
 
 # remove unnecessary fail2ban filters
  rm \
@@ -30,4 +46,3 @@ RUN \
 
 # add local files
 COPY root/ /
-

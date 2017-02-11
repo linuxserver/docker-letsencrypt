@@ -1,9 +1,10 @@
+# listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
-server {
-	listen 80;
-	server_name _;
-	return 301 https://$host$request_uri;
-}
+#server {
+#	listen 80;
+#	server_name _;
+#	return 301 https://$host$request_uri;
+#}
 
 # main server block
 server {
@@ -28,10 +29,10 @@ server {
 
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		# With php5-cgi alone:
+		# With php7-cgi alone:
 		fastcgi_pass 127.0.0.1:9000;
-		# With php5-fpm:
-		#fastcgi_pass unix:/var/run/php5-fpm.sock;
+		# With php7-fpm:
+		#fastcgi_pass unix:/var/run/php7-fpm.sock;
 		fastcgi_index index.php;
 		include /etc/nginx/fastcgi_params;
 	}
@@ -49,7 +50,7 @@ server {
 }
 
 # sample reverse proxy config without url base, but as a subdomain "cp", ip and port same as above
-# notice this is a new server block
+# notice this is a new server block, you need a new server block for each subdomain
 #server {
 #	listen 443 ssl;
 #
