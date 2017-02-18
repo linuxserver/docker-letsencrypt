@@ -24,6 +24,7 @@ RUN \
 	php7-mysqlnd \
 	php7-openssl \
 	php7-pdo_mysql \
+	php7-mbstring \
 	php7-zlib \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
