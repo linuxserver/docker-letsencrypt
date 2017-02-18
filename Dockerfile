@@ -16,18 +16,11 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
-	php7-ctype \
-	php7-curl \
-	php7-gd \
-	php7-mcrypt \
-	php7-mysqli \
-	php7-mysqlnd \
-	php7-openssl \
-	php7-pdo_mysql \
-	php7-zlib \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
+	nginx-mod-http-geoip \
 	nginx-mod-http-headers-more \
+	nginx-mod-http-image-filter \
 	nginx-mod-http-lua \
 	nginx-mod-http-nchan \
 	nginx-mod-http-perl \
@@ -36,9 +29,14 @@ RUN \
 	nginx-mod-mail \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
-	nginx-mod-http-geoip \
-	nginx-mod-http-image-filter \
-	nginx-vim && \
+	nginx-vim \
+	php7-ctype \
+	php7-curl \
+	php7-gd \
+	php7-mcrypt \
+	php7-mysqli \
+	php7-mysqlnd \
+	php7-pdo_mysql && \
 
 # remove unnecessary fail2ban filters
  rm \
