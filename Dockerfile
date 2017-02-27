@@ -32,11 +32,14 @@ RUN \
 	nginx-vim \
 	php7-ctype \
 	php7-curl \
+	php7-dom \
 	php7-gd \
+	php7-iconv \
 	php7-mcrypt \
 	php7-mysqli \
 	php7-mysqlnd \
 	php7-pdo_mysql \
+	php7-pdo_sqlite \
 	php7-xml && \
 
 # remove unnecessary fail2ban filters
