@@ -16,6 +16,7 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
+	ip6tables \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
