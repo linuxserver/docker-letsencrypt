@@ -15,7 +15,6 @@ RUN \
  apk add --no-cache \
 	certbot \
 	curl \
-	fail2ban \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
@@ -32,6 +31,8 @@ RUN \
 	nginx-vim && \
  apk add --no-cache \
  	--repository http://nl.alpinelinux.org/alpine/edge/community \
+	fail2ban \
+	libwebp \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
