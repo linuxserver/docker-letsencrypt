@@ -13,6 +13,10 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 # install packages
 RUN \
  apk add --no-cache \
+ 	--repository http://nl.alpinelinux.org/alpine/edge/main \
+	fail2ban \
+	libwebp && \
+ apk add --no-cache \
 	certbot \
 	curl \
 	nginx-mod-http-echo \
@@ -31,8 +35,6 @@ RUN \
 	nginx-vim && \
  apk add --no-cache \
  	--repository http://nl.alpinelinux.org/alpine/edge/community \
-	fail2ban \
-	libwebp \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
