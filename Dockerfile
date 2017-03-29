@@ -29,7 +29,9 @@ RUN \
 	nginx-mod-mail \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
-	nginx-vim \
+	nginx-vim && \
+ apk add --no-cache \
+ 	--repository http://nl.alpinelinux.org/alpine/edge/community \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
