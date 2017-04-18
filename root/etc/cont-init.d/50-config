@@ -15,6 +15,9 @@ rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
 # copy config files
+[[ ! -f /etc/fail2ban/jail.local ]] && \
+	cp -R /etc/fail2ban/filter.d /config/fail2ban/ && \
+	cp -R /etc/fail2ban/action.d /config/fail2ban/
 [[ ! -f /config/fail2ban/jail.local ]] && \
 	cp /defaults/jail.local /config/fail2ban/jail.local
 [[ ! -d /config/fail2ban/filter.d ]] && \
