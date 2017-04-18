@@ -45,6 +45,7 @@ RUN \
 	php7-mysqlnd \
 	php7-pdo_mysql \
 	php7-pdo_sqlite \
+	php7-sockets \
 	php7-xml && \
 
 # remove unnecessary fail2ban filters
