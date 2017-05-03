@@ -7,4 +7,5 @@
  missingok
  notifempty
  sharedscripts
+ su abc abc
 }

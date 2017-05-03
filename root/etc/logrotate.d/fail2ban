@@ -8,4 +8,5 @@
     postrotate
         /usr/bin/fail2ban-client set logtarget /config/log/fail2ban/fail2ban.log 1>/dev/null || true
     endscript
+    su abc abc
 }
