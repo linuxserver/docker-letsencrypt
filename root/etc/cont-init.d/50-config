@@ -118,7 +118,7 @@ echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$
 # permissions
 chown -R abc:abc \
 	/config
-chmod -R 0644 /etc/logrotate.d /config/log
+chmod -R 0644 /etc/logrotate.d
 
 # Start fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
