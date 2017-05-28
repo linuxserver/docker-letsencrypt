@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx:3.5
+FROM lsiobase/alpine.nginx:3.6
 MAINTAINER aptalca
 
 # set version label
@@ -13,12 +13,9 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 # install packages
 RUN \
  apk add --no-cache \
- 	--repository http://nl.alpinelinux.org/alpine/edge/main \
-	fail2ban \
-	libwebp && \
- apk add --no-cache \
 	certbot \
 	curl \
+	fail2ban \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
@@ -32,9 +29,7 @@ RUN \
 	nginx-mod-mail \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
-	nginx-vim && \
- apk add --no-cache \
- 	--repository http://nl.alpinelinux.org/alpine/edge/community \
+	nginx-vim \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
