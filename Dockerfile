@@ -30,6 +30,7 @@ RUN \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
 	nginx-vim \
+	php7-bz2 \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
