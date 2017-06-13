@@ -79,11 +79,11 @@ else
 fi
 
 # figuring out whether to use e-mail and which
-if [ -z "$EMAIL" ]; then
-  echo "E-mail entered: ${EMAIL}"
+if [[ $EMAIL == *@* ]]; then
+  echo "E-mail address entered: ${EMAIL}"
   EMAILPARAM="-m ${EMAIL}"
 else
-  echo "No e-mail entered"
+  echo "No e-mail address entered or address invalid"
   EMAILPARAM="--register-unsafely-without-email"
 fi
 
