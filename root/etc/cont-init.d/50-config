@@ -124,14 +124,16 @@ fi
 # saving new variables
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
 
+# logfiles needed by fail2ban
+[[ ! -f /config/log/nginx/error.log ]] && \
+	touch /config/log/nginx/error.log
+[[ ! -f /config/log/nginx/access.log ]] && \
+	touch /config/log/nginx/access.log
+
 # permissions
 chown -R abc:abc \
 	/config
 chmod -R 0644 /etc/logrotate.d
 
 # Start fail2ban
-[[ ! -f /config/log/nginx/error.log ]] && \
-	touch /config/log/nginx/error.log
-[[ ! -f /config/log/nginx/access.log ]] && \
-	touch /config/log/nginx/access.log
 fail2ban-client -x start
