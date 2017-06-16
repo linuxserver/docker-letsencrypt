@@ -95,7 +95,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
-+ **06.13.2017:** Update deprecated certbot option for https validation, make e-mail entry optional, update readme
++ **06.16.2017:** Update deprecated certbot option for https validation, make e-mail entry optional, update readme
 + **05.06.2017:** Add php7-bz2
 + **27.05.2017:** Rebase to alpine 3.6.
 + **03.05.2017:** Fix log permissions.
