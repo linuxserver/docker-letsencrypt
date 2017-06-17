@@ -2,8 +2,8 @@
 
 # check to make sure that the required variables are set
 # shellcheck disable=SC2153
-if [ -z "$URL" ] || [ -z "$EMAIL" ]; then
-  echo "Please pass your URL and EMAIL as environment variables in your docker run command. See docker info for more details."
+if [ -z "$URL" ]; then
+  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details."
   exit 1
 fi
 
@@ -78,6 +78,15 @@ else
   URLS="-d $URL"
 fi
 
+# figuring out whether to use e-mail and which
+if [[ $EMAIL == *@* ]]; then
+  echo "E-mail address entered: ${EMAIL}"
+  EMAILPARAM="-m ${EMAIL}"
+else
+  echo "No e-mail address entered or address invalid"
+  EMAILPARAM="--register-unsafely-without-email"
+fi
+
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
 if [ "$ONLY_SUBDOMAINS" = "true" ]; then
@@ -104,7 +113,7 @@ fi
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
 # shellcheck disable=SC2086
-  certbot certonly --non-interactive --renew-by-default --standalone --standalone-supported-challenges tls-sni-01 --rsa-key-size 4096 --email "$EMAIL" --agree-tos $URLS
+  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges tls-sni --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
   cd /config/keys/letsencrypt || exit
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
@@ -115,14 +124,16 @@ fi
 # saving new variables
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
 
+# logfiles needed by fail2ban
+[[ ! -f /config/log/nginx/error.log ]] && \
+	touch /config/log/nginx/error.log
+[[ ! -f /config/log/nginx/access.log ]] && \
+	touch /config/log/nginx/access.log
+
 # permissions
 chown -R abc:abc \
 	/config
 chmod -R 0644 /etc/logrotate.d
 
 # Start fail2ban
-[[ ! -f /config/log/nginx/error.log ]] && \
-	touch /config/log/nginx/error.log
-[[ ! -f /config/log/nginx/access.log ]] && \
-	touch /config/log/nginx/access.log
 fail2ban-client -x start
