@@ -95,6 +95,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **22.06.2017:** Add various nginx modules and enable all modules in the default nginx.conf
 + **06.16.2017:** Update deprecated certbot option for https validation, make e-mail entry optional, update readme
 + **05.06.2017:** Add php7-bz2
 + **27.05.2017:** Rebase to alpine 3.6.
