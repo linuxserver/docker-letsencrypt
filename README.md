@@ -56,6 +56,7 @@ _Optional settings:_
 * `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
 * `-p 80` - Port 80 forwarding is optional (cert validation is done through 443)
 * `-e ONLY_SUBDOMAINS` - if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`
+* `-e EXTRA_DOMAINS` - additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,anotherdomain.org`
 
 It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it letsencrypt /bin/bash`.
 
