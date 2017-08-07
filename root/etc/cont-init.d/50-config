@@ -128,6 +128,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
   chmod +x /app/le-renew.sh
+  sleep 1
   /app/le-renew.sh
 fi
 
