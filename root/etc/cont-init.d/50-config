@@ -29,7 +29,7 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 # Replace fail2ban config with user config and disable ipv6
 rm -rf /etc/fail2ban/filter.d/*
 rm -rf /etc/fail2ban/action.d/*
-cp /defaults/iptables-common.local /config/fail2ban/filter.d/iptables-common.local
+cp /defaults/iptables-common.local /config/fail2ban/action.d/iptables-common.local
 cp -R /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
 cp -R /config/fail2ban/action.d/* /etc/fail2ban/action.d/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
