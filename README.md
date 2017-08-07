@@ -23,7 +23,7 @@ This container sets up an Nginx webserver and reverse proxy with php support and
 
 ```
 docker create \
-  --privileged \
+  --cap-add=NET_ADMIN \
   --name=letsencrypt \
   -v <path to data>:/config \
   -e PGID=<gid> -e PUID=<uid>  \
@@ -75,7 +75,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 is not being used by another service on the host (NAS gui, another webserver, etc.).
 * Port 443 on the internet side of the router should be forwarded to this container's port 443 (Required for letsencrypt validation)
-* `--privileged` mode is required for fail2ban to modify iptables
+* `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
@@ -96,6 +96,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **07.08.2017:** `--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules
 + **14.07.2017:** Enable modules dynamically in nginx.conf
 + **06.07.2017:** Add support for multiple domains (thanks @oznu)
 + **22.06.2017:** Add various nginx modules and enable all modules in the default nginx.conf
