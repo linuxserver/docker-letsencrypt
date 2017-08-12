@@ -14,24 +14,16 @@ mkdir -p \
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
-# if the container is fresh, update the fail2ban config defaults in /config
-[[ ! -f /etc/fail2ban/jail.local ]] && \
-	cp -R /etc/fail2ban/filter.d /config/fail2ban/ && \
-	cp -R /etc/fail2ban/action.d /config/fail2ban/
+# copy/update the fail2ban config defaults to/in /config
+cp -R /defaults/fail2ban/filter.d /config/fail2ban/
+cp -R /defaults/fail2ban/action.d /config/fail2ban/
 # if jail.local is missing in /config, copy default
 [[ ! -f /config/fail2ban/jail.local ]] && \
 	cp /defaults/jail.local /config/fail2ban/jail.local
-# if /config is fresh, copy defaults
-[[ ! -d /config/fail2ban/filter.d ]] && \
-	cp -R /etc/fail2ban/filter.d /config/fail2ban/
-[[ ! -d /config/fail2ban/action.d ]] && \
-	cp -R /etc/fail2ban/action.d /config/fail2ban/
 # Replace fail2ban config with user config and disable ipv6
-rm -rf /etc/fail2ban/filter.d/*
-rm -rf /etc/fail2ban/action.d/*
 cp /defaults/iptables-common.local /config/fail2ban/action.d/iptables-common.local
-cp -R /config/fail2ban/filter.d/* /etc/fail2ban/filter.d/
-cp -R /config/fail2ban/action.d/* /etc/fail2ban/action.d/
+cp -R /config/fail2ban/filter.d /etc/fail2ban/
+cp -R /config/fail2ban/action.d /etc/fail2ban/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
 # copy crontab and proxy defaults if needed
