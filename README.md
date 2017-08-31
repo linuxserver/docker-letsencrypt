@@ -96,6 +96,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **31.08.2017:** Add php7-phar
 + **14.07.2017:** Enable modules dynamically in nginx.conf
 + **06.07.2017:** Add support for multiple domains (thanks @oznu)
 + **22.06.2017:** Add various nginx modules and enable all modules in the default nginx.conf
