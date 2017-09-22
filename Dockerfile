@@ -53,7 +53,12 @@ RUN \
 
 # remove unnecessary fail2ban filters
  rm \
-	/etc/fail2ban/jail.d/alpine-ssh.conf
+	/etc/fail2ban/jail.d/alpine-ssh.conf && \
+
+# copy fail2ban default action and filter to /default
+ mkdir -p /defaults/fail2ban && \
+ mv /etc/fail2ban/action.d /defaults/fail2ban/ && \
+ mv /etc/fail2ban/filter.d /defaults/fail2ban/
 
 # add local files
 COPY root/ /
