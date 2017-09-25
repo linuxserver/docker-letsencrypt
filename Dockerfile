@@ -16,6 +16,7 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
+	memcached \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
@@ -41,6 +42,7 @@ RUN \
 	php7-gd \
 	php7-iconv \
 	php7-mcrypt \
+	php7-memcached \
 	php7-mysqli \
 	php7-mysqlnd \
 	php7-pdo_mysql \
