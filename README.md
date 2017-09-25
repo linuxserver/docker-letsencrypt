@@ -97,7 +97,9 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 ## Versions
 
 + **25.09.2017:** Manage fail2ban via s6
-+ **07.08.2017:** `--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules
++ **24.09.2017:** Add memcached service
++ **01.09.2017:** `--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules
++ **31.08.2017:** Add php7-phar
 + **14.07.2017:** Enable modules dynamically in nginx.conf
 + **06.07.2017:** Add support for multiple domains (thanks @oznu)
 + **22.06.2017:** Add various nginx modules and enable all modules in the default nginx.conf
