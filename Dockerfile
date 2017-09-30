@@ -16,6 +16,8 @@ RUN \
 	certbot \
 	curl \
 	fail2ban \
+	lua5.1-cjson \
+	lua5.1-resty-http \
 	memcached \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
