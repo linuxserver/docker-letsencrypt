@@ -96,6 +96,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **31.10.2017:** Add php7 exif and xmlreader modules
 + **25.09.2017:** Manage fail2ban via s6
 + **24.09.2017:** Add memcached service
 + **01.09.2017:** `--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules
