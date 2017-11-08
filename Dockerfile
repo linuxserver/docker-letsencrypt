@@ -49,6 +49,7 @@ RUN \
 	php7-pdo_mysql \
 	php7-pdo_sqlite \
 	php7-phar \
+	php7-soap \
 	php7-sockets \
 	php7-tokenizer \
 	php7-xml \
