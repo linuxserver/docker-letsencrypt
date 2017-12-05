@@ -57,6 +57,7 @@ _Optional settings:_
 * `-p 80` - Port 80 forwarding is optional (cert validation is done through 443)
 * `-e ONLY_SUBDOMAINS` - if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`
 * `-e EXTRA_DOMAINS` - additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org`
+* `-e CERT2_SUBDOMAINS` - subdomains you'd like the second certificate to cover (comma seperated, no spaces). `blog,wiki,chat`
 
 It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it letsencrypt /bin/bash`.
 
