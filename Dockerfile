@@ -54,7 +54,8 @@ RUN \
 	php7-tokenizer \
 	php7-xml \
 	php7-xmlreader \
-	php7-zip && \
+	php7-zip \
+	py2-future && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
 	/etc/fail2ban/jail.d/alpine-ssh.conf && \
