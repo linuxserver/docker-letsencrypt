@@ -1,6 +1,0 @@
-[Init?family=inet6]
-# Option: blocktype (ipv6) Note: This is what the action does with rules. This can be any jump target
-#          as per the iptables man page (section 8). Common values are DROP REJECT, REJECT --reject-with icmp6-port-unreachable Values: STRING
-blocktype = REJECT --reject-with icmp6-port-unreachable
-# Option: iptables (ipv6) Notes.: Actual command to be executed, including common to all calls options Values: STRING
-iptables = iptables <lockingopt>
