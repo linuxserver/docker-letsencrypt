@@ -96,6 +96,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **09.01.18:** Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image
 + **05.01.18:** Rebase to alpine 3.7
 + **04.11.17:** Add php7 soap module
 + **31.10.17:** Add php7 exif and xmlreader modules
