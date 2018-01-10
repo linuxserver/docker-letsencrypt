@@ -79,7 +79,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
-
+* Proxy setup examples are shown in your specified volume "/config" (/nginx/site-confs/default)
 
 ## Info
 
