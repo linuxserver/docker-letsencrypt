@@ -39,7 +39,7 @@ cp /config/crontabs/* /etc/crontabs/
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
 # shellcheck disable=SC2153
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\"" > /config/donoteditthisfile.conf
 fi
 
 # load original config settings
@@ -97,6 +97,13 @@ else
   EMAILPARAM="--register-unsafely-without-email"
 fi
 
+# setting the validation method to use
+if [ "$HTTPVAL" = "true" ]; then
+  PREFCHAL="http"
+else
+  PREFCHAL="tls-sni"
+fi
+
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
 if [ "$ONLY_SUBDOMAINS" = "true" ]; then
@@ -107,7 +114,7 @@ else
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$HTTPVAL" = "$ORIGHTTPVAL" ]; then
   echo "Different sub/domains entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
@@ -123,7 +130,7 @@ fi
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
 # shellcheck disable=SC2086
-  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges tls-sni --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
+  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
   cd /config/keys/letsencrypt || exit
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
@@ -133,7 +140,7 @@ else
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\"" > /config/donoteditthisfile.conf
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
