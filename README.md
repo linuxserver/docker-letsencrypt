@@ -98,6 +98,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **11.01.18:** Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)
 + **10.01.18:** Add option for http validation on port 80
 + **05.01.18:** Rebase to alpine 3.7
 + **04.11.17:** Add php7 soap module

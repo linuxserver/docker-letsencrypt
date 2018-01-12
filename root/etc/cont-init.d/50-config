@@ -131,7 +131,12 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
 # shellcheck disable=SC2086
   certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
-  cd /config/keys/letsencrypt || exit
+  if [ -d /config/keys/letsencrypt ]; then
+    cd /config/keys/letsencrypt || exit
+  else
+    echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+    sleep infinity
+  fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
   chmod +x /app/le-renew.sh
