@@ -1,10 +1,10 @@
-FROM lsiobase/alpine.nginx:3.7
+FROM lsiobase/alpine.nginx:3.6
+MAINTAINER aptalca
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="aptalca"
 
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false
@@ -54,12 +54,13 @@ RUN \
 	php7-tokenizer \
 	php7-xml \
 	php7-xmlreader \
-	php7-zip \
-	py2-future && \
- echo "**** remove unnecessary fail2ban filters ****" && \
+	php7-zip && \
+
+# remove unnecessary fail2ban filters
  rm \
 	/etc/fail2ban/jail.d/alpine-ssh.conf && \
- echo "**** copy fail2ban default action and filter to /default ****" && \
+
+# copy fail2ban default action and filter to /default
  mkdir -p /defaults/fail2ban && \
  mv /etc/fail2ban/action.d /defaults/fail2ban/ && \
  mv /etc/fail2ban/filter.d /defaults/fail2ban/
