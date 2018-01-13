@@ -54,9 +54,10 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 _Optional settings:_
 * `-e EMAIL` - your e-mail address for cert registration and notifications
 * `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
-* `-p 80` - Port 80 forwarding is optional (cert validation is done through 443)
+* `-p 80` - Port 80 forwarding is optional (cert validation is done through 443 by default) unless the `HTTPVAL` option is set to `true`
 * `-e ONLY_SUBDOMAINS` - if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true`
 * `-e EXTRA_DOMAINS` - additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org`
+* `-e HTTPVAL` - if you wish to get certs through http validation on port 80 instead of port 443, set this to `true`. Keep in mind that you also have to map port 80 as listed above
 
 It is based on alpine linux with s6 overlay, for shell access whilst the container is running do `docker exec -it letsencrypt /bin/bash`.
 
@@ -75,6 +76,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 is not being used by another service on the host (NAS gui, another webserver, etc.).
 * Port 443 on the internet side of the router should be forwarded to this container's port 443 (Required for letsencrypt validation)
+* If `HTTPVAL` is set to `true`, port 80 on the internet side of the router should be forwarded to this container's port 80 (Required for letsencrypt validation)
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
@@ -96,7 +98,9 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
-+ **09.01.18:** Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image
++ **13.01.18:** Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image
++ **11.01.18:** Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)
++ **10.01.18:** Add option for http validation on port 80
 + **05.01.18:** Rebase to alpine 3.7
 + **04.11.17:** Add php7 soap module
 + **31.10.17:** Add php7 exif and xmlreader modules
