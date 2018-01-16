@@ -20,10 +20,14 @@ cp -R /defaults/fail2ban/action.d /config/fail2ban/
 # if jail.local is missing in /config, copy default
 [[ ! -f /config/fail2ban/jail.local ]] && \
 	cp /defaults/jail.local /config/fail2ban/jail.local
-# Replace fail2ban config with user config and disable ipv6
-cp /defaults/iptables-common.local /config/fail2ban/action.d/iptables-common.local
+# Replace fail2ban config with user config
+[[ -d /etc/fail2ban/filter.d ]] && \
+	rm -rf /etc/fail2ban/filter.d
+[[ -d /etc/fail2ban/action.d ]] && \
+	rm -rf /etc/fail2ban/action.d
 cp -R /config/fail2ban/filter.d /etc/fail2ban/
 cp -R /config/fail2ban/action.d /etc/fail2ban/
+cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
 # copy crontab and proxy defaults if needed
