@@ -17,7 +17,10 @@ The [LinuxServer.io][linuxserverurl] team brings you another container release f
 
 This container sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
 
-[![letsencrypt](https://github.com/letsencrypt/website/raw/master/images/le-logo-wide.png)][appurl]
+### TLS-SNI validation issues
+If you are having issues with certbot not supporting challenges that will satisfy the CA, please set HTTPVAL to true and expose port 80. This will use the authentication method HTTP-01. See below in _Optional settings_ on how to set these. [source](https://community.letsencrypt.org/t/important-what-you-need-to-know-about-tls-sni-validation-issues/50811)
+
+[![letsencrypt](https://github.com/letsencrypt/website/blob/master/static/images/le-logo-wide.png)][appurl]
 
 ## Usage
 
