@@ -48,7 +48,7 @@ cp /config/crontabs/* /etc/crontabs/
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
 # shellcheck disable=SC2153
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\"" > /config/donoteditthisfile.conf
 fi
 
 # load original config settings
@@ -129,8 +129,8 @@ else
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$HTTPVAL" = "$ORIGHTTPVAL" ]; then
-  echo "Different sub/domains entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
+  echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
@@ -160,7 +160,7 @@ else
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\"" > /config/donoteditthisfile.conf
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
