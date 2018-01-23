@@ -4,7 +4,7 @@
 # shellcheck disable=SC2153
 if [ -z "$URL" ]; then
   echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details."
-  exit 1
+  sleep infinity
 fi
 
 # make our folders and links
