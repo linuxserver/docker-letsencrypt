@@ -59,10 +59,10 @@ fi
 if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "ORIGHTTPVAL" = "true" ]; then
   VALIDATION="http" && \
   ORIGVALIDATION="http"
-elseif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "ORIGHTTPVAL" = "true" ]; then
+elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "ORIGHTTPVAL" = "true" ]; then
   VALIDATION="tls-sni" && \
   ORIGVALIDATION="tls-sni"
-elseif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
+elif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
   VALIDATION="$ORIGVALIDATION"
 fi
 
@@ -124,7 +124,7 @@ if [ "$VALIDATION" = "dns" ]; then
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   fi
-elseif [ "$VALIDATION" = "tls-sni" ]; then
+elif [ "$VALIDATION" = "tls-sni" ]; then
   PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
 else
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
