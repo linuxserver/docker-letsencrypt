@@ -57,11 +57,11 @@ fi
 
 # Backwards compatibility, remove after 2018/05/01
 echo "Backwards compatibility check. . ."
-if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "ORIGHTTPVAL" = "true" ]; then
+if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "$ORIGHTTPVAL" = "true" ]; then
   echo "Previously used http, will continue to use http. Please set the VALIDATION parameter in the future"
   VALIDATION="http" && \
   ORIGVALIDATION="http"
-elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "ORIGHTTPVAL" = "true" ]; then
+elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "$ORIGHTTPVAL" = "true" ]; then
   echo "Previously used tls-sni, will continue to use tls-sni. Please set the VALIDATION parameter in the future"
   VALIDATION="tls-sni" && \
   ORIGVALIDATION="tls-sni"
