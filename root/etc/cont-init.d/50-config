@@ -113,8 +113,10 @@ if [ "$VALIDATION" = "dns" ]; then
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   fi
+elseif [ "$VALIDATION" = "tls-sni" ]; then
+  PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
 else
-  PREFCHAL="tls-sni"
+  PREFCHAL="--non-interactive --standalone --preferred-challenges http"
 fi
 
 # setting the symlink for key location
