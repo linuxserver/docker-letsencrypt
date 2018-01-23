@@ -7,7 +7,7 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="aptalca"
 
 # environment settings
-ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false VALIDATE=http AWS_CONFIG_FILE=/config/dns-conf/route53.ini
+ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 # install packages
