@@ -105,8 +105,14 @@ else
 fi
 
 # setting the validation method to use
-if [ "$HTTPVAL" = "true" ]; then
-  PREFCHAL="http"
+if [ "$VALIDATION" = "dns" ]; then
+  if [ -z "$DNSPLUGIN" ]; then
+    echo "ERROR! You did not select a dns plugin."
+  elseif [ "$DNSPLUGIN" = "route53" ]; then
+    PREFCHAL="--dns-${DNSPLUGIN}"
+  else
+    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
+  fi
 else
   PREFCHAL="tls-sni"
 fi
