@@ -109,9 +109,9 @@ if [ "$VALIDATION" = "dns" ]; then
   if [ -z "$DNSPLUGIN" ]; then
     echo "ERROR! You did not select a dns plugin."
   elseif [ "$DNSPLUGIN" = "route53" ]; then
-    PREFCHAL="--dns-${DNSPLUGIN}"
+    PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
   else
-    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini"
+    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   fi
 else
   PREFCHAL="tls-sni"
