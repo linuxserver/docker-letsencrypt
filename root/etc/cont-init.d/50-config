@@ -46,7 +46,7 @@ cp /config/crontabs/* /etc/crontabs/
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
 # shellcheck disable=SC2153
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\" CERT2_ORIGSUBDOMAINS=\"$CERT2_SUBDOMAINS\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\"" > /config/donoteditthisfile.conf
 fi
 
 # load original config settings
@@ -79,28 +79,10 @@ if [ ! -z "$SUBDOMAINS" ]; then
   else
     URLS="-d ${URL}${SUBDOMAINS2}"
   fi
-  echo "Sub-domains processed for certificate 1 are: $SUBDOMAINS2"
+  echo "Sub-domains processed are: $SUBDOMAINS2"
 else
   echo "No subdomains defined"
   URLS="-d $URL"
-fi
-
-#Edit for Second Certificate
-# figuring out url only vs url & subdomains vs subdomains only
-if [ ! -z "$CERT2_SUBDOMAINS" ]; then
-  echo "CERT2_SUBDOMAINS entered, processing"
-  for job in $(echo "$CERT2_SUBDOMAINS" | tr "," " "); do
-    export CERT2_SUBDOMAINS2="$CERT2_SUBDOMAINS2 -d ${job}.${URL}"
-  done
-  if [ "$ONLY_SUBDOMAINS" = true ]; then
-    CERT2_URLS="$CERT2_SUBDOMAINS2"
-    echo "Only subdomains, no URL in cert"
-  else
-    echo "Root URL in certificate, set Only subdomains to TRUE to generate a second certificate"
-  fi
-  echo "Sub-domains processed for certificate 2 are: $CERT2_SUBDOMAINS2"
-else
-  echo "No subdomains for Certificate 2 defined"
 fi
 
 # add extra domains
@@ -138,42 +120,22 @@ else
   ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
-#Edit for second Certificate
-# setting the symlink for key2 location
-rm -rf /config/keys/letsencrypt2
-if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! -z "$CERT2_SUBDOMAINS" ]; then
-  CERT2_DOMAIN="$(echo "$CERT2_SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
-  ln -s ../etc/letsencrypt/live/"$CERT2_DOMAIN" /config/keys/letsencrypt2
-else
-  echo "Conditions for second certificate not set, not generating letsencrypt2 directory"
-fi
-
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$HTTPVAL" = "$ORIGHTTPVAL" ] || [ ! "$CERT2_SUBDOMAINS" = "$CERT2_ORIGSUBDOMAINS" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$HTTPVAL" = "$ORIGHTTPVAL" ]; then
   echo "Different sub/domains entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
-    #Edit for more verbose logging
-    echo "Cert 1 Revoked"
-    CERT2_ORIGDOMAIN="$(echo "$CERT2_ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
-    echo "Cert 2 Revoked"
-    
   else
     certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
-    #Note: no need to revoke if not originally set to only subdomains, as that is not done with a root certificate
-    echo "Cert 1 Revoked - Root Domain"
   fi
   rm -rf /config/etc
   mkdir -p /config/etc/letsencrypt
-else
-  echo "no changes detected"
 fi
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
-  echo "Generating new Cert 1 certificate"
+  echo "Generating new certificate"
 # shellcheck disable=SC2086
   certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
   if [ -d /config/keys/letsencrypt ]; then
@@ -189,19 +151,8 @@ else
   /app/le-renew.sh
 fi
 
-#Edit to Generate Second Certificate if necessary
-if [ ! -f "/config/keys/letsencrypt2/fullchain.pem" ] && [ ! -z "$CERT2_SUBDOMAINS" ]; then
-  echo "Generating new Cert 2 certificate"
-# shellcheck disable=SC2086
-  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $CERT2_URLS
-  cd /config/keys/letsencrypt2 || exit
-  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
-else
-  sleep 1
-fi
-
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\" CERT2_ORIGSUBDOMAINS=\"$CERT2_SUBDOMAINS\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\"" > /config/donoteditthisfile.conf
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
