@@ -2,10 +2,12 @@
 
 # check to make sure that the required variables are set
 # shellcheck disable=SC2153
-if [ -z "$URL" ]; then
-  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details."
+[[ -z "$URL" ]] && \
+  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
   sleep infinity
-fi
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
+  echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
+  sleep infinity
 
 # make our folders and links
 mkdir -p \
