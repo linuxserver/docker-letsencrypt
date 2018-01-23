@@ -17,7 +17,7 @@ The [LinuxServer.io][linuxserverurl] team brings you another container release f
 
 This container sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
 
-[![letsencrypt](https://github.com/letsencrypt/website/raw/master/images/le-logo-wide.png)][appurl]
+[![letsencrypt](https://github.com/letsencrypt/website/raw/832499b0f1e8e25492ac3e57d73b9c9f0e40d8ec/static/images/le-logo-wide.png)][appurl]
 
 ## Usage
 
