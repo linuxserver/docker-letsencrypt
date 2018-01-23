@@ -55,6 +55,17 @@ fi
 # shellcheck disable=SC1091
 . /config/donoteditthisfile.conf
 
+# Backwards compatibility, remove after 2018/05/01
+if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "ORIGHTTPVAL" = "true" ]; then
+  VALIDATION="http" && \
+  ORIGVALIDATION="http"
+elseif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "ORIGHTTPVAL" = "true" ]; then
+  VALIDATION="tls-sni" && \
+  ORIGVALIDATION="tls-sni"
+elseif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
+  VALIDATION="$ORIGVALIDATION"
+fi
+
 # compare dhparams existence and level, create if necessary
 if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
   rm -rf /config/nginx/dhparams.pem
