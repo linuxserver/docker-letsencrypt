@@ -55,7 +55,20 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-zip \
-	py2-future && \
+	py2-future \
+	py2-pip && \
+ echo "**** install certbot plugins ****" && \
+ pip install \
+	certbot-dns-cloudflare \
+	certbot-dns-cloudxns \
+	certbot-dns-digitalocean \
+	certbot-dns-dnsimple \
+	certbot-dns-dnsmadeeasy \
+	certbot-dns-google \
+	certbot-dns-luadns \
+	certbot-dns-nsone \
+	certbot-dns-rfc2136 \
+	certbot-dns-route53 && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
 	/etc/fail2ban/jail.d/alpine-ssh.conf && \
