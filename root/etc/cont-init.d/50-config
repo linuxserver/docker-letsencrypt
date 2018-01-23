@@ -100,7 +100,7 @@ fi
 # figuring out whether to use e-mail and which
 if [[ $EMAIL == *@* ]]; then
   echo "E-mail address entered: ${EMAIL}"
-  EMAILPARAM="-m ${EMAIL}"
+  EMAILPARAM="-m ${EMAIL} --no-eff-email"
 else
   echo "No e-mail address entered or address invalid"
   EMAILPARAM="--register-unsafely-without-email"
