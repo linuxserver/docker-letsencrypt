@@ -143,7 +143,7 @@ fi
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
 # shellcheck disable=SC2086
-  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
+  certbot certonly --renew-by-default $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else
