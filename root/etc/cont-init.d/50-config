@@ -5,9 +5,6 @@
 [[ -z "$URL" ]] && \
   echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
   sleep infinity
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
-  echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
-  sleep infinity
 
 # make our folders and links
 mkdir -p \
@@ -40,6 +37,11 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /etc/crontabs/root /config/crontabs/
 [[ ! -f /config/nginx/proxy.conf ]] && \
 	cp /defaults/proxy.conf /config/nginx/proxy.conf
+
+# check to make sure DNSPLUGIN is selected if dns validation is used
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
+  echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
+  sleep infinity
 
 # import user crontabs
 rm /etc/crontabs/*
