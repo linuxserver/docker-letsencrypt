@@ -18,7 +18,7 @@ server {
 	server_name _;
 
 	# all ssl related config moved to ssl.conf
-	include /config/nginx/ssl.conf
+	include /config/nginx/ssl.conf;
 
 	client_max_body_size 0;
 
@@ -58,7 +58,7 @@ server {
 #
 #	server_name cp.*;
 #
-#	include /config/nginx/ssl.conf
+#	include /config/nginx/ssl.conf;
 #
 #	client_max_body_size 0;
 #
