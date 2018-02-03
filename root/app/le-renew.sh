@@ -1,8 +1,14 @@
 #!/usr/bin/with-contenv bash
 
+. /config/donoteditthisfile.conf
+
 echo "<------------------------------------------------->"
 echo
 echo "<------------------------------------------------->"
 echo "cronjob running on "$(date)
 echo "Running certbot renew"
-certbot -n renew --standalone --pre-hook "s6-svc -d /var/run/s6/services/nginx" --post-hook "s6-svc -u /var/run/s6/services/nginx ; cd /config/keys/letsencrypt && openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:"
+if [ "$ORIGVALIDATION" = "dns" ]; then
+  certbot -n renew
+else
+  certbot -n renew --pre-hook "[[ ! -z $(ps -ef | grep nginx: | grep -v grep) ]] && s6-svc -d /var/run/s6/services/nginx" --post-hook "[[ ! -z $(ps -ef | grep "s6-supervise nginx" | grep -v grep) ]] && s6-svc -u /var/run/s6/services/nginx ; cd /config/keys/letsencrypt && openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:"
+fi

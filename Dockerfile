@@ -7,7 +7,7 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="aptalca"
 
 # environment settings
-ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false
+ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 # install packages
@@ -55,7 +55,20 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-zip \
-	py2-future && \
+	py2-future \
+	py2-pip && \
+ echo "**** install certbot plugins ****" && \
+ pip install \
+	certbot-dns-cloudflare \
+	certbot-dns-cloudxns \
+	certbot-dns-digitalocean \
+	certbot-dns-dnsimple \
+	certbot-dns-dnsmadeeasy \
+	certbot-dns-google \
+	certbot-dns-luadns \
+	certbot-dns-nsone \
+	certbot-dns-rfc2136 \
+	certbot-dns-route53 && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
 	/etc/fail2ban/jail.d/alpine-ssh.conf && \

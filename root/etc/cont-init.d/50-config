@@ -2,17 +2,19 @@
 
 # check to make sure that the required variables are set
 # shellcheck disable=SC2153
-if [ -z "$URL" ]; then
-  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details."
-  exit 1
-fi
+[[ -z "$URL" ]] && \
+  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
+  sleep infinity
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf} \
 	/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
+
+# copy dns default configs
+cp -n /defaults/dns-conf/* /config/dns-conf/
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
@@ -35,6 +37,13 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /etc/crontabs/root /config/crontabs/
 [[ ! -f /config/nginx/proxy.conf ]] && \
 	cp /defaults/proxy.conf /config/nginx/proxy.conf
+[[ ! -f /config/nginx/ssl.conf ]] && \
+	cp /defaults/ssl.conf /config/nginx/ssl.conf
+
+# check to make sure DNSPLUGIN is selected if dns validation is used
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
+  echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
+  sleep infinity
 
 # import user crontabs
 rm /etc/crontabs/*
@@ -43,18 +52,38 @@ cp /config/crontabs/* /etc/crontabs/
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
 # shellcheck disable=SC2153
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
 fi
 
 # load original config settings
 # shellcheck disable=SC1091
 . /config/donoteditthisfile.conf
 
+# Backwards compatibility, remove after 2018/05/01
+echo "Backwards compatibility check. . ."
+if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "$ORIGHTTPVAL" = "true" ]; then
+  echo "Previously used http, will continue to use http. Please set the VALIDATION parameter in the future"
+  VALIDATION="http" && \
+  ORIGVALIDATION="http"
+elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "$ORIGHTTPVAL" = "true" ]; then
+  echo "Previously used tls-sni, will continue to use tls-sni. Please set the VALIDATION parameter in the future"
+  VALIDATION="tls-sni" && \
+  ORIGVALIDATION="tls-sni"
+elif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
+  echo "Still using ${ORIGVALIDATION}. Please set the VALIDATION parameter in the future"
+  VALIDATION="$ORIGVALIDATION"
+fi
+
 # compare dhparams existence and level, create if necessary
 if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
   rm -rf /config/nginx/dhparams.pem
   echo "DH parameters bit setting changed. Deleting old dhparams file."
 fi
+
+# if staging is set to true, add the --staging parameter
+[[ "$STAGING" = "true" ]] && \
+  echo "NOTICE: Staging is active" && \
+  STGNG="--staging"
 
 if [ ! -f "/config/nginx/dhparams.pem" ]; then
   echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
@@ -95,17 +124,23 @@ fi
 # figuring out whether to use e-mail and which
 if [[ $EMAIL == *@* ]]; then
   echo "E-mail address entered: ${EMAIL}"
-  EMAILPARAM="-m ${EMAIL}"
+  EMAILPARAM="-m ${EMAIL} --no-eff-email"
 else
   echo "No e-mail address entered or address invalid"
   EMAILPARAM="--register-unsafely-without-email"
 fi
 
 # setting the validation method to use
-if [ "$HTTPVAL" = "true" ]; then
-  PREFCHAL="http"
+if [ "$VALIDATION" = "dns" ]; then
+  if [ "$DNSPLUGIN" = "route53" ]; then
+    PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
+  else
+    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
+  fi
+elif [ "$VALIDATION" = "tls-sni" ]; then
+  PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
 else
-  PREFCHAL="tls-sni"
+  PREFCHAL="--non-interactive --standalone --preferred-challenges http"
 fi
 
 # setting the symlink for key location
@@ -118,27 +153,34 @@ else
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$HTTPVAL" = "$ORIGHTTPVAL" ]; then
-  echo "Different sub/domains entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
+  echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
+    [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
   else
-    certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
+    [[ -f /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
   fi
   rm -rf /config/etc
   mkdir -p /config/etc/letsencrypt
 fi
 
+# saving new variables
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
 # shellcheck disable=SC2086
-  certbot certonly --non-interactive --renew-by-default --standalone --preferred-challenges $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
+  certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else
-    echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+    if [ "$VALIDATION" = "dns" ]; then
+      echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${DNSPLUGIN}.ini file."
+    else
+      echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+    fi
     sleep infinity
   fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
@@ -147,9 +189,6 @@ else
   sleep 1
   /app/le-renew.sh
 fi
-
-# saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGHTTPVAL=\"$HTTPVAL\"" > /config/donoteditthisfile.conf
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
