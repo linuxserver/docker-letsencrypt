@@ -15,6 +15,13 @@ DNSPLUGIN=${DNSPLUGIN}\n\
 EMAIL=${EMAIL}\n\
 STAGING=${STAGING}\n"
 
+# Sanitize variables
+for i in URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING
+do
+  export $(printf "$i")="${!i//\"/}"
+  export $(printf "$i")=$(echo "${!i}" | tr '[:upper:]' '[:lower:]')
+done
+
 # check to make sure that the required variables are set
 # shellcheck disable=SC2153
 [[ -z "$URL" ]] && \
