@@ -2,7 +2,7 @@ server {
 	listen 80 default_server;
 	root /config/www;
 	index index.html index.htm index.php;
-	server_name %%%SERVER_NAME%%%
+	server_name _;
 	location ~ /.well-known {
 		allow all;
 	}
@@ -13,7 +13,7 @@ server {
 	listen 443 ssl default_server;
 	root /config/www;
 	index index.html index.htm index.php;
-	server_name %%%SERVER_NAME%%%;
+	server_name _;
 	
 	gzip on;
 	gzip_vary on;
