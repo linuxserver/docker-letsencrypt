@@ -16,7 +16,7 @@ docker create \
   -e VALIDATION=<method> \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
-  linuxserver/letsencrypt
+  vertig0ne/letsorg
 ```
 
 ## Parameters
