@@ -127,6 +127,13 @@ if [ ! -z "$UBOOQUITY_URL" ]; then
     ln -s /config/nginx/rproxy-available/ubooquity.conf /config/nginx/rproxy-enabled/ubooquity.conf
 fi
 
+echo "[LetsOrg] Checking for Transmission..."
+if [ ! -z "$TRANSMISSION_URL" ]; then
+    sed -i 's!%%%TRANSMISSION_URL%%%!'$TRANSMISSION_URL'!' /config/nginx/rproxy-available/transmission.conf
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/transmission.conf
+    ln -s /config/nginx/rproxy-available/transmission.conf /config/nginx/rproxy-enabled/transmission.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
