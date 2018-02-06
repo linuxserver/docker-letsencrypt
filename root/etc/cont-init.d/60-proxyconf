@@ -19,20 +19,6 @@ case "$ORG_BRANCH" in
     * ) echo "[LetsOrg] ERROR: BRANCH IS NOT SET, PLEASE SET ORG_BRANCH IN SETUP"; sleep infinity;;
 esac
 
-if [ ! -z "$ORG_BRANCH" ]; then
-    export ORG_BRANCH=V1
-fi
-if [ $ORG_BRANCH == "V2" ]; then
-    echo "[LetsOrg] Enabling Organizr v2 Authentication..."
-    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf
-    ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
-fi
-if [ $ORG_BRANCH == "V1" ]; then
-    echo "[LetsOrg] Enabling Organizr v1 Authentication..."
-    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/authv1.conf
-    ln -s /config/nginx/rproxy-available/authv1.conf /config/nginx/rproxy-enabled/auth.conf
-fi
-
 echo "[LetsOrg] Checking for Sonarr..."
 if [ ! -z "$SONARR_URL" ]; then
     sed -i 's!%%%SONARR_URL%%%!'$SONARR_URL'!' /config/nginx/rproxy-available/sonarr.conf
@@ -139,7 +125,11 @@ if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
     echo "[LetsOrg] Cloning Organizr..."
-    git clone -b v2-develop https://github.com/causefx/Organizr /config/www/
+    if [ $ORG_BRANCH == "V2" ]; then
+        git clone -b v2-develop https://github.com/causefx/Organizr /config/www/
+    else
+        git clone https://github.com/causefx/Organizr /config/www/
+    fi
     echo "[LetsOrg] Checking permissions..."
     chown -R abc:abc /config/www
 else
