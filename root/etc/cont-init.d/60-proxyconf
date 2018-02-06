@@ -9,9 +9,29 @@ mkdir -p /config/nginx/rproxy-available
 cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
 chown -R abc:abc /config/nginx/rproxy-*
 
-echo "[LetsOrg] Enabling Organizr Authentication..."
-sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf
-ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
+case "$ORG_BRANCH" in
+    V1 ) echo "[LetsOrg] Enabling Organizr v1 Authentication...";
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/authv1.conf;
+    ln -s /config/nginx/rproxy-available/authv1.conf /config/nginx/rproxy-enabled/auth.conf;;
+    V2 ) echo "[LetsOrg] Enabling Organizr v2 Authentication...";
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf;
+    ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf;;
+    * ) echo "[LetsOrg] ERROR: BRANCH IS NOT SET, PLEASE SET ORG_BRANCH IN SETUP"; sleep infinity;;
+esac
+
+if [ ! -z "$ORG_BRANCH" ]; then
+    export ORG_BRANCH=V1
+fi
+if [ $ORG_BRANCH == "V2" ]; then
+    echo "[LetsOrg] Enabling Organizr v2 Authentication..."
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf
+    ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
+fi
+if [ $ORG_BRANCH == "V1" ]; then
+    echo "[LetsOrg] Enabling Organizr v1 Authentication..."
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/authv1.conf
+    ln -s /config/nginx/rproxy-available/authv1.conf /config/nginx/rproxy-enabled/auth.conf
+fi
 
 echo "[LetsOrg] Checking for Sonarr..."
 if [ ! -z "$SONARR_URL" ]; then
