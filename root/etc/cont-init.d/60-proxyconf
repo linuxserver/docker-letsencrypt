@@ -45,6 +45,12 @@ if [ ! -z "$OMBI_URL" ]; then
     ln -s /config/nginx/rproxy-available/ombi.conf /config/nginx/rproxy-enabled/ombi.conf
 fi
 
+echo "[LetsOrg] Checking for Guacamole..."
+if [ ! -z "$GUACAMOLE_URL" ]; then
+    sed -i 's!%%%GUACAMOLE_URL%%%!'$GUACAMOLE_URL'!' /config/nginx/rproxy-available/guacamole.conf
+    ln -s /config/nginx/rproxy-available/guacamole.conf /config/nginx/rproxy-enabled/guacamole.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
