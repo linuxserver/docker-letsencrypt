@@ -57,6 +57,12 @@ if [ ! -z "$NETDATA_URL" ]; then
     ln -s /config/nginx/rproxy-available/netdata.conf /config/nginx/rproxy-enabled/netdata.conf
 fi
 
+echo "[LetsOrg] Checking for Plex..."
+if [ ! -z "$PLEX_URL" ]; then
+    sed -i 's!%%%PLEX_URL%%%!'$PLEX_URL'!' /config/nginx/rproxy-available/plex.conf
+    ln -s /config/nginx/rproxy-available/plex.conf /config/nginx/rproxy-enabled/plex.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
