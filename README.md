@@ -14,6 +14,7 @@ docker create \
   -e URL=<url> \
   -e SUBDOMAINS=<subdomains> \
   -e VALIDATION=<method> \
+  -e ORG_BRANCH=V1 \
   -e SONARR_URL=http://sonarr:8989/sonarr \
   -e RADARR_URL=http://radarr:7878/radarr \
   -e LIDARR_URL=http://lidarr:8686/lidarr \
