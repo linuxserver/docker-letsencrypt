@@ -64,6 +64,7 @@ fi
 echo "[LetsOrg] Checking for Plex..."
 if [ ! -z "$PLEX_URL" ]; then
     sed -i 's!%%%PLEX_URL%%%!'$PLEX_URL'!' /config/nginx/rproxy-available/plex.conf
+    sed -i 's!%%%PLEX_URL%%%!'$PLEX_URL'!' /config/nginx/rproxy-available/_plexroot.conf
     ln -s /config/nginx/rproxy-available/plex.conf /config/nginx/rproxy-enabled/plex.conf
 fi
 
