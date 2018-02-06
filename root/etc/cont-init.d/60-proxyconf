@@ -81,11 +81,16 @@ if [ ! -z "$NZBGET_URL" ]; then
     ln -s /config/nginx/rproxy-available/nzbget.conf /config/nginx/rproxy-enabled/nzbget.conf
 fi
 
-
 echo "[LetsOrg] Checking for NzbHydra..."
 if [ ! -z "$NZBHYDRA_URL" ]; then
     sed -i 's!%%%NZBHYDRA_URL%%%!'$NZBHYDRA_URL'!' /config/nginx/rproxy-available/nzbhydra.conf
     ln -s /config/nginx/rproxy-available/nzbhydra.conf /config/nginx/rproxy-enabled/nzbhydra.conf
+fi
+
+echo "[LetsOrg] Checking for Deluge..."
+if [ ! -z "$DELUGE_URL" ]; then
+    sed -i 's!%%%DELUGE_URL%%%!'$DELUGE_URL'!' /config/nginx/rproxy-available/deluge.conf
+    ln -s /config/nginx/rproxy-available/deluge.conf /config/nginx/rproxy-enabled/deluge.conf
 fi
 
 if [[ -f /config/www/index.html ]]; then
