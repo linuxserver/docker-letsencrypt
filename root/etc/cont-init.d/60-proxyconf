@@ -51,6 +51,12 @@ if [ ! -z "$GUACAMOLE_URL" ]; then
     ln -s /config/nginx/rproxy-available/guacamole.conf /config/nginx/rproxy-enabled/guacamole.conf
 fi
 
+echo "[LetsOrg] Checking for NetData..."
+if [ ! -z "$NETDATA_URL" ]; then
+    sed -i 's!%%%NETDATA_URL%%%!'$NETDATA_URL'!' /config/nginx/rproxy-available/netdata.conf
+    ln -s /config/nginx/rproxy-available/netdata.conf /config/nginx/rproxy-enabled/netdata.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
