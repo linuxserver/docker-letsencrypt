@@ -1,7 +1,8 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /config/nginx/rproxy-enabled
-mkdir -p /config/nginx/rproxy-available
+mkdir -p /config/rproxy-enabled
+mkdir -p /config/rproxy-available
+chown -R abc:abc /config/rproxy-*
 
 # get defaults into config
 cp /defaults/proxymodules/*.conf /config/rproxy-available/
@@ -38,3 +39,4 @@ fi
 # git clone org
 git clone https://github.com/causefx/Organizr /config/www/
 git checkout -b v2-develop
+
