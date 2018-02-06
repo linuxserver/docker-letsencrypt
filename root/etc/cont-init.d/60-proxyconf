@@ -33,7 +33,6 @@ fi
 
 
 # git clone org
-git clone https://github.com/causefx/organizr /config/www/
-cd /config/www
+git clone https://github.com/causefx/Organizr /config/www/
 git checkout -b v2-develop
 
