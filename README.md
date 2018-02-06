@@ -32,7 +32,7 @@ docker create \
 
 So... Since this is forked from letsencrypt, only a little tighter to a single use-case. It's designed to be used with Organizr as the root, but comes pre-loaded with loads of things that may require reverse proxying to work with org properly.
 
-Most of the options in the create comes from linuxserver/letsencrypt so please, check them first. If you run into issues.
+Most of the options in the create comes from [linuxserver/letsencrypt](https://github.com/linuxserver/docker-letsencrypt) so please, check them first. If you run into issues.
 
  '*_URL=' is obviously following a format, you put the URL in that it goes to, if you are using internal networking, use named instances and go from there, obviously, as you know most of these apps do require some kind of basedir set. This does NOT perform that action, but aims to help ease the burden of figuring out whats wrong as these are designed to work. 
 
