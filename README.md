@@ -28,6 +28,7 @@ docker create \
   -e DELUGE_URL=http://deluge:6000 \
   -e RUTORRENT_URL=http://rutorrent:443 \
   -e JACKETT_URL=http://jackett:9117/jackett \
+  -e UBOOQUITY_URL=http://ubooquity:8132/ubooquity \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
   vertig0ne/letsorg
