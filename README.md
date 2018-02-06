@@ -18,6 +18,11 @@ docker create \
   -e RADARR_URL=http://radarr:7878/radarr \
   -e LIDARR_URL=http://lidarr:8686/lidarr \
   -e OMBI_URL=http://ombi:5000/ombi \
+  -e CALIBREWEB_URL=http://calibre-web:8080 \
+  -e GUACAMOLE_URL=http://guacamole:8080 \
+  -e MYLAR_URL=http://mylar:8888 \
+  -e NETDATA_URL=http://netdata:19999 \
+  -e PLEX_URL=http://127.0.0.1:32400 \
   -e TAUTULLI_URL=http://tautulli:8181/tautulli \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
