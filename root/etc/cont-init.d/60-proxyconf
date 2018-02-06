@@ -12,6 +12,7 @@ chown -R abc:abc /config/nginx/rproxy-*
 cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
 
 # enable auth
+sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf
 ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
 
 echo "[LetsOrg] Checking for Sonarr..."
