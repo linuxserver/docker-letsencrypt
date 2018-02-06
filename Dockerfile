@@ -55,6 +55,7 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-zip \
+	php7-sqlite3 \
 	py2-future \
 	py2-pip && \
  echo "**** install certbot plugins ****" && \
