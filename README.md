@@ -24,6 +24,7 @@ docker create \
   -e NETDATA_URL=http://netdata:19999 \
   -e PLEX_URL=http://127.0.0.1:32400 \
   -e TAUTULLI_URL=http://tautulli:8181/tautulli \
+  -e DELUGE_URL=http://deluge:6000 \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
   vertig0ne/letsorg
