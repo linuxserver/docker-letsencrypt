@@ -29,6 +29,7 @@ docker create \
   -e RUTORRENT_URL=http://rutorrent:443 \
   -e JACKETT_URL=http://jackett:9117/jackett \
   -e UBOOQUITY_URL=http://ubooquity:8132/ubooquity \
+  -e TRANSMISSION_URL=http://transmission:9001 \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
   vertig0ne/letsorg
