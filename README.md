@@ -14,6 +14,11 @@ docker create \
   -e URL=<url> \
   -e SUBDOMAINS=<subdomains> \
   -e VALIDATION=<method> \
+  -e SONARR_URL=http://sonarr:8989/sonarr \
+  -e RADARR_URL=http://radarr:7878/radarr \
+  -e LIDARR_URL=http://lidarr:8686/lidarr \
+  -e OMBI_URL=http://ombi:5000/ombi \
+  -e TAUTULLI_URL=http://tautulli:8181/tautulli \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
   vertig0ne/docker-letsorg
@@ -88,4 +93,5 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **06.02.18:** Added SONARR_URL, RADARR_URL, LIDARR_URL, OMBI_URL, TAUTULLI_URL
 + **05.02.18:** Forked code from linuxserver/letsencrypt as theirs is the best base, so why not go from there.
