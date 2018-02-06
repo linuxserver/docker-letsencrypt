@@ -2,46 +2,46 @@
 
 echo "[LetsOrg] Starting..."
 echo "[LetsOrg] Cleaning Reverse Proxy modules"
-rm -rf /config/rproxy-enabled
-rm -rf /config/rproxy-available
-mkdir -p /config/rproxy-enabled
-mkdir -p /config/rproxy-available
-chown -R abc:abc /config/rproxy-*
+rm -rf /config/nginx/rproxy-enabled
+rm -rf /config/nginx/rproxy-available
+mkdir -p /config/nginx/rproxy-enabled
+mkdir -p /config/nginx/rproxy-available
+chown -R abc:abc /config/nginx/rproxy-*
 
 # get defaults into config
-cp /defaults/proxymodules/*.conf /config/rproxy-available/
+cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
 
 # enable auth
-ln -s /config/rproxy-available/auth.conf /config/rproxy-enabled/auth.conf
+ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
 
 echo "[LetsOrg] Checking for Sonarr..."
 if [ ! -z "$SONARR_URL" ]; then
-    sed -i 's!%%%SONARR_URL%%%!'$SONARR_URL'!' /config/rproxy-available/sonarr.conf
-    ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/sonarr.conf
+    sed -i 's!%%%SONARR_URL%%%!'$SONARR_URL'!' /config/nginx/rproxy-available/sonarr.conf
+    ln -s /config/nginx/rproxy-available/sonarr.conf /config/nginx/rproxy-enabled/sonarr.conf
 fi
 
 echo "[LetsOrg] Checking for Radarr..."
 if [ ! -z "$RADARR_URL" ]; then
-    sed -i 's!%%%RADARR_URL%%%!'$RADARR_URL'!' /config/rproxy-available/radarr.conf
-    ln -s /config/rproxy-available/radarr.conf /config/rproxy-enabled/radarr.conf
+    sed -i 's!%%%RADARR_URL%%%!'$RADARR_URL'!' /config/nginx/rproxy-available/radarr.conf
+    ln -s /config/nginx/rproxy-available/radarr.conf /config/nginx/rproxy-enabled/radarr.conf
 fi
 
 echo "[LetsOrg] Checking for Lidarr..."
 if [ ! -z "$LIDARR_URL" ]; then
-    sed -i 's!%%%LIDARR_URL%%%!'$LIDARR_URL'!' /config/rproxy-available/lidarr.conf
-    ln -s /config/rproxy-available/lidarr.conf /config/rproxy-enabled/
+    sed -i 's!%%%LIDARR_URL%%%!'$LIDARR_URL'!' /config/nginx/rproxy-available/lidarr.conf
+    ln -s /config/nginx/rproxy-available/lidarr.conf /config/nginx/rproxy-enabled/
 fi
 
 echo "[LetsOrg] Checking for Tautulli..."
 if [ ! -z "$TAUTULLI_URL" ]; then
-    sed -i 's!%%%TAUTULLI_URL%%%!'$TAUTULLI_URL'!' /config/rproxy-available/tautulli.conf
-    ln -s /config/rproxy-available/tautulli.conf /config/rproxy-enabled/tautulli.conf
+    sed -i 's!%%%TAUTULLI_URL%%%!'$TAUTULLI_URL'!' /config/nginx/rproxy-available/tautulli.conf
+    ln -s /config/nginx/rproxy-available/tautulli.conf /config/nginx/rproxy-enabled/tautulli.conf
 fi
 
 echo "[LetsOrg] Checking for Ombi..."
 if [ ! -z "$OMBI_URL" ]; then
-    sed -i 's!%%%OMBI_URL%%%!'$OMBI_URL'!' /config/rproxy-available/ombi.conf
-    ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/ombi.conf
+    sed -i 's!%%%OMBI_URL%%%!'$OMBI_URL'!' /config/nginx/rproxy-available/ombi.conf
+    ln -s /config/nginx/rproxy-available/ombi.conf /config/nginx/rproxy-enabled/ombi.conf
 fi
 
 if [[ -f /config/www/index.html ]]; then
