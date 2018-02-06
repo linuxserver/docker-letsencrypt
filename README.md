@@ -21,7 +21,7 @@ docker create \
   -e TAUTULLI_URL=http://tautulli:8181/tautulli \
   -p 80:80 -p 443:443 \
   -e TZ=<timezone> \
-  vertig0ne/docker-letsorg
+  vertig0ne/letsorg
 ```
 
 ## Parameters
