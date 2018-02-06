@@ -19,7 +19,7 @@ server {
 	gzip_vary on;
 	gzip_min_length 1000;
 	gzip_proxied any;
-	gzip_types text/plain text/html text/css text/xml application/xml text/javascript application/x-javascript image/svg+xml;
+	gzip_types text/plain text/css text/xml application/xml text/javascript application/x-javascript image/svg+xml;
 	gzip_disable "MSIE [1-6]\.";
 	
 	# all ssl related config moved to ssl.conf
