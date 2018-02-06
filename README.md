@@ -7,7 +7,7 @@ Organizr setup right with a docker and ready to do some reverse proxying
 ```
 docker create \
   --cap-add=NET_ADMIN \
-  --name=letsencrypt \
+  --name=letsorg \
   -v <path to data>:/config \
   -e PGID=<gid> -e PUID=<uid>  \
   -e EMAIL=<email> \
