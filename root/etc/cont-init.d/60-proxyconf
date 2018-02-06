@@ -121,6 +121,12 @@ if [ ! -z "$QBITTORRENT_URL" ]; then
     ln -s /config/nginx/rproxy-available/qbittorrent.conf /config/nginx/rproxy-enabled/qbittorrent.conf
 fi
 
+echo "[LetsOrg] Checking for Ubooquity..."
+if [ ! -z "$UBOOQUITY_URL" ]; then
+    sed -i 's!%%%UBOOQUITY_URL%%%!'$UBOOQUITY_URL'!' /config/nginx/rproxy-available/ubooquity.conf
+    ln -s /config/nginx/rproxy-available/ubooquity.conf /config/nginx/rproxy-enabled/ubooquity.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
