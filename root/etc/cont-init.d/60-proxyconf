@@ -2,7 +2,8 @@
 
 echo "[LetsOrg] Starting..."
 echo "[LetsOrg] Cleaning Reverse Proxy modules"
-rm -rf /config/rproxy-enabled /config/rproxy-available
+rm -rf /config/rproxy-enabled
+rm -rf /config/rproxy-available
 mkdir -p /config/rproxy-enabled
 mkdir -p /config/rproxy-available
 chown -R abc:abc /config/rproxy-*
@@ -11,18 +12,18 @@ chown -R abc:abc /config/rproxy-*
 cp /defaults/proxymodules/*.conf /config/rproxy-available/
 
 # enable auth
-ln -s /config/rproxy-available/auth.conf /config/rproxy-enabled/
+ln -s /config/rproxy-available/auth.conf /config/rproxy-enabled/auth.conf
 
 echo "[LetsOrg] Checking for Sonarr..."
 if [[ $SONARR_URL == "http://*" ]]; then
     sed -i 's/%%%SONARR_URL%%%/'"$SONARR_URL"'/g' /config/rproxy-available/sonarr.conf
-    ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/
+    ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/sonarr.conf
 fi
 
 echo "[LetsOrg] Checking for Radarr..."
 if [[ $RADARR_URL == "http://*" ]]; then
     sed -i 's/%%%RADARR_URL%%%/'"$RADARR_URL"'/g' /config/rproxy-available/radarr.conf
-    ln -s /config/rproxy-available/radarr.conf /config/rproxy-enabled/
+    ln -s /config/rproxy-available/radarr.conf /config/rproxy-enabled/radarr.conf
 fi
 
 echo "[LetsOrg] Checking for Lidarr..."
@@ -34,16 +35,16 @@ fi
 echo "[LetsOrg] Checking for Tautulli..."
 if [[ $TAUTULLI_URL == "http://*" ]]; then
     sed -i 's/%%%TAUTULLI_URL%%%/'"$TAUTULLI_URL"'/g' /config/rproxy-available/tautulli.conf
-    ln -s /config/rproxy-available/tautulli.conf /config/rproxy-enabled/
+    ln -s /config/rproxy-available/tautulli.conf /config/rproxy-enabled/tautulli.conf
 fi
 
 echo "[LetsOrg] Checking for Ombi..."
 if [[ $OMBI_URL == "http://*" ]]; then
     sed -i 's/%%%OMBI_URL%%%/'"$OMBI_URL"'/g' /config/rproxy-available/ombi.conf
-    ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/
+    ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/ombi.conf
 fi
 
-if [[ -f /config/index.html ]]; then
+if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
     echo "[LetsOrg] Cloning Organizr..."
