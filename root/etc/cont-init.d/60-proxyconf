@@ -81,6 +81,13 @@ if [ ! -z "$NZBGET_URL" ]; then
     ln -s /config/nginx/rproxy-available/nzbget.conf /config/nginx/rproxy-enabled/nzbget.conf
 fi
 
+
+echo "[LetsOrg] Checking for NzbHydra..."
+if [ ! -z "$NZBHYDRA_URL" ]; then
+    sed -i 's!%%%NZBHYDRA_URL%%%!'$NZBHYDRA_URL'!' /config/nginx/rproxy-available/nzbhydra.conf
+    ln -s /config/nginx/rproxy-available/nzbhydra.conf /config/nginx/rproxy-enabled/nzbhydra.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
