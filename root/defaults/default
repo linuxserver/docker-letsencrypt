@@ -28,6 +28,10 @@ server {
 	client_max_body_size 0;
 
 	location / {
+		if ( -f /config/nginx/rproxy-enabled/plex.conf ) { 
+			include /config/nginx/rproxy-available/_plexroot.conf;
+		}
+		
 		location ~ \.php$ {
 			fastcgi_split_path_info ^(.+\.php)(/.+)$;
 			fastcgi_pass 127.0.0.1:9000;
