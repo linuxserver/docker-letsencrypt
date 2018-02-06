@@ -1,0 +1,39 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /config/nginx/rproxy-enabled
+mkdir -p /config/nginx/rproxy-available
+
+# get defaults into config
+cp /defaults/proxymodules/*.conf /config/rproxy-available/
+
+if [[ $SONARR_URL == "http://*" ]]; then
+    sed -i 's/%%%SONARR_URL%%%/'"$SONARR_URL"'/g' /config/rproxy-available/sonarr.conf
+    ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/
+fi
+
+if [[ $RADARR_URL == "http://*" ]]; then
+    sed -i 's/%%%RADARR_URL%%%/'"$RADARR_URL"'/g' /config/rproxy-available/radarr.conf
+    ln -s /config/rproxy-available/radarr.conf /config/rproxy-enabled/
+fi
+
+if [[ $LIDARR_URL == "http://*" ]]; then
+    sed -i 's/%%%LIDARR_URL%%%/'"$LIDARR_URL"'/g' /config/rproxy-available/lidarr.conf
+    ln -s /config/rproxy-available/lidarr.conf /config/rproxy-enabled/
+fi
+
+if [[ $TAUTULLI_URL == "http://*" ]]; then
+    sed -i 's/%%%TAUTULLI_URL%%%/'"$TAUTULLI_URL"'/g' /config/rproxy-available/tautulli.conf
+    ln -s /config/rproxy-available/tautulli.conf /config/rproxy-enabled/
+fi
+
+if [[ $OMBI_URL == "http://*" ]]; then
+    sed -i 's/%%%OMBI_URL%%%/'"$OMBI_URL"'/g' /config/rproxy-available/ombi.conf
+    ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/
+fi
+
+
+# git clone org
+git clone https://github.com/causefx/organizr /config/www/
+cd /config/www
+git checkout -b v2-develop
+
