@@ -69,6 +69,12 @@ if [ ! -z "$CALIBREWEB_URL" ]; then
     ln -s /config/nginx/rproxy-available/calibre-web.conf /config/nginx/rproxy-enabled/calibre-web.conf
 fi
 
+echo "[LetsOrg] Checking for Mylar..."
+if [ ! -z "$MYLAR_URL" ]; then
+    sed -i 's!%%%MYLAR_URL%%%!'$MYLAR_URL'!' /config/nginx/rproxy-available/mylar.conf
+    ln -s /config/nginx/rproxy-available/mylar.conf /config/nginx/rproxy-enabled/mylar.conf
+fi
+
 if [[ -f /config/www/index.html ]]; then
     echo "[LetsOrg] Cleaning Current WebRoot..."
     rm -rf /config/www
