@@ -10,7 +10,7 @@ server {
 }
 
 server {
-	listen 443 ssl default_server;
+	listen 443 ssl http2 default_server;
 	root /config/www;
 	index index.html index.htm index.php;
 	server_name _;
