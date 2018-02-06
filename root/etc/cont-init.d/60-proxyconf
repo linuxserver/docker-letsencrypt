@@ -15,31 +15,31 @@ cp /defaults/proxymodules/*.conf /config/rproxy-available/
 ln -s /config/rproxy-available/auth.conf /config/rproxy-enabled/auth.conf
 
 echo "[LetsOrg] Checking for Sonarr..."
-if [[ $SONARR_URL == "http://*" ]]; then
+if [ ! -z "$SONARR_URL" ];
     sed -i 's!%%%SONARR_URL%%%!'$SONARR_URL'!' /config/rproxy-available/sonarr.conf
     ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/sonarr.conf
 fi
 
 echo "[LetsOrg] Checking for Radarr..."
-if [[ $RADARR_URL == "http://*" ]]; then
+if [ ! -z "$RADARR_URL" ];
     sed -i 's!%%%RADARR_URL%%%!'$RADARR_URL'!' /config/rproxy-available/radarr.conf
     ln -s /config/rproxy-available/radarr.conf /config/rproxy-enabled/radarr.conf
 fi
 
 echo "[LetsOrg] Checking for Lidarr..."
-if [[ $LIDARR_URL == "http://*" ]]; then
+if [ ! -z "$LIDARR_URL" ];
     sed -i 's!%%%LIDARR_URL%%%!'$LIDARR_URL'!' /config/rproxy-available/lidarr.conf
     ln -s /config/rproxy-available/lidarr.conf /config/rproxy-enabled/
 fi
 
 echo "[LetsOrg] Checking for Tautulli..."
-if [[ $TAUTULLI_URL == "http://*" ]]; then
+if [ ! -z "$TAUTULLI_URL" ];
     sed -i 's!%%%TAUTULLI_URL%%%!'$TAUTULLI_URL'!' /config/rproxy-available/tautulli.conf
     ln -s /config/rproxy-available/tautulli.conf /config/rproxy-enabled/tautulli.conf
 fi
 
 echo "[LetsOrg] Checking for Ombi..."
-if [[ $OMBI_URL == "http://*" ]]; then
+if [ ! -z "$OMBI_URL" ];
     sed -i 's!%%%OMBI_URL%%%!'$OMBI_URL'!' /config/rproxy-available/ombi.conf
     ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/ombi.conf
 fi
