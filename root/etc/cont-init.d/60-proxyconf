@@ -6,6 +6,10 @@ mkdir -p /config/nginx/rproxy-available
 # get defaults into config
 cp /defaults/proxymodules/*.conf /config/rproxy-available/
 
+# enable auth
+ln -s /config/rproxy-available/auth.conf /config/rproxy-enabled/
+
+# check for config
 if [[ $SONARR_URL == "http://*" ]]; then
     sed -i 's/%%%SONARR_URL%%%/'"$SONARR_URL"'/g' /config/rproxy-available/sonarr.conf
     ln -s /config/rproxy-available/sonarr.conf /config/rproxy-enabled/
@@ -31,8 +35,6 @@ if [[ $OMBI_URL == "http://*" ]]; then
     ln -s /config/rproxy-available/ombi.conf /config/rproxy-enabled/
 fi
 
-
 # git clone org
 git clone https://github.com/causefx/Organizr /config/www/
 git checkout -b v2-develop
-
