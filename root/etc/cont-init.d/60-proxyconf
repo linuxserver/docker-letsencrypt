@@ -6,12 +6,10 @@ rm -rf /config/nginx/rproxy-enabled
 rm -rf /config/nginx/rproxy-available
 mkdir -p /config/nginx/rproxy-enabled
 mkdir -p /config/nginx/rproxy-available
+cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
 chown -R abc:abc /config/nginx/rproxy-*
 
-# get defaults into config
-cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
-
-# enable auth
+echo "[LetsOrg] Enabling Organizr Authentication..."
 sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf
 ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf
 
@@ -93,11 +91,16 @@ if [ ! -z "$DELUGE_URL" ]; then
     ln -s /config/nginx/rproxy-available/deluge.conf /config/nginx/rproxy-enabled/deluge.conf
 fi
 
-
 echo "[LetsOrg] Checking for RUTorrent..."
 if [ ! -z "$RUTORRENT_URL" ]; then
     sed -i 's!%%%RUTORRENT_URL%%%!'$RUTORRENT_URL'!' /config/nginx/rproxy-available/rutorrent.conf
     ln -s /config/nginx/rproxy-available/rutorrent.conf /config/nginx/rproxy-enabled/rutorrent.conf
+fi
+
+echo "[LetsOrg] Checking for Jackett..."
+if [ ! -z "$JACKETT_URL" ]; then
+    sed -i 's!%%%JACKETT_URL%%%!'$JACKETT_URL'!' /config/nginx/rproxy-available/jackett.conf
+    ln -s /config/nginx/rproxy-available/jackett.conf /config/nginx/rproxy-enabled/jackett.conf
 fi
 
 if [[ -f /config/www/index.html ]]; then
