@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
   <TemplateURL>https://raw.githubusercontent.com/vertig0ne/docker-letsorg/master/letsorg.xml</TemplateURL>
-  <Name>letsencrypt</Name>
+  <Name>letsorg</Name>
   <Date>2016-11-08</Date>
 <Changes>[center][font size=4]letsorg Change Log[/font][/center]
   [font size=4]06-01-2018[/font]
