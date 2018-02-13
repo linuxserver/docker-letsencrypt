@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <TemplateURL>https://raw.githubusercontent.com/vertig0ne/docker-letsorg/master/letsorg.xml</TemplateURL>
+  <Name>letsorg</Name>
+  <Date>2016-11-08</Date>
+<Changes>[center][font size=4]letsorg Change Log[/font][/center]
+  [font size=4]06-01-2018[/font]
+  - Initial release.
+  </Changes>
+  <Repository>vertig0ne/letsorg</Repository>
+  <Registry>https://hub.docker.com/r/vertig0ne/letsorg/</Registry>
+  <Network>bridge</Network>
+  <Privileged>true</Privileged>
+  <Project>https://github.com/vertig0ne/letsorg/</Project>
+  <Support>https://github.com/vertig0ne/letsorg/wiki/</Support>
+  <Overview>This container sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client.&#xD;
+  &#xD;
+  Before running this container, make sure that the url and subdomains are properly forwarded to this container's host.&#xD;
+  &#xD;
+  - Port 443 on the internet side of the router should be forwarded to this container's port 443.&#xD;
+  - If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be yoursubdomain.duckdns.org and the subdomains    can be www,ftp,cloud&#xD;
+  - The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. &#xD;
+  - It also detects changes to the DHLEVEL parameter and replaces the dhparams file.&#xD;
+  &#xD;
+  - If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd &amp;lt;username&amp;gt;</Overview>
+  <Description>Nginx webserver and reverse proxy pre-configured with Orgnaizr installed and a built-in letsencrypt client. Tons of proxies pre-configured and ready to go..</Description>
+  <Category>Tools: Network:Web Status:Stable</Category>
+  <WebUI>https://[IP]:[PORT:443]</WebUI>
+  <Icon>https://raw.githubusercontent.com/causefx/Organizr/v2-develop/plugins/images/organizr/logo.png</Icon>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort></HostPort>
+        <ContainerPort>80</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort></HostPort>
+        <ContainerPort>443</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir></HostDir>
+      <ContainerDir>/config</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable>
+      <Value></Value>
+      <Name>EMAIL</Name>
+    </Variable>
+    <Variable>
+      <Value></Value>
+      <Name>URL</Name>
+    </Variable>
+    <Variable>
+      <Value>www,</Value>
+      <Name>SUBDOMAINS</Name>
+    </Variable>
+    <Variable>
+      <Value>false</Value>
+      <Name>ONLY_SUBDOMAINS</Name>
+    </Variable>
+    <Variable>
+      <Value>2048</Value>
+      <Name>DHLEVEL</Name>
+    </Variable>
+        <Variable>
+      <Value>V1</Value>
+      <Name>ORG_BRANCH</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>PLEX_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>OMBI_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>TAUTULLI_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>SONARR_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>RADARR_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>LIDARR_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>GUACAMOLE_URL</Name>
+      <Mode/>
+    </Variable>
+        <Variable>
+      <Value/>
+      <Name>NETDATA_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>CALIBREWEB_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>MYLAR_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>NZBGET_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>DELUGE_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>RUTORRENT_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>JACKETT_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>NOWSHOWING_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>QBITTORRENT_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>UBOOQUITY_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>TRANSMISSION_URL</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value>99</Value>
+      <Name>PUID</Name>
+    </Variable>
+    <Variable>
+      <Value>100</Value>
+      <Name>PGID</Name>
+    </Variable>
+    <Variable>
+      <Value>http</Value>
+      <Name>VALIDATION</Name>
+    </Variable>
+    <Variable>
+      <Value/>
+      <Name>DNSPLUGIN</Name>
+      <Mode/>
+    </Variable>
+  </Environment>
+  <Config Name="http" Target="80" Default="" Mode="tcp" Description="Container Port: 80" Type="Port" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="https" Target="443" Default="" Mode="tcp" Description="Container Port: 443" Type="Port" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Email" Target="EMAIL" Default="" Mode="" Description="Your e-mail address for cert registration" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Domain Name" Target="URL" Default="" Mode="" Description="the top url you have control over customdomain.com if you own it, or customsubdomain.ddnsprovider.com if using dynamic dns)" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Subdomain(s)" Target="SUBDOMAINS" Default="www," Mode="" Description="Subdomains you'd like the cert to cover (comma separated, no spaces) ie. www,ftp,cloud," Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Only Subdomains" Target="ONLY_SUBDOMAINS" Default="false" Mode="" Description="if you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to true" Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="Diffie Hellman" Target="DHLEVEL" Default="2048" Mode="" Description="Diffie Hellman parameters bit value.  Can be 1024, 2048 or 4096.  (Default is 2048)" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Orgnaizr Branch" Target="ORG_BRANCH" Default="V1" Mode="" Description="Organizr branch to install" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Plex URL" Target="PLEX_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Ombi URL" Target="OMBI_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Tautulli URL" Target="TAUTULLI_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Sonarr URL" Target="SONARR_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Radarr URL" Target="RADARR_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Lidarr URL" Target="LIDARR_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Guacamole URL" Target="GUACAMOLE_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="NetData URL" Target="NETDATA_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Calibre-Web URL" Target="CALIBREWEB_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Mylar URL" Target="MYLAR_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Nzbget URL" Target="NZBGET_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Deluge URL" Target="DELUGE_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="ruTorrent URL" Target="RUTORRENT_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Jackett URL" Target="JACKETT_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="NowShowing URL" Target="NOWSHOWING_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="qBitTorrent URL" Target="QBITTORRENT_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Ubooquity URL" Target="UBOOQUITY_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Transmission URL" Target="TRANSMISSION_URL" Default="" Mode="" Description="URL to Reverse Proxy with" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="UID for permissions.  Do not change unless you know what you're doing." Type="Variable" Display="advanced-hide" Required="true" Mask="false"></Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="GID for permissions.  Do not change unless you know what you're doing." Type="Variable" Display="advanced-hide" Required="true" Mask="false"></Config>
+  <Config Name="Validation" Target="VALIDATION" Default="http" Mode="" Description="Flag to specify validation method use either 'http','dns' or 'tls-sni'" Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="DNS-Plugin" Target="DNSPLUGIN" Default="" Mode="" Description="DNS plugin to use if using DNS validation" Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="AppData Config Path" Target="/config" Default="/mnt/user/appdata/letsorg" Mode="rw" Description="Container Path: /config" Type="Path" Display="always" Required="true" Mask="false"></Config>
+<BaseImage>lsiobase/alpine.nginx:3.6</BaseImage>
+</Container>

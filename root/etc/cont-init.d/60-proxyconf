@@ -1,0 +1,157 @@
+#!/usr/bin/with-contenv bash
+
+echo "[LetsOrg] Starting..."
+echo "[LetsOrg] Cleaning Reverse Proxy modules"
+rm -rf /config/nginx/rproxy-enabled
+rm -rf /config/nginx/rproxy-available
+mkdir -p /config/nginx/rproxy-enabled
+mkdir -p /config/nginx/rproxy-available
+cp /defaults/proxymodules/*.conf /config/nginx/rproxy-available/
+chown -R abc:abc /config/nginx/rproxy-*
+
+case "$ORG_BRANCH" in
+    V1 ) echo "[LetsOrg] Enabling Organizr v1 Authentication...";
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/authv1.conf;
+    ln -s /config/nginx/rproxy-available/authv1.conf /config/nginx/rproxy-enabled/auth.conf;;
+    V2 ) echo "[LetsOrg] Enabling Organizr v2 Authentication...";
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/auth.conf;
+    ln -s /config/nginx/rproxy-available/auth.conf /config/nginx/rproxy-enabled/auth.conf;;
+    * ) echo "[LetsOrg] ERROR: BRANCH IS NOT SET, PLEASE SET ORG_BRANCH IN SETUP"; sleep infinity;;
+esac
+
+echo "[LetsOrg] Checking for Sonarr..."
+if [ ! -z "$SONARR_URL" ]; then
+    sed -i 's!%%%SONARR_URL%%%!'$SONARR_URL'!' /config/nginx/rproxy-available/sonarr.conf
+    ln -s /config/nginx/rproxy-available/sonarr.conf /config/nginx/rproxy-enabled/sonarr.conf
+fi
+
+echo "[LetsOrg] Checking for Radarr..."
+if [ ! -z "$RADARR_URL" ]; then
+    sed -i 's!%%%RADARR_URL%%%!'$RADARR_URL'!' /config/nginx/rproxy-available/radarr.conf
+    ln -s /config/nginx/rproxy-available/radarr.conf /config/nginx/rproxy-enabled/radarr.conf
+fi
+
+echo "[LetsOrg] Checking for Lidarr..."
+if [ ! -z "$LIDARR_URL" ]; then
+    sed -i 's!%%%LIDARR_URL%%%!'$LIDARR_URL'!' /config/nginx/rproxy-available/lidarr.conf
+    ln -s /config/nginx/rproxy-available/lidarr.conf /config/nginx/rproxy-enabled/
+fi
+
+echo "[LetsOrg] Checking for Tautulli..."
+if [ ! -z "$TAUTULLI_URL" ]; then
+    sed -i 's!%%%TAUTULLI_URL%%%!'$TAUTULLI_URL'!' /config/nginx/rproxy-available/tautulli.conf
+    ln -s /config/nginx/rproxy-available/tautulli.conf /config/nginx/rproxy-enabled/tautulli.conf
+fi
+
+echo "[LetsOrg] Checking for Ombi..."
+if [ ! -z "$OMBI_URL" ]; then
+    sed -i 's!%%%OMBI_URL%%%!'$OMBI_URL'!' /config/nginx/rproxy-available/ombi.conf
+    ln -s /config/nginx/rproxy-available/ombi.conf /config/nginx/rproxy-enabled/ombi.conf
+fi
+
+echo "[LetsOrg] Checking for Guacamole..."
+if [ ! -z "$GUACAMOLE_URL" ]; then
+    sed -i 's!%%%GUACAMOLE_URL%%%!'$GUACAMOLE_URL'!' /config/nginx/rproxy-available/guacamole.conf
+    ln -s /config/nginx/rproxy-available/guacamole.conf /config/nginx/rproxy-enabled/guacamole.conf
+fi
+
+echo "[LetsOrg] Checking for NetData..."
+if [ ! -z "$NETDATA_URL" ]; then
+    sed -i 's!%%%NETDATA_URL%%%!'$NETDATA_URL'!' /config/nginx/rproxy-available/netdata.conf
+    ln -s /config/nginx/rproxy-available/netdata.conf /config/nginx/rproxy-enabled/netdata.conf
+fi
+
+echo "[LetsOrg] Checking for Plex..."
+if [ ! -z "$PLEX_URL" ]; then
+    sed -i 's!%%%PLEX_URL%%%!'$PLEX_URL'!' /config/nginx/rproxy-available/plex.conf
+    sed -i 's!%%%PLEX_URL%%%!'$PLEX_URL'!' /config/nginx/rproxy-available/_plexroot.conf
+    ln -s /config/nginx/rproxy-available/plex.conf /config/nginx/rproxy-enabled/plex.conf
+fi
+
+echo "[LetsOrg] Checking for Calibre-Web..."
+if [ ! -z "$CALIBREWEB_URL" ]; then
+    sed -i 's!%%%CALIBREWEB_URL%%%!'$CALIBREWEB_URL'!' /config/nginx/rproxy-available/calibre-web.conf
+    ln -s /config/nginx/rproxy-available/calibre-web.conf /config/nginx/rproxy-enabled/calibre-web.conf
+fi
+
+echo "[LetsOrg] Checking for Mylar..."
+if [ ! -z "$MYLAR_URL" ]; then
+    sed -i 's!%%%MYLAR_URL%%%!'$MYLAR_URL'!' /config/nginx/rproxy-available/mylar.conf
+    ln -s /config/nginx/rproxy-available/mylar.conf /config/nginx/rproxy-enabled/mylar.conf
+fi
+
+echo "[LetsOrg] Checking for Nzbget..."
+if [ ! -z "$NZBGET_URL" ]; then
+    sed -i 's!%%%NZBGET_URL%%%!'$NZBGET_URL'!' /config/nginx/rproxy-available/nzbget.conf
+    ln -s /config/nginx/rproxy-available/nzbget.conf /config/nginx/rproxy-enabled/nzbget.conf
+fi
+
+echo "[LetsOrg] Checking for NzbHydra..."
+if [ ! -z "$NZBHYDRA_URL" ]; then
+    sed -i 's!%%%NZBHYDRA_URL%%%!'$NZBHYDRA_URL'!' /config/nginx/rproxy-available/nzbhydra.conf
+    ln -s /config/nginx/rproxy-available/nzbhydra.conf /config/nginx/rproxy-enabled/nzbhydra.conf
+fi
+
+echo "[LetsOrg] Checking for Deluge..."
+if [ ! -z "$DELUGE_URL" ]; then
+    sed -i 's!%%%DELUGE_URL%%%!'$DELUGE_URL'!' /config/nginx/rproxy-available/deluge.conf
+    ln -s /config/nginx/rproxy-available/deluge.conf /config/nginx/rproxy-enabled/deluge.conf
+fi
+
+echo "[LetsOrg] Checking for RUTorrent..."
+if [ ! -z "$RUTORRENT_URL" ]; then
+    sed -i 's!%%%RUTORRENT_URL%%%!'$RUTORRENT_URL'!' /config/nginx/rproxy-available/rutorrent.conf
+    ln -s /config/nginx/rproxy-available/rutorrent.conf /config/nginx/rproxy-enabled/rutorrent.conf
+fi
+
+echo "[LetsOrg] Checking for Jackett..."
+if [ ! -z "$JACKETT_URL" ]; then
+    sed -i 's!%%%JACKETT_URL%%%!'$JACKETT_URL'!' /config/nginx/rproxy-available/jackett.conf
+    ln -s /config/nginx/rproxy-available/jackett.conf /config/nginx/rproxy-enabled/jackett.conf
+fi
+
+echo "[LetsOrg] Checking for NowShowing..."
+if [ ! -z "$NOWSHOWING_URL" ]; then
+    sed -i 's!%%%NOWSHOWING_URL%%%!'$NOWSHOWING_URL'!' /config/nginx/rproxy-available/nowshowing.conf
+    ln -s /config/nginx/rproxy-available/nowshowing.conf /config/nginx/rproxy-enabled/nowshowing.conf
+fi
+
+echo "[LetsOrg] Checking for qBitTorrent..."
+if [ ! -z "$QBITTORRENT_URL" ]; then
+    sed -i 's!%%%QBITTORRENT_URL%%%!'$NOWSHOWING_URL'!' /config/nginx/rproxy-available/qbittorrent.conf
+    ln -s /config/nginx/rproxy-available/qbittorrent.conf /config/nginx/rproxy-enabled/qbittorrent.conf
+fi
+
+echo "[LetsOrg] Checking for Ubooquity..."
+if [ ! -z "$UBOOQUITY_URL" ]; then
+    sed -i 's!%%%UBOOQUITY_URL%%%!'$UBOOQUITY_URL'!' /config/nginx/rproxy-available/ubooquity.conf
+    ln -s /config/nginx/rproxy-available/ubooquity.conf /config/nginx/rproxy-enabled/ubooquity.conf
+fi
+
+echo "[LetsOrg] Checking for Transmission..."
+if [ ! -z "$TRANSMISSION_URL" ]; then
+    sed -i 's!%%%TRANSMISSION_URL%%%!'$TRANSMISSION_URL'!' /config/nginx/rproxy-available/transmission.conf
+    sed -i 's!%%%URL%%%!'$URL'!' /config/nginx/rproxy-available/transmission.conf
+    ln -s /config/nginx/rproxy-available/transmission.conf /config/nginx/rproxy-enabled/transmission.conf
+fi
+
+if [[ -f /config/www/index.html ]]; then
+    echo "[LetsOrg] Cleaning Current WebRoot..."
+    rm -rf /config/www
+    echo "[LetsOrg] Cloning Organizr..."
+    if [ $ORG_BRANCH == "V2" ]; then
+        git clone -b v2-develop https://github.com/causefx/Organizr /config/www/
+    else
+        git clone https://github.com/causefx/Organizr /config/www/
+    fi
+    echo "[LetsOrg] Checking permissions..."
+    chown -R abc:abc /config/www
+else
+    echo "[LetsOrg] Checking for Organizr updates..."
+    cd /config/www
+    git pull
+    echo "[LetsOrg] Checking permissions..."
+    chown -R abc:abc /config/www
+fi
+
+echo "[LetsOrg] Finished"
