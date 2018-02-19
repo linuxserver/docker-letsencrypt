@@ -37,7 +37,7 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
-chown -R abd:abc /config/dns-conf
+chown -R abc:abc /config/dns-conf
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
