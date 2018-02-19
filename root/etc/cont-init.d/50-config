@@ -1,19 +1,20 @@
 #!/usr/bin/with-contenv bash
 
 # Display variables for troubleshooting
-echo -e "Variables set:\n\
-PUID=${PUID}\n\
-PGID=${PGID}\n\
-TZ=${TZ}\n\
-URL=${URL}\n\
-SUBDOMAINS=${SUBDOMAINS}\n\
-EXTRA_DOMAINS=${EXTRA_DOMAINS}\n\
-ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\n\
-DHLEVEL=${DHLEVEL}\n\
-VALIDATION=${VALIDATION}\n\
-DNSPLUGIN=${DNSPLUGIN}\n\
-EMAIL=${EMAIL}\n\
-STAGING=${STAGING}\n"
+# shellcheck disable=SC2153
+echo -e "Variables set:\\n\
+PUID=${PUID}\\n\
+PGID=${PGID}\\n\
+TZ=${TZ}\\n\
+URL=${URL}\\n\
+SUBDOMAINS=${SUBDOMAINS}\\n\
+EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
+ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
+DHLEVEL=${DHLEVEL}\\n\
+VALIDATION=${VALIDATION}\\n\
+DNSPLUGIN=${DNSPLUGIN}\\n\
+EMAIL=${EMAIL}\\n\
+STAGING=${STAGING}\\n"
 
 # Sanitize variables
 for i in URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING
