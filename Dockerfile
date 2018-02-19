@@ -58,7 +58,7 @@ RUN \
 	py2-future \
 	py2-pip && \
  echo "**** install certbot plugins ****" && \
- pip install \
+ pip install --no-cache-dir \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-digitalocean \
