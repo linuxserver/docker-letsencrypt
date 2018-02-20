@@ -17,10 +17,11 @@ EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
 # Sanitize variables
-for i in URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING
+SANED_VARS=( URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING )
+for i in "${SANED_VARS[@]}"
 do
-  export $(printf "$i")="${!i//\"/}"
-  export $(printf "$i")=$(echo "${!i}" | tr '[:upper:]' '[:lower:]')
+  export echo "$i"="${!i//\"/}"
+  export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
 done
 
 # check to make sure that the required variables are set
