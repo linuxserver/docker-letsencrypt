@@ -1,5 +1,29 @@
 #!/usr/bin/with-contenv bash
 
+# Display variables for troubleshooting
+# shellcheck disable=SC2153
+echo -e "Variables set:\\n\
+PUID=${PUID}\\n\
+PGID=${PGID}\\n\
+TZ=${TZ}\\n\
+URL=${URL}\\n\
+SUBDOMAINS=${SUBDOMAINS}\\n\
+EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
+ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
+DHLEVEL=${DHLEVEL}\\n\
+VALIDATION=${VALIDATION}\\n\
+DNSPLUGIN=${DNSPLUGIN}\\n\
+EMAIL=${EMAIL}\\n\
+STAGING=${STAGING}\\n"
+
+# Sanitize variables
+SANED_VARS=( URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING )
+for i in "${SANED_VARS[@]}"
+do
+  export echo "$i"="${!i//\"/}"
+  export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
+done
+
 # check to make sure that the required variables are set
 # shellcheck disable=SC2153
 [[ -z "$URL" ]] && \
@@ -15,6 +39,7 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
+chown -R abc:abc /config/dns-conf
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
@@ -53,6 +78,7 @@ cp /config/crontabs/* /etc/crontabs/
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
 # shellcheck disable=SC2153
   echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+  echo "Created donoteditthisfile.conf"
 fi
 
 # load original config settings
@@ -72,6 +98,8 @@ elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "$ORIGHTTPVAL" = "t
 elif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
   echo "Still using ${ORIGVALIDATION}. Please set the VALIDATION parameter in the future"
   VALIDATION="$ORIGVALIDATION"
+else
+  echo "No compatibility action needed"
 fi
 
 # compare dhparams existence and level, create if necessary
@@ -137,10 +165,13 @@ if [ "$VALIDATION" = "dns" ]; then
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   fi
+  echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
   PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
+  echo "tls-sni validation is selected"
 else
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+  echo "http validation is selected"
 fi
 
 # setting the symlink for key location
@@ -185,6 +216,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
+  echo "Certificate exists; parameters unchanged; attempting renewal"
   chmod +x /app/le-renew.sh
   sleep 1
   /app/le-renew.sh
