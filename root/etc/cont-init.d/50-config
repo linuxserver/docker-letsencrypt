@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bash
 
 # Display variables for troubleshooting
-# shellcheck disable=SC2153
 echo -e "Variables set:\\n\
 PUID=${PUID}\\n\
 PGID=${PGID}\\n\
@@ -17,7 +16,7 @@ EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
 # Sanitize variables
-SANED_VARS=( URL SUBDOMAINS EXTRA_DOMAINS ONLY_SUBDOMAINS DHLEVEL VALIDATION DNSPLUGIN EMAIL STAGING )
+SANED_VARS=( DHLEVEL DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
 for i in "${SANED_VARS[@]}"
 do
   export echo "$i"="${!i//\"/}"
@@ -25,7 +24,6 @@ do
 done
 
 # check to make sure that the required variables are set
-# shellcheck disable=SC2153
 [[ -z "$URL" ]] && \
   echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
   sleep infinity
@@ -76,7 +74,6 @@ cp /config/crontabs/* /etc/crontabs/
 
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
-# shellcheck disable=SC2153
   echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
   echo "Created donoteditthisfile.conf"
 fi
@@ -125,28 +122,28 @@ fi
 if [ ! -z "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
   for job in $(echo "$SUBDOMAINS" | tr "," " "); do
-    export SUBDOMAINS2="$SUBDOMAINS2 -d ${job}.${URL}"
+    export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
   done
   if [ "$ONLY_SUBDOMAINS" = true ]; then
-    URLS="$SUBDOMAINS2"
+    URL_REAL="$SUBDOMAINS_REAL"
     echo "Only subdomains, no URL in cert"
   else
-    URLS="-d ${URL}${SUBDOMAINS2}"
+    URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
   fi
-  echo "Sub-domains processed are: $SUBDOMAINS2"
+  echo "Sub-domains processed are: $SUBDOMAINS_REAL"
 else
   echo "No subdomains defined"
-  URLS="-d $URL"
+  URL_REAL="-d $URL"
 fi
 
 # add extra domains
 if [ ! -z "$EXTRA_DOMAINS" ]; then
   echo "EXTRA_DOMAINS entered, processing"
   for job in $(echo "$EXTRA_DOMAINS" | tr "," " "); do
-    export EXTRA_DOMAINS2="$EXTRA_DOMAINS2 -d ${job}"
+    export EXTRA_DOMAINS_REAL="$EXTRA_DOMAINS_REAL -d ${job}"
   done
-  echo "Extra domains processed are: $EXTRA_DOMAINS2"
-  URLS="$URLS $EXTRA_DOMAINS2"
+  echo "Extra domains processed are: $EXTRA_DOMAINS_REAL"
+  URL_REAL="$URL_REAL $EXTRA_DOMAINS_REAL"
 fi
 
 # figuring out whether to use e-mail and which
@@ -202,8 +199,8 @@ echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
-# shellcheck disable=SC2086
-  certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URLS
+ # shellcheck disable=SC2086
+ certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else
