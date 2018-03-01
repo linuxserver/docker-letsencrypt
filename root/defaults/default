@@ -1,4 +1,4 @@
-## Version 2018/01/29 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2018/03/02 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
@@ -12,7 +12,8 @@
 server {
 	listen 443 ssl default_server;
 
-	root /config/www;
+	# Change root folder to Heimdall
+	root /var/www/localhost/heimdall/public;
 	index index.html index.htm index.php;
 
 	server_name _;
@@ -23,7 +24,7 @@ server {
 	client_max_body_size 0;
 
 	location / {
-		try_files $uri $uri/ /index.html /index.php?$args =404;
+		try_files $uri $uri/ /index.php?$args;
 	}
 
 	location ~ \.php$ {
