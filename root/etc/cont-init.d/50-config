@@ -227,6 +227,7 @@ fi
 
 # permissions
 chown -R abc:abc \
-	/config
+	/config \
+	/var/www/localhost/heimdall
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
