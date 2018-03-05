@@ -72,11 +72,13 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 rm /etc/crontabs/*
 cp /config/crontabs/* /etc/crontabs/
 
+#Popwebz - Block edited to add second certificate
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\" CERT2_ORIGSUBDOMAINS=\"$CERT2_SUBDOMAINS\"" > /config/donoteditthisfile.conf
   echo "Created donoteditthisfile.conf"
 fi
+#Popwebz - End block edit
 
 # load original config settings
 # shellcheck disable=SC1091
@@ -130,11 +132,31 @@ if [ ! -z "$SUBDOMAINS" ]; then
   else
     URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
   fi
-  echo "Sub-domains processed are: $SUBDOMAINS_REAL"
+  #Popwebz - Block edited to add second certificate
+  echo "Sub-domains processed for certificate 1 are: $SUBDOMAINS_REAL"
 else
   echo "No subdomains defined"
   URL_REAL="-d $URL"
 fi
+
+#Popwebz - Block edited to add second certificate
+# figuring out url only vs url & subdomains vs subdomains only
+if [ ! -z "$CERT2_SUBDOMAINS" ]; then
+  echo "CERT2_SUBDOMAINS entered, processing"
+  for job in $(echo "$CERT2_SUBDOMAINS" | tr "," " "); do
+    export CERT2_SUBDOMAINS_REAL="$CERT2_SUBDOMAINS_REAL -d ${job}.${URL}"
+  done
+  if [ "$ONLY_SUBDOMAINS" = true ]; then
+    CERT2_URLS="$CERT2_SUBDOMAINS_REAL"
+    echo "Only subdomains, no URL in cert"
+  else
+    echo "Root URL in certificate, set Only subdomains to TRUE to generate a second certificate"
+  fi
+  echo "Sub-domains processed for certificate 2 are: $CERT2_SUBDOMAINS_REAL"
+else
+  echo "No subdomains for Certificate 2 defined"
+fi
+#Popwebz - End edit to add second certificate
 
 # add extra domains
 if [ ! -z "$EXTRA_DOMAINS" ]; then
@@ -180,25 +202,53 @@ else
   ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
+#Popwebz - Block added to add second certificate
+# setting the symlink for key2 location
+rm -rf /config/keys/letsencrypt2
+if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! -z "$CERT2_SUBDOMAINS" ]; then
+  CERT2_DOMAIN="$(echo "$CERT2_SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
+  ln -s ../etc/letsencrypt/live/"$CERT2_DOMAIN" /config/keys/letsencrypt2
+else
+  echo "Conditions for second certificate not set, not generating letsencrypt2 directory"
+fi
+#Popwebz - end added block to add second certificate
+
+#Popwebz - Block edited to add second certificate
 # checking for changes in cert variables, revoking certs if necessary
-if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
+if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$CERT2_SUBDOMAINS" = "$CERT2_ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
+    
+    #Popwebz - Edit for more verbose logging
+    echo "Cert 1 Revoked"
+    #Popwebz - Edit to also revoke Cert 2
+    [[ -f /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
+    echo "Cert 2 Revoked"
+    #Popwebz end edit
+    
   else
     [[ -f /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
+     #Popwebz Note: no need to revoke if not originally set to only subdomains, as that is not done with a root certificate
+    echo "Cert 1 Revoked - Root Domain"
+    #Popwebz end edit
+    
   fi
   rm -rf /config/etc
   mkdir -p /config/etc/letsencrypt
+  
+  else
+  echo "no changes detected"
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"  CERT2_ORIGSUBDOMAINS=\"$CERT2_SUBDOMAINS\"" > /config/donoteditthisfile.conf
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
-  echo "Generating new certificate"
+#Popwebz Edit line below to clarify that it is cert 1
+  echo "Generating new Cert 1 certificate"
  # shellcheck disable=SC2086
  certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
   if [ -d /config/keys/letsencrypt ]; then
@@ -218,6 +268,28 @@ else
   sleep 1
   /app/le-renew.sh
 fi
+
+#Popwebz - Block added to add second certificate
+#Edit to Generate Second Certificate if necessary
+if [ ! -f "/config/keys/letsencrypt2/fullchain.pem" ] && [ ! -z "$CERT2_SUBDOMAINS" ]; then
+  echo "Generating new Cert 2 certificate"
+# shellcheck disable=SC2086
+  certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+  if [ -d /config/keys/letsencrypt2 ]; then
+    cd /config/keys/letsencrypt2 || exit
+  else
+    if [ "$VALIDATION" = "dns" ]; then
+      echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${DNSPLUGIN}.ini file."
+    else
+      echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+    fi
+    sleep infinity
+  fi
+  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+else
+  sleep 1
+fi
+#Popwebz - end added block to add second certificate
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
