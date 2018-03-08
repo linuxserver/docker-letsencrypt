@@ -213,6 +213,7 @@ else
 fi
 #Popwebz - end added block to add second certificate
 
+#Initialize revocation tracking variables
 CERT1REV="false"
 CERT2REV="false"
 
@@ -227,6 +228,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" 
     echo "Cert 1 Revoked (other parameters changed)"
 
     #Popwebz - Edit to also revoke Cert 2
+    CERT2_ORIGDOMAIN="$(echo "$CERT2_ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     [[ -f /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
     echo "Cert 2 Revoked (other parameters changed)"
     #Popwebz end edit
@@ -243,9 +245,6 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" 
     CERT1REV="true"
 
   fi
-  rm -rf /config/etc
-  mkdir -p /config/etc/letsencrypt
-  mkdir -p /config/etc/letsencrypt2 #popwebz edit to add folder -p for no error if already existing
 
   else
   echo "no certificate changes required (unless subdomains changed)"
@@ -254,9 +253,8 @@ fi
 
 #Popwebz logic to only revoke what is needed
 
- if [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$CERT1REV" = "true" ]; then
+ if [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ "$CERT1REV" = "true" ]; then
    if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
-     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
      [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
      #Popwebz - Edit for more verbose logging
      echo "Cert 1 Revoked (subdomains changed)"
@@ -265,14 +263,29 @@ fi
       #Popwebz Note: no need to revoke if not originally set to only subdomains, as that is not done with a root certificate
      echo "Cert 1 Revoked - Root Domain (subdomains changed)"
    fi
+   #set tracking var
+   CERT1REV="true"
 fi
 
- if [ ! "$CERT2_SUBDOMAINS" = "$CERT2_ORIGSUBDOMAINS" ] || [ ! "$CERT2REV" = "true" ]; then
- [[ -f /config/etc/letsencrypt/live/"$CERT2_ORIGSUBDOMAINS"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
+ if [ ! "$CERT2_SUBDOMAINS" = "$CERT2_ORIGSUBDOMAINS" ] || [ "$CERT2REV" = "true" ]; then
+ [[ -f /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
   echo "Cert 2 Revoked (subdomains changed)"
+  #set tracking var
+  CERT2REV="true"
 fi
 
-# saving new variables
+#Delete live folders after revoking
+if [ "$CERT1REV" = "true" ]; then
+  rm -rf /config/etc/"$ORIGDOMAIN"
+  mkdir -p /config/etc/letsencrypt
+fi
+
+if [ "$CERT2REV" = "true" ]; then
+  rm -rf /config/etc/"$CERT2_ORIGDOMAIN"
+  mkdir -p /config/etc/letsencrypt
+fi
+
+# saving new variables to file
 echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"  CERT2_ORIGSUBDOMAINS=\"$CERT2_SUBDOMAINS\"" > /config/donoteditthisfile.conf
 
 # generating certs if necessary
