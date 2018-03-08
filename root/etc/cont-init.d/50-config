@@ -218,10 +218,6 @@ CERT1REV="false"
 CERT2REV="false"
 ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
 CERT2_ORIGDOMAIN="$(echo "$CERT2_ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-echo "Orig Domain:"
-echo "$ORIGDOMAIN"
-echo "cert 2 ORIGDOMAIN"
-echo "$CERT2_ORIGDOMAIN"
 
 #Popwebz - Block edited to add second certificate
 # checking for changes in cert variables, revoking certs if necessary
@@ -314,10 +310,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
-  echo "Certificate exists; parameters unchanged; attempting renewal"
-  chmod +x /app/le-renew.sh
   sleep 1
-  /app/le-renew.sh
 fi
 
 #Popwebz - Block added to add second certificate
@@ -338,7 +331,10 @@ if [ ! -f "/config/keys/letsencrypt2/fullchain.pem" ] && [ ! -z "$CERT2_SUBDOMAI
   fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
 else
+  echo "Certificates exists. Attempting renewal"
+  chmod +x /app/le-renew.sh
   sleep 1
+  /app/le-renew.sh
 fi
 #Popwebz - end added block to add second certificate
 
