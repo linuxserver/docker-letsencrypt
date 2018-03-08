@@ -282,12 +282,14 @@ fi
 
 #Delete live folders after revoking
 if [ "$CERT1REV" = "true" ]; then
-  rm -rf /config/etc/"$ORIGDOMAIN"
+  rm -rf /config/etc/letsencrypt/live/"$ORIGDOMAIN"
+  echo "Live Cert 1 folder deleted"
   mkdir -p /config/etc/letsencrypt
 fi
 
 if [ "$CERT2REV" = "true" ]; then
-  rm -rf /config/etc/"$CERT2_ORIGDOMAIN"
+  rm -rf /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"
+  echo "Live Cert 2 folder deleted"
   mkdir -p /config/etc/letsencrypt
 fi
 
