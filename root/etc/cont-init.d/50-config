@@ -216,19 +216,25 @@ fi
 #Initialize revocation tracking variables
 CERT1REV="false"
 CERT2REV="false"
+ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+CERT2_ORIGDOMAIN="$(echo "$CERT2_ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+echo "Orig Domain:"
+echo "$ORIGDOMAIN"
+echo "cert 2 ORIGDOMAIN"
+echo "$CERT2_ORIGDOMAIN"
 
 #Popwebz - Block edited to add second certificate
 # checking for changes in cert variables, revoking certs if necessary
 if [ ! "$URL" = "$ORIGURL" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing Cert 1 certificate, and an updated one will be created"
   if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
-    ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+    
     [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
     #Popwebz - Edit for more verbose logging
     echo "Cert 1 Revoked (other parameters changed)"
 
     #Popwebz - Edit to also revoke Cert 2
-    CERT2_ORIGDOMAIN="$(echo "$CERT2_ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+    
     [[ -f /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$CERT2_ORIGDOMAIN"/fullchain.pem
     echo "Cert 2 Revoked (other parameters changed)"
     #Popwebz end edit
