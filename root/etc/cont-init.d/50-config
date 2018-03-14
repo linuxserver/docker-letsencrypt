@@ -121,7 +121,7 @@ fi
 # figuring out url only vs url & subdomains vs subdomains only
 if [ ! -z "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
-  if [ "$SUBDOMAINS" = "*" ]; then
+  if [ "$SUBDOMAINS" = "wildcard" ]; then
     export URL_REAL="-d *.${URL} -d ${URL}"
     echo "Wildcard cert for $URL will be requested"
   else
