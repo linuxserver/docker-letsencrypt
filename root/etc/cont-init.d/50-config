@@ -121,16 +121,22 @@ fi
 # figuring out url only vs url & subdomains vs subdomains only
 if [ ! -z "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
-  for job in $(echo "$SUBDOMAINS" | tr "," " "); do
-    export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
-  done
-  if [ "$ONLY_SUBDOMAINS" = true ]; then
-    URL_REAL="$SUBDOMAINS_REAL"
-    echo "Only subdomains, no URL in cert"
+  if [ "$SUBDOMAINS" = "wildcard" ]; then
+    export URL_REAL="-d *.${URL} -d ${URL}"
+    echo "Wildcard cert for $URL will be requested"
   else
-    URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
+    echo "SUBDOMAINS entered, processing"
+    for job in $(echo "$SUBDOMAINS" | tr "," " "); do
+      export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
+    done
+    if [ "$ONLY_SUBDOMAINS" = true ]; then
+      URL_REAL="$SUBDOMAINS_REAL"
+      echo "Only subdomains, no URL in cert"
+    else
+      URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
+    fi
+    echo "Sub-domains processed are: $SUBDOMAINS_REAL"
   fi
-  echo "Sub-domains processed are: $SUBDOMAINS_REAL"
 else
   echo "No subdomains defined"
   URL_REAL="-d $URL"
@@ -200,7 +206,7 @@ echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
  # shellcheck disable=SC2086
- certbot certonly --renew-by-default $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+ certbot certonly --renew-by-default --server https://acme-v02.api.letsencrypt.org/directory $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else
