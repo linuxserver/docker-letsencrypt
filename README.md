@@ -47,7 +47,7 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 * `-p 80 -p 443` - the port(s)
 * `-v /config` - all the config files including the webroot reside here
 * `-e URL` - the top url you have control over ("customdomain.com" if you own it, or "customsubdomain.ddnsprovider.com" if dynamic dns)
-* `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this to `wildcard` (wildcard cert is available via dns validation only)
+* `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via dns validation only)
 * `-e VALIDATION` - letsencrypt validation method to use, options are `http`, `tls-sni` or `dns` (dns method also requires `DNSPLUGIN` variable set)
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
