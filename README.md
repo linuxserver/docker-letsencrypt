@@ -105,6 +105,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **29.03.18:** Fix staging for v2 api
 + **13.03.18:** Support for wildcard cert with dns validation added. Switched to v2 api for ACME.
 + **21.02.18:** Reduce shellcheck directives by renaming secondary variables
 + **20.02.18:** Sanitize variables, increase log verbosity
