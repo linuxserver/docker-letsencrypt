@@ -105,10 +105,13 @@ if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
   echo "DH parameters bit setting changed. Deleting old dhparams file."
 fi
 
-# if staging is set to true, add the --staging parameter
-[[ "$STAGING" = "true" ]] && \
-  echo "NOTICE: Staging is active" && \
-  STGNG="--staging"
+# if staging is set to true, use the staging server
+if [ "$STAGING" = "true" ]; then
+  echo "NOTICE: Staging is active"
+  ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+else
+  ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+fi
 
 if [ ! -f "/config/nginx/dhparams.pem" ]; then
   echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
@@ -206,7 +209,7 @@ echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   echo "Generating new certificate"
  # shellcheck disable=SC2086
- certbot certonly --renew-by-default --server https://acme-v02.api.letsencrypt.org/directory $PREFCHAL $STGNG --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+ certbot certonly --renew-by-default --server $ACMESERVER $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
   if [ -d /config/keys/letsencrypt ]; then
     cd /config/keys/letsencrypt || exit
   else
