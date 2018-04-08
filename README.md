@@ -105,6 +105,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **08.04.18:** Fix renewal hooks
 + **29.03.18:** Create pfx cert after renewal for dns validation (previous version only created it for http and tls, an oversight)
 + **29.03.18:** Fix staging for v2 api
 + **13.03.18:** Support for wildcard cert with dns validation added. Switched to v2 api for ACME.
