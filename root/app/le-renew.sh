@@ -9,7 +9,7 @@ echo "cronjob running on "$(date)
 echo "Running certbot renew"
 if [ "$ORIGVALIDATION" = "dns" ]; then
   certbot -n renew \
-    --post-hook "if ps aux | grep [n]ginx: > /dev/null; then s6-svc -h /var/run/s6/services/nginx; fi \
+    --post-hook "if ps aux | grep [n]ginx: > /dev/null; then s6-svc -h /var/run/s6/services/nginx; fi; \
     cd /config/keys/letsencrypt && \
     openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:"
 else
