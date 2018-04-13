@@ -1,0 +1,14 @@
+# first go into ombi settings, under the menu "Ombi" set the base url to /ombi and restart the ombi container
+
+location /ombi {
+    return 301 $scheme://$host/ombi/;
+}
+
+location /ombi/ {
+    include /config/nginx/proxy.conf;
+    proxy_pass http://ombi:3579/ombi/;
+}
+
+if ($http_referer ~* /ombi/) {
+    rewrite ^/dist/(.*) $scheme://$host/ombi/dist/$1 permanent;
+}
