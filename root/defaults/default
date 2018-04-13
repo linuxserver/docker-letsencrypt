@@ -73,5 +73,5 @@ server {
 #	}
 #}
 
-# # enable subdomain method reverse proxy confs
+# enable subdomain method reverse proxy confs
 include /config/nginx/proxy-confs/*.subdomain.conf;
