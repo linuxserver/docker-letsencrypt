@@ -6,7 +6,8 @@ location /ombi {
 
 location /ombi/ {
     include /config/nginx/proxy.conf;
-    proxy_pass http://ombi:3579/ombi/;
+    set $upstream_ombi ombi;
+    proxy_pass http://$upstream_ombi:3579/ombi/;
 }
 
 if ($http_referer ~* /ombi/) {
