@@ -1,0 +1,8 @@
+# sabnzbd already uses the base url /sabnzbd by default so you don't need to do anything extra
+
+location /sabnzbd {
+    include /config/nginx/proxy.conf;
+    resolver 127.0.0.11 valid=30s;
+    set $upstream_sabnzbd sabnzbd;
+    proxy_pass http://$upstream_sabnzbd:8080;
+}
