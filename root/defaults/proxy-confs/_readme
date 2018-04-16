@@ -27,7 +27,7 @@ and define that network in the container run/create command via "--network [netw
 a new container.
 - If you are using unraid, create a custom network in command line, then go to docker service settings (under advanced) and 
 set the option "Preserve user defined networks:" to "Yes". Then in each container setting, (under advanced) add
-"--network [networkname]" into "Extra arguments".
+"--network=[networkname]" into "Extra Parameters". You would have to do this for the letsencrypt container as well.
 
 If the reverse proxied containers are not reachable via dns or they are running on a different machine, you will have to modify
 these confs to fit your needs.
