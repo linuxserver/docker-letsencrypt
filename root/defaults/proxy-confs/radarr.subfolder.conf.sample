@@ -1,0 +1,8 @@
+# First go into radarr settings, and under "General" set the URL Base to /radarr
+
+location /radarr {
+    include /config/nginx/proxy.conf;
+    resolver 127.0.0.11 valid=30s;
+    set $upstream_radarr radarr;
+    proxy_pass http://$upstream_radarr:7878;
+}
