@@ -11,6 +11,8 @@ server {
 
 	location / {
 		include /config/nginx/proxy.conf;
-		proxy_pass http://ombi:3579;	
+		resolver 127.0.0.11 valid=30s;
+		set $upstream_ombi ombi;
+		proxy_pass http://$upstream_ombi:3579;
 	}
 }
