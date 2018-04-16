@@ -1,0 +1,19 @@
+
+# make sure that your dns has a cname set for sabnzbd
+
+server {
+    listen 443 ssl;
+
+    server_name sabnzbd.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    location / {
+        include /config/nginx/proxy.conf;
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_sabnzbd sabnzbd;
+        proxy_pass http://$upstream_sabnzbd:8080;
+    }
+}
