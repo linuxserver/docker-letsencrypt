@@ -15,6 +15,8 @@ server {
 #        auth_basic_user_file /config/nginx/.htpasswd;
         include /config/nginx/proxy.conf;
         proxy_pass http://HOSTIP:8096;
+        proxy_set_header Range $http_range;
+        proxy_set_header If-Range $http_if_range;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
     }
