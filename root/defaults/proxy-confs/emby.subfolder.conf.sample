@@ -7,6 +7,8 @@ location /emby {
     include /config/nginx/proxy.conf;
     rewrite /emby/(.*) /$1 break;
     proxy_pass http://192.168.13.40:8096;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $http_connection;
 }
