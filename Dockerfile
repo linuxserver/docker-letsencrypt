@@ -51,6 +51,7 @@ RUN \
 	php7-phar \
 	php7-soap \
 	php7-sockets \
+	php7-sqlite3 \
 	php7-tokenizer \
 	php7-xml \
 	php7-xmlreader \

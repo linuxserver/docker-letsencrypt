@@ -105,6 +105,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **19.04.18:** Bind memcached to localhost only, add php7-sqlite3
 + **08.04.18:** Fix renewal hooks
 + **29.03.18:** Create pfx cert after renewal for dns validation (previous version only created it for http and tls, an oversight)
 + **29.03.18:** Fix staging for v2 api
