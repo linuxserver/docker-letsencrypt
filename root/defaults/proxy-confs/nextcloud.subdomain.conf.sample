@@ -1,0 +1,21 @@
+# make sure that your dns has a cname set for nextcloud
+# edit your nextcloud container's /config/www/nextcloud/config/config.php file and change the server address info as described
+# at the end of the following article: https://blog.linuxserver.io/2017/05/10/installing-nextcloud-on-unraid-with-letsencrypt-reverse-proxy/
+
+server {
+    listen 443 ssl;
+
+    server_name nextcloud.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    location / {
+        include /config/nginx/proxy.conf;
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_nextcloud nextcloud;
+        proxy_max_temp_file_size 2048m;
+        proxy_pass https://$upstream_nextcloud:443;
+    }
+}
