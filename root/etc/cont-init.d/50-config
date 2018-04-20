@@ -39,7 +39,7 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
 
-# cop reverse proxy configs
+# copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
 
 # copy/update the fail2ban config defaults to/in /config
