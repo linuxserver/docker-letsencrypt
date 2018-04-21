@@ -87,7 +87,9 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
+* After setup, navigate to `https://yourdomain.url` to access the default homepage
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
+* Reverse proxy config files are added for popular apps. See the `_readme` file under `/config/nginx/proxy_confs` for instructions on how to enable them
 
 
 ## Info
@@ -105,6 +107,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **20.04.18:** Add standardized optional reverse proxy conf files
 + **19.04.18:** Bind memcached to localhost only, add php7-sqlite3
 + **08.04.18:** Fix renewal hooks
 + **29.03.18:** Create pfx cert after renewal for dns validation (previous version only created it for http and tls, an oversight)

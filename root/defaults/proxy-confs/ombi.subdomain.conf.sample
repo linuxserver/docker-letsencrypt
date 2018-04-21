@@ -1,0 +1,21 @@
+# make sure that your dns has a cname set for ombi and that your ombi container is not using a base url
+# to enable password access, uncomment the two auth_basic lines
+
+server {
+    listen 443 ssl;
+
+    server_name ombi.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    location / {
+#        auth_basic "Restricted";
+#        auth_basic_user_file /config/nginx/.htpasswd;
+        include /config/nginx/proxy.conf;
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_ombi ombi;
+        proxy_pass http://$upstream_ombi:3579;
+    }
+}

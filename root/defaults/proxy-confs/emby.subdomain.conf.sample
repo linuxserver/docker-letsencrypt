@@ -1,0 +1,23 @@
+# make sure that your dns has a cname set for emby, replace HOSTIP below with the IP address of your emby server
+# to enable password access, uncomment the two auth_basic lines
+
+server {
+    listen 443 ssl;
+
+    server_name emby.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+    location / {
+#        auth_basic "Restricted";
+#        auth_basic_user_file /config/nginx/.htpasswd;
+        include /config/nginx/proxy.conf;
+        proxy_pass http://HOSTIP:8096;
+        proxy_set_header Range $http_range;
+        proxy_set_header If-Range $http_if_range;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
