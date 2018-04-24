@@ -224,6 +224,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     sleep infinity
   fi
   openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+  cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
 else
   echo "Certificate exists; parameters unchanged; attempting renewal"
   chmod +x /app/le-renew.sh
