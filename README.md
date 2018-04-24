@@ -90,6 +90,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 * After setup, navigate to `https://yourdomain.url` to access the default homepage
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
 * Reverse proxy config files are added for popular apps. See the `_readme` file under `/config/nginx/proxy_confs` for instructions on how to enable them
+* Includes auto-generated pfx and private-fullchain-bundle pem certs that are needed by other apps like Emby and Znc
 
 
 ## Info
@@ -107,6 +108,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **24.04.18:** Auto generate a private key + fullchain bundle pem that is needed by certain apps
 + **20.04.18:** Add standardized optional reverse proxy conf files
 + **19.04.18:** Bind memcached to localhost only, add php7-sqlite3
 + **08.04.18:** Fix renewal hooks
