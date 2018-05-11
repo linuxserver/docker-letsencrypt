@@ -108,6 +108,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **11.05.18:** Add php pgsql support
 + **24.04.18:** Auto generate a private key + fullchain bundle pem that is needed by certain apps
 + **20.04.18:** Add standardized optional reverse proxy conf files
 + **19.04.18:** Bind memcached to localhost only, add php7-sqlite3
