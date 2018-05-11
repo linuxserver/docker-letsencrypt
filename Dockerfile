@@ -47,6 +47,7 @@ RUN \
 	php7-mysqli \
 	php7-mysqlnd \
 	php7-pdo_mysql \
+	php7-pdo_pgsql \
 	php7-pdo_sqlite \
 	php7-pgsql \
 	php7-phar \
