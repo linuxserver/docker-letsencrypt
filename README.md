@@ -89,7 +89,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
   * Cloudflare provides free accounts for managing dns and is very easy to use with this image. Make sure that it is set up for "dns only" instead of "dns + proxy)
   * Google dns plugin is meant to be used with "Google Cloud DNS", a paid enterprise product, and not for "Google Domains DNS"
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
-* If you need a dynamic dns provider, you can use the free provider duckdns.org where the url will be `yoursubdomain.duckdns.org` and the subdomains can be `www,ftp,cloud`
+* If you need a dynamic dns provider, you can use the free provider duckdns.org where the `URL` will be `yoursubdomain.duckdns.org` and the `SUBDOMAINS` can be `www,ftp,cloud`
 * After setup, navigate to `https://yourdomain.url` to access the default homepage
 ### Security and password protection
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
