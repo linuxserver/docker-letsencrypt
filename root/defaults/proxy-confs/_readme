@@ -26,8 +26,10 @@ and define that network in the container run/create command via "--network [netw
 - If you are using a gui manager like portainer, you can create a custom bridge network in the gui, and select it when creating
 a new container.
 - If you are using unraid, create a custom network in command line, then go to docker service settings (under advanced) and 
-set the option "Preserve user defined networks:" to "Yes". Then in each container setting, (under advanced) add
-"--network=[networkname]" into "Extra Parameters". You would have to do this for the letsencrypt container as well.
+set the option "Preserve user defined networks:" to "Yes". Then in each container setting, do one of the following:
+  1) Unraid 6.5.0 or earlier - (under advanced) add "--network=[networkname]" into "Extra Parameters".
+  2) Unraid 6.5.1 or later - in the network type dropdown, select "Custom : [networkname]".
+  You would have to do the above for the letsencrypt container as well, so they are all on the same custom network.
 
 If the reverse proxied containers are not reachable via dns or they are running on a different machine, you will have to modify
 these confs to fit your needs.
