@@ -1,5 +1,5 @@
 # The organizr container does not use a baseurl by default.
-# In order to use this location block you need to edit the default file one folder up and commen out the / location
+# In order to use this location block you need to edit the default file one folder up and comment out the / location
 # to enable password access, uncomment the two auth_basic lines
 
 location / {
