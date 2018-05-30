@@ -1,0 +1,11 @@
+# monitorr does not requre a base url setting
+# to enable password access, uncomment the two auth_basic lines
+
+location /transmission {
+#    auth_basic "Restricted";
+#    auth_basic_user_file /config/nginx/.htpasswd;
+    include /config/nginx/proxy.conf;
+    resolver 127.0.0.11 valid=30s;
+    set $upstream_transmission transmission;
+    proxy_pass http://$upstream_transmission:9091;
+}
