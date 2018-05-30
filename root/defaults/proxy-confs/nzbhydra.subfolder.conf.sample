@@ -1,0 +1,11 @@
+# first go into nzbhydra settings, set the URL Base to /nzbhydra and restart the nzbhydra container
+# to enable password access, uncomment the two auth_basic lines
+
+location /nzbhydra {
+#    auth_basic "Restricted";
+#    auth_basic_user_file /config/nginx/.htpasswd;
+    include /config/nginx/proxy.conf;
+    resolver 127.0.0.11 valid=30s;
+    set $upstream_nzbhydra hydra2;
+    proxy_pass http://$upstream_nzbhydra:5076;
+}
