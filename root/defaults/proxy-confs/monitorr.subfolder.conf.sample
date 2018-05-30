@@ -1,4 +1,4 @@
-# monitorr does not requre a base url setting
+# monitorr does not require a base url setting
 # to enable password access, uncomment the two auth_basic lines
 
 location /monitorr {
