@@ -135,6 +135,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **31.05.18:** Update ssl.conf and proxy.conf for tighter security
 + **18.05.18:** Add more info on certs and unraid reverse proxy config
 + **11.05.18:** Add php pgsql support
 + **24.04.18:** Auto generate a private key + fullchain bundle pem that is needed by certain apps
