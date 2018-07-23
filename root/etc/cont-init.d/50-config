@@ -85,21 +85,10 @@ fi
 # shellcheck disable=SC1091
 . /config/donoteditthisfile.conf
 
-# Backwards compatibility, remove after 2018/05/01
-echo "Backwards compatibility check. . ."
-if [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ "$ORIGHTTPVAL" = "true" ]; then
-  echo "Previously used http, will continue to use http. Please set the VALIDATION parameter in the future"
-  VALIDATION="http" && \
-  ORIGVALIDATION="http"
-elif [ -z "$VALIDATION" ] && [ -z "$ORIGVALIDATION" ] && [ ! "$ORIGHTTPVAL" = "true" ]; then
-  echo "Previously used tls-sni, will continue to use tls-sni. Please set the VALIDATION parameter in the future"
-  VALIDATION="tls-sni" && \
-  ORIGVALIDATION="tls-sni"
-elif [ -z "$VALIDATION" ] && [ ! -z "$ORIGVALIDATION" ]; then
-  echo "Still using ${ORIGVALIDATION}. Please set the VALIDATION parameter in the future"
-  VALIDATION="$ORIGVALIDATION"
-else
-  echo "No compatibility action needed"
+# set default validation to http
+if [ -z "$VALIDATION" ]; then
+  VALIDATION="http"
+  echo "VALIDATION parameter not set; setting it to http"
 fi
 
 # compare dhparams existence and level, create if necessary
