@@ -25,7 +25,7 @@ create a custom network and attach all containers to it. You don't have to do an
 and define that network in the container run/create command via "--network [networkname]".
 - If you are using a gui manager like portainer, you can create a custom bridge network in the gui, and select it when creating
 a new container.
-- If you are using unraid, create a custom network in command line, then go to docker service settings (under advanced) and 
+- If you are using unraid, create a custom network in command line via "docker network create [networkname]", then go to docker service settings (under advanced) and 
 set the option "Preserve user defined networks:" to "Yes". Then in each container setting, do one of the following:
   1) Unraid 6.5.0 or earlier - (under advanced) add "--network=[networkname]" into "Extra Parameters".
   2) Unraid 6.5.1 or later - in the network type dropdown, select "Custom : [networkname]".
