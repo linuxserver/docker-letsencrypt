@@ -135,6 +135,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **25.07.18:** Add subdomain proxy conf for syncthing
 + **23.07.18:** Remove backwards compatibility and set default validation method to http. Update portainer proxy config to fix websockets. Add unifi proxy conf.
 + **31.05.18:** Update ssl.conf and proxy.conf for tighter security (thanks @nemchik)
 + **30.05.18:** Add reverse proxy configs for jackett, monitorr, nzbget, nzbhydra, organizr, portainer and transmission (thanks @nemchik)
