@@ -1,5 +1,4 @@
-# sample subdomain proxy-conf for linuxserver.io sycnthing (not tested with other dockers)
-# should work out of the box if sycnthing is installed properly on same interface using default ports
+# make sure that your dns has a cname set for syncthing and that your syncthing container is not using a base url
 # to enable password access, uncomment the two auth_basic lines
 
 server {
