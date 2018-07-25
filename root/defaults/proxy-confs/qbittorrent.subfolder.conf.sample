@@ -1,0 +1,21 @@
+# qBittorrent devs on Github indicated the Origin and Referer headers needed to be surpressed,
+# and that the X-Forwarded-Host needed to match what was seen in the browser,
+# as of version 4.0.3 these are the working settings.
+
+# Note: For some users, several windows in the Web UI may still be blank, such as the main GUI page when adding
+# a new torrent from a URL/magnet or local file.
+# If so, uncomment the last line "add_header" and restart the webserver
+
+# to enable password access, uncomment the two auth_basic lines
+
+location /qbt/ {
+#   auth_basic "Restricted";
+#   auth_basic_user_file /config/nginx/.htpasswd;
+    proxy_pass              http://192.168.1.50:8080/;
+    proxy_set_header        X-Forwarded-Host        $server_name:$server_port;
+    proxy_hide_header       Referer;
+    proxy_hide_header       Origin;
+    proxy_set_header        Referer                 '';
+    proxy_set_header        Origin                  '';
+#   add_header              X-Frame-Options         "SAMEORIGIN";
+}
