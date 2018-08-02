@@ -1,0 +1,27 @@
+# make sure that your dns has a cname set for krusader
+# serves krusader container at krusader.yourdomain
+# to enable password access, uncomment the two auth_basic lines
+
+server {
+    listen 443 ssl;
+
+    server_name krusader.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+	location / {
+	    proxy_pass http://192.168.1.50:6080/vnc.html;
+#		auth_basic "Restricted";
+#		auth_basic_user_file /config/nginx/.htpasswd;
+        include /config/nginx/proxy.conf;
+	}
+
+	location /websockify {
+		proxy_pass http://192.168.1.50:6080/vnc.html;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_read_timeout 86400;
+	}
+}
