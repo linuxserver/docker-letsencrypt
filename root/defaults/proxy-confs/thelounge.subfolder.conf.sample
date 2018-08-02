@@ -1,0 +1,16 @@
+# thelounge does not require a base url setting
+# serves thelounge at yourdomain.tld/irc
+# to enable password access, uncomment the two auth_basic lines
+
+location ^~ /irc/ {
+#		auth_basic "Restricted";
+#		auth_basic_user_file /config/nginx/.htpasswd;
+		proxy_pass http://192.168.1.50:9000/;
+		proxy_http_version 1.1;
+		proxy_set_header Connection "upgrade";
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header X-Forwarded-For $remote_addr;
+
+	# by default nginx times out connections in one minute
+	proxy_read_timeout 1d;
+}

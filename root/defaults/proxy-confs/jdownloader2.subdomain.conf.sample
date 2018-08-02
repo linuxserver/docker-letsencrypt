@@ -1,0 +1,27 @@
+# make sure that your dns has a cname set for jdownloader2
+# serves jdownloader2 container at jd2.yourdomain.tld
+# to enable password access, uncomment the two auth_basic lines
+
+server {
+    listen 443 ssl;
+
+    server_name jd2.*;
+
+    include /config/nginx/ssl.conf;
+
+    client_max_body_size 0;
+
+	location / {
+	    proxy_pass http://192.168.1.50:7807;
+#		auth_basic "Restricted";
+#		auth_basic_user_file /config/nginx/.htpasswd;
+        include /config/nginx/proxy.conf;
+	}
+
+	location /websockify {
+		proxy_pass http://192.168.1.50:7807;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_read_timeout 86400;
+	}
+}

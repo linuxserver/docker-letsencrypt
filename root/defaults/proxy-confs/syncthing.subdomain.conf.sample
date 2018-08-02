@@ -1,4 +1,4 @@
-# make sure that your dns has a cname set for syncthing and that your syncthing container is not using a base url
+# make sure you have a cname set for sycnthing in your dns
 # to enable password access, uncomment the two auth_basic lines
 
 server {
