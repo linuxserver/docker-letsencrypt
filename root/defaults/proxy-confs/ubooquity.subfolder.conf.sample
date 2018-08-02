@@ -1,0 +1,21 @@
+# ubooquity uses 2 different ports for webUI access. 2202 for library access and 2203 for admin panel access
+# serves the library at yourdomain.tld/library and admin panel at yourdomain.tld/library/admin
+# to enable password access, uncomment the two auth_basic lines
+
+location /library {
+#    auth_basic "Restricted";
+#    auth_basic_user_file /config/nginx/.htpasswd;
+	proxy_pass http://192.168.1.50:2202/library;
+	proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location /library/admin {
+#    auth_basic "Restricted";
+#    auth_basic_user_file /config/nginx/.htpasswd;
+	proxy_pass http://192.168.1.50:2203/library/admin;
+	proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
