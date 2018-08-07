@@ -1,4 +1,8 @@
-# make sure that your dns has a cname set for emby, replace HOSTIP below with the IP address of your emby server
+# make sure that your dns has a cname set for emby, if emby is running in bridge mode, the below config should work as is, although, 
+# the container name is expected to be "emby", if not, replace the line "set $upstream_emby emby;" with "set $upstream_emby <containername>;"
+# for host mode, replace the line "proxy_pass http://$upstream_emby:8096;" with "proxy_pass http://HOSTIP:8096;" HOSTIP being the IP address of emby
+# in emby settings, under "Advanced" change the public https port to 443, leave the local ports as is, set the "external domain" to your url,
+# and set the "Secure connection mode" to "Handled by reverse proxy"
 # to enable password access, uncomment the two auth_basic lines
 
 server {
@@ -14,7 +18,9 @@ server {
 #        auth_basic "Restricted";
 #        auth_basic_user_file /config/nginx/.htpasswd;
         include /config/nginx/proxy.conf;
-        proxy_pass http://HOSTIP:8096;
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_emby emby;
+        proxy_pass http://$upstream_emby:8096;
         proxy_set_header Range $http_range;
         proxy_set_header If-Range $http_if_range;
         proxy_set_header Upgrade $http_upgrade;
