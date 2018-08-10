@@ -22,6 +22,9 @@ server {
 
 	# all ssl related config moved to ssl.conf
 	include /config/nginx/ssl.conf;
+	
+	# enable for ldap auth
+	#include /config/nginx/ldap.conf;
 
 	client_max_body_size 0;
 
@@ -86,13 +89,14 @@ server {
 #
 #	include /config/nginx/ssl.conf;
 #
+#	include /config/nginx/ldap.conf;
+#
 #	client_max_body_size 0;
 #
 #	location / {
-#		# the next three lines will enable ldap auth
+#		# the next two lines will enable ldap auth along with the included ldap.conf in the server block
 #		auth_request /auth;
 #		error_page 401 =200 /login;
-#		include /config/nginx/ldap.conf;
 #
 #		include /config/nginx/proxy.conf;
 #		proxy_pass https://heimdall:443;
