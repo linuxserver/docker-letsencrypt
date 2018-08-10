@@ -1,4 +1,4 @@
-## Version 2018/04/20 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2018/08/10 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
@@ -75,3 +75,5 @@ server {
 
 # enable subdomain method reverse proxy confs
 include /config/nginx/proxy-confs/*.subdomain.conf;
+# enable proxy cache for auth
+proxy_cache_path cache/ keys_zone=auth_cache:10m;
