@@ -65,6 +65,8 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/proxy.conf /config/nginx/proxy.conf
 [[ ! -f /config/nginx/ssl.conf ]] && \
 	cp /defaults/ssl.conf /config/nginx/ssl.conf
+[[ ! -f /config/nginx/ldap.conf ]] && \
+	cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
 [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
