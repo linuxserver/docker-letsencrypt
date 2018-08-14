@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx:3.7
+FROM lsiobase/alpine.nginx:3.8
 
 # set version label
 ARG BUILD_DATE
@@ -61,7 +61,7 @@ RUN \
 	py2-future \
 	py2-pip && \
  echo "**** install certbot plugins ****" && \
- pip install --no-cache-dir \
+ pip install -U --no-cache-dir \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-digitalocean \
@@ -71,7 +71,8 @@ RUN \
 	certbot-dns-luadns \
 	certbot-dns-nsone \
 	certbot-dns-rfc2136 \
-	certbot-dns-route53 && \
+	certbot-dns-route53 \
+	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
 	/etc/fail2ban/jail.d/alpine-ssh.conf && \
