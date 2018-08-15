@@ -1,5 +1,4 @@
 # make sure that your dns has a cname set for monitorr
-# to enable password access, uncomment the two auth_basic lines
 
 server {
     listen 443 ssl;
