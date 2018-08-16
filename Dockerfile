@@ -62,6 +62,8 @@ RUN \
 	py2-pip && \
  echo "**** install certbot plugins ****" && \
  pip install -U --no-cache-dir \
+	pip && \
+ pip install -U --no-cache-dir \
 	certbot \ 
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
