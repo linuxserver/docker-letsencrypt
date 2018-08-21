@@ -98,6 +98,9 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 ### Site config and reverse proxy
 * The default site config resides at `/config/nginx/site-confs/default`. Feel free to modify this file, and you can add other conf files to this directory. However, if you delete the `default` file, a new default will be created on container start.
 * Preset reverse proxy config files are added for popular apps. See the `_readme` file under `/config/nginx/proxy_confs` for instructions on how to enable them
+* If you wish to hide your site from search engine crawlers, you may find it useful to add this configuration line to your site config, within the server block, above the line where ssl.conf is included
+`add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";`
+This will *ask* Google et al not to index and list your site. Be careful with this, as you will eventually be de-listed if you leave this line in on a site you wish to be present on search engines
 ### Using certs in other containers
 * This container includes auto-generated pfx and private-fullchain-bundle pem certs that are needed by other apps like Emby and Znc. 
   * To use these certs in other containers, do either of the following:
@@ -135,6 +138,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **21.08.18:** Rebase to alpine 3.8, add info on search engine de-listing
 + **08.08.18:** Add subdomain proxy conf for plex, update emby proxy confs
 + **25.07.18:** Add subdomain proxy conf for syncthing
 + **23.07.18:** Remove backwards compatibility and set default validation method to http. Update portainer proxy config to fix websockets. Add unifi proxy conf.
