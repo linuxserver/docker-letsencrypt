@@ -19,7 +19,7 @@ location = /.well-known/caldav {
     return 301 $scheme://$host/nextcloud/remote.php/dav;
 }
 
-location /nextcloud {
+location ~ "^/nextcloud/?.*" {
     include /config/nginx/proxy.conf;
     rewrite ^/nextcloud/?(.*) /$1 break;
     resolver 127.0.0.11 valid=30s;
