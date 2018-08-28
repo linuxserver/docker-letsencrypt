@@ -18,7 +18,7 @@ server {
         #auth_basic_user_file /config/nginx/.htpasswd;
 
         # enable the next two lines for ldap auth
-        #proxy_auth /auth;
+        #auth_request /auth;
         #error_page 401 =200 /login;
 
         include /config/nginx/proxy.conf;
