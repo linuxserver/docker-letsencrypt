@@ -1,7 +1,7 @@
 # make sure that your dns has a cname set for portainer
 
 server {
-    listen 443 ssl;
+    listen [::]:443 ssl http2;
 
     server_name portainer.*;
 
