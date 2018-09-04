@@ -10,8 +10,8 @@ LABEL maintainer="aptalca"
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
-# install packages
 RUN \
+ echo "**** install runtime packages ****" && \
  apk add --no-cache \
 	certbot \
 	curl \
