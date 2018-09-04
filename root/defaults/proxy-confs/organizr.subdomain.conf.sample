@@ -1,5 +1,4 @@
 # make sure that your dns has a cname set for organizr
-# to enable password access, uncomment the two auth_basic lines
 
 server {
     listen 443 ssl;
@@ -9,10 +8,19 @@ server {
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
+    
+    # enable for ldap auth, fill in ldap details in ldap.conf 
+    #include /config/nginx/ldap.conf;
 
     location / {
-#        auth_basic "Restricted";
-#        auth_basic_user_file /config/nginx/.htpasswd;
+        # enable the next two lines for http auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable the next two lines for ldap auth
+        #auth_request /auth;
+        #error_page 401 =200 /login;
+
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
         set $upstream_organizr organizr;

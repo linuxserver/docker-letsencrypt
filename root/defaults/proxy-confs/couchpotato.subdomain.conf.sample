@@ -1,14 +1,14 @@
-# make sure that your dns has a cname set for tautulli and that your tautulli container is not using a base url
+# make sure that your dns has a cname set for couchpotato and that your couchpotato container is not using a base url
 
 server {
     listen 443 ssl;
 
-    server_name tautulli.*;
+    server_name couchpotato.*;
 
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
-    
+
     # enable for ldap auth, fill in ldap details in ldap.conf 
     #include /config/nginx/ldap.conf;
 
@@ -23,14 +23,7 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_tautulli tautulli;
-        proxy_pass http://$upstream_tautulli:8181;
-    }
-    
-    location ^~ /api {
-        include /config/nginx/proxy.conf;
-        resolver 127.0.0.11 valid=30s;
-        set $upstream_tautulli tautulli;
-        proxy_pass http://$upstream_tautulli:8181;
+        set $upstream_couchpotato couchpotato;
+        proxy_pass http://$upstream_couchpotato:5050;
     }
 }

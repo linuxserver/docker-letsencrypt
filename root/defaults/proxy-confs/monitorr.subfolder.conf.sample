@@ -1,9 +1,14 @@
 # monitorr does not require a base url setting
-# to enable password access, uncomment the two auth_basic lines
 
 location /monitorr {
-#    auth_basic "Restricted";
-#    auth_basic_user_file /config/nginx/.htpasswd;
+    # enable the next two lines for http auth
+    #auth_basic "Restricted";
+    #auth_basic_user_file /config/nginx/.htpasswd;
+
+    # enable the next two lines for ldap auth, also customize and enable ldap.conf in the default conf
+    #auth_request /auth;
+    #error_page 401 =200 /login;
+
     include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
     set $upstream_monitorr monitorr;

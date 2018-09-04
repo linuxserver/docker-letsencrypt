@@ -3,7 +3,6 @@
 # for host mode, replace the line "proxy_pass http://$upstream_emby:8096;" with "proxy_pass http://HOSTIP:8096;" HOSTIP being the IP address of emby
 # in emby settings, under "Advanced" change the public https port to 443, leave the local ports as is, set the "external domain" to your url,
 # and set the "Secure connection mode" to "Handled by reverse proxy"
-# to enable password access, uncomment the two auth_basic lines
 
 server {
     listen 443 ssl;
@@ -13,10 +12,19 @@ server {
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
+    
+    # enable for ldap auth, fill in ldap details in ldap.conf 
+    #include /config/nginx/ldap.conf;
 
     location / {
-#        auth_basic "Restricted";
-#        auth_basic_user_file /config/nginx/.htpasswd;
+        # enable the next two lines for http auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable the next two lines for ldap auth
+        #auth_request /auth;
+        #error_page 401 =200 /login;
+
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
         set $upstream_emby emby;

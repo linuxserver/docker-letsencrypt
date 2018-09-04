@@ -1,7 +1,6 @@
 # make sure that your dns has a cname set for plex, if plex is running in bridge mode, the below config should work as is, for host mode,
 # replace the line "proxy_pass https://$upstream_plex:32400;" with "proxy_pass https://HOSTIP:32400;" HOSTIP being the IP address of plex
 # in plex server settings, under network, fill in "Custom server access URLs" with your domain (ie. "https://plex.yourdomain.url:443")
-# to enable password access, uncomment the two auth_basic lines
 
 server {
     listen 443 ssl;
@@ -13,11 +12,20 @@ server {
     client_max_body_size 0;
     proxy_redirect off;
     proxy_buffering off;
+    
+    # enable for ldap auth, fill in ldap details in ldap.conf 
+    #include /config/nginx/ldap.conf;
 
 
     location / {
-#        auth_basic "Restricted";
-#        auth_basic_user_file /config/nginx/.htpasswd;
+        # enable the next two lines for http auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable the next two lines for ldap auth
+        #auth_request /auth;
+        #error_page 401 =200 /login;
+
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
         set $upstream_plex plex;

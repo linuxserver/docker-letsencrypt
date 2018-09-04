@@ -1,4 +1,4 @@
-## Version 2018/04/20 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2018/08/15 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
@@ -22,6 +22,9 @@ server {
 
 	# all ssl related config moved to ssl.conf
 	include /config/nginx/ssl.conf;
+	
+	# enable for ldap auth
+	#include /config/nginx/ldap.conf;
 
 	client_max_body_size 0;
 
@@ -73,5 +76,36 @@ server {
 #	}
 #}
 
+# sample reverse proxy config for "heimdall" via subdomain, with ldap authentication
+# ldap-auth container has to be running and the /config/nginx/ldap.conf file should be filled with ldap info
+# notice this is a new server block, you need a new server block for each subdomain
+#server {
+#	listen 443 ssl;
+#
+#	root /config/www;
+#	index index.html index.htm index.php;
+#
+#	server_name heimdall.*;
+#
+#	include /config/nginx/ssl.conf;
+#
+#	include /config/nginx/ldap.conf;
+#
+#	client_max_body_size 0;
+#
+#	location / {
+#		# the next two lines will enable ldap auth along with the included ldap.conf in the server block
+#		auth_request /auth;
+#		error_page 401 =200 /login;
+#
+#		include /config/nginx/proxy.conf;
+#		resolver 127.0.0.11 valid=30s;
+#		set $upstream_heimdall heimdall;
+#		proxy_pass https://$upstream_heimdall:443;
+#	}
+#}
+
 # enable subdomain method reverse proxy confs
 include /config/nginx/proxy-confs/*.subdomain.conf;
+# enable proxy cache for auth
+proxy_cache_path cache/ keys_zone=auth_cache:10m;
