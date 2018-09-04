@@ -1,7 +1,8 @@
 # make sure that your dns has a cname set for syncthing and that your syncthing container is not using a base url
 
 server {
-    listen 443 ssl;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
 
     server_name syncthing.*;
 

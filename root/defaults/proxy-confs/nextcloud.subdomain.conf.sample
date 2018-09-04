@@ -3,7 +3,8 @@
 # at the end of the following article: https://blog.linuxserver.io/2017/05/10/installing-nextcloud-on-unraid-with-letsencrypt-reverse-proxy/
 
 server {
-    listen 443 ssl;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
 
     server_name nextcloud.*;
 

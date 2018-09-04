@@ -1,15 +1,16 @@
 # make sure that your dns has a cname set for bazarr and that your bazarr container is not using a base url
 
 server {
-    listen 443 ssl;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
 
     server_name bazarr.*;
 
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
-    
-    # enable for ldap auth, fill in ldap details in ldap.conf 
+
+    # enable for ldap auth, fill in ldap details in ldap.conf
     #include /config/nginx/ldap.conf;
 
     location / {
