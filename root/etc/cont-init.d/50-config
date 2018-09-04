@@ -116,7 +116,7 @@ else
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
-if [ ! -z "$SUBDOMAINS" ]; then
+if [ -n "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
   if [ "$SUBDOMAINS" = "wildcard" ]; then
     export URL_REAL="-d *.${URL} -d ${URL}"
@@ -140,7 +140,7 @@ else
 fi
 
 # add extra domains
-if [ ! -z "$EXTRA_DOMAINS" ]; then
+if [ -n "$EXTRA_DOMAINS" ]; then
   echo "EXTRA_DOMAINS entered, processing"
   for job in $(echo "$EXTRA_DOMAINS" | tr "," " "); do
     export EXTRA_DOMAINS_REAL="$EXTRA_DOMAINS_REAL -d ${job}"
