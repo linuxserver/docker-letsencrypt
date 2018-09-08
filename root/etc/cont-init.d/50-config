@@ -16,7 +16,7 @@ EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
 # Sanitize variables
-SANED_VARS=( DHLEVEL DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
+SANED_VARS=( DHLEVEL DNSPLUGIN EMAIL CLOUDFLARE_API_KEY EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
 for i in "${SANED_VARS[@]}"
 do
   export echo "$i"="${!i//\"/}"
@@ -30,14 +30,20 @@ done
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf} \
-	/var/run/fail2ban
+  /config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf,keys} \
+  /var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
+# set cloudflare config
+sed -i "s/<<EMAIL>>/${EMAIL}/" /config/dns-conf/cloudflare.ini
+sed -i "s/<<CLOUDFLARE_API_KEY>>/${CLOUDFLARE_API_KEY}/" /config/dns-conf/cloudflare.ini
 chown -R abc:abc /config/dns-conf
+
+# copy cloudflare keys
+cp -R /defaults/keys /config/
 
 # copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
@@ -47,26 +53,28 @@ cp -R /defaults/fail2ban/filter.d /config/fail2ban/
 cp -R /defaults/fail2ban/action.d /config/fail2ban/
 # if jail.local is missing in /config, copy default
 [[ ! -f /config/fail2ban/jail.local ]] && \
-	cp /defaults/jail.local /config/fail2ban/jail.local
+  cp /defaults/jail.local /config/fail2ban/jail.local
 # Replace fail2ban config with user config
 [[ -d /etc/fail2ban/filter.d ]] && \
-	rm -rf /etc/fail2ban/filter.d
+  rm -rf /etc/fail2ban/filter.d
 [[ -d /etc/fail2ban/action.d ]] && \
-	rm -rf /etc/fail2ban/action.d
+  rm -rf /etc/fail2ban/action.d
 cp -R /config/fail2ban/filter.d /etc/fail2ban/
 cp -R /config/fail2ban/action.d /etc/fail2ban/
 cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
 cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
+sed -i "s/<<EMAIL>>/${EMAIL}/" /config/fail2ban/action.d/cloudflare.conf
+sed -i "s/<<CLOUDFLARE_API_KEY>>/${CLOUDFLARE_API_KEY}/" /config/fail2ban/action.d/cloudflare.conf
 
 # copy crontab and proxy defaults if needed
 [[ ! -f /config/crontabs/root ]] && \
-	cp /etc/crontabs/root /config/crontabs/
+  cp /etc/crontabs/root /config/crontabs/
 [[ ! -f /config/nginx/proxy.conf ]] && \
-	cp /defaults/proxy.conf /config/nginx/proxy.conf
+  cp /defaults/proxy.conf /config/nginx/proxy.conf
 [[ ! -f /config/nginx/ssl.conf ]] && \
-	cp /defaults/ssl.conf /config/nginx/ssl.conf
+  cp /defaults/ssl.conf /config/nginx/ssl.conf
 [[ ! -f /config/nginx/ldap.conf ]] && \
-	cp /defaults/ldap.conf /config/nginx/ldap.conf
+  cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
 [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
@@ -225,12 +233,12 @@ fi
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
-	touch /config/log/nginx/error.log
+  touch /config/log/nginx/error.log
 [[ ! -f /config/log/nginx/access.log ]] && \
-	touch /config/log/nginx/access.log
+  touch /config/log/nginx/access.log
 
 # permissions
 chown -R abc:abc \
-	/config
+  /config
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
