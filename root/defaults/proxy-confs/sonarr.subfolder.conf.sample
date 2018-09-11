@@ -1,6 +1,6 @@
 # first go into sonarr settings, under "General" set the URL Base to /sonarr and restart the sonarr container
 
-location /sonarr {
+location ^~ /sonarr {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
