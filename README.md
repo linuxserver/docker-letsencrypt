@@ -140,6 +140,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 ## Versions
 
 + **11.09.18:** Add various preset proxy confs and fix others (thanks @nemchik and @LeoVerto)
++ **04.09.18:** Linting fixes.
 + **30.08.18:** Add support for ldap auth, add proxy confs for bazarr, couchpotato, headphones, lidarr and plex subfolder (thanks @nemchik and @jedahan)
 + **21.08.18:** Rebase to alpine 3.8, add info on search engine de-listing
 + **08.08.18:** Add subdomain proxy conf for plex, update emby proxy confs
