@@ -4,7 +4,7 @@ location /ombi {
     return 301 $scheme://$host/ombi/;
 }
 
-location /ombi/ {
+location ^~ /ombi/ {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
