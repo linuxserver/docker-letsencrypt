@@ -1,6 +1,6 @@
 # first go into nzbhydra settings, set the URL Base to /nzbhydra and restart the nzbhydra container
 
-location /nzbhydra {
+location ^~ /nzbhydra {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
