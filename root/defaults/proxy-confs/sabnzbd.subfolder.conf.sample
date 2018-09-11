@@ -1,6 +1,6 @@
 # sabnzbd already uses the base url /sabnzbd by default so you don't need to do anything extra
 
-location /sabnzbd {
+location ^~ /sabnzbd {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
