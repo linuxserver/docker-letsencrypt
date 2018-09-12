@@ -8,8 +8,8 @@ server {
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
-    
-    # enable for ldap auth, fill in ldap details in ldap.conf 
+
+    # enable for ldap auth, fill in ldap details in ldap.conf
     #include /config/nginx/ldap.conf;
 
     location / {
@@ -26,8 +26,8 @@ server {
         set $upstream_sabnzbd sabnzbd;
         proxy_pass http://$upstream_sabnzbd:8080;
     }
-    
-    location ^~ /api {
+
+    location ~ (/sabnzbd)?/api {
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
         set $upstream_sabnzbd sabnzbd;

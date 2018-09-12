@@ -1,15 +1,15 @@
-# make sure that your dns has a cname set for nzbhydra and that your nzbhydra container is not using a base url
+# make sure that your dns has a cname set for rutorrent
 
 server {
     listen 443 ssl;
 
-    server_name nzbhydra.*;
+    server_name rutorrent.*;
 
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
-    
-    # enable for ldap auth, fill in ldap details in ldap.conf 
+
+    # enable for ldap auth, fill in ldap details in ldap.conf
     #include /config/nginx/ldap.conf;
 
     location / {
@@ -23,14 +23,14 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_nzbhydra hydra2;
-        proxy_pass http://$upstream_nzbhydra:5076;
+        set $upstream_rutorrent rutorrent;
+        proxy_pass http://$upstream_rutorrent:80;
     }
 
-    location ~ (/nzbhydra)?/api {
+    location /RPC2 {
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_nzbhydra hydra2;
-        proxy_pass http://$upstream_nzbhydra:5076;
+        set $upstream_rutorrent rutorrent;
+        proxy_pass http://$upstream_rutorrent:80;
     }
 }

@@ -1,4 +1,4 @@
-## Version 2018/08/15 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2018/09/12 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
@@ -34,10 +34,7 @@ server {
 
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		# With php7-cgi alone:
 		fastcgi_pass 127.0.0.1:9000;
-		# With php7-fpm:
-		#fastcgi_pass unix:/var/run/php7-fpm.sock;
 		fastcgi_index index.php;
 		include /etc/nginx/fastcgi_params;
 	}

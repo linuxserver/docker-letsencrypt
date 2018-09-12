@@ -1,6 +1,6 @@
-# first go into sonarr settings, under "General" set the URL Base to /sonarr and restart the sonarr container
+# rutorrent does not require a base url setting
 
-location ^~ /sonarr {
+location ^~ /rutorrent {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
@@ -11,13 +11,15 @@ location ^~ /sonarr {
 
     include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_sonarr sonarr;
-    proxy_pass http://$upstream_sonarr:8989;
+    set $upstream_rutorrent rutorrent;
+    rewrite /rutorrent(.*) $1 break;
+    proxy_pass http://$upstream_rutorrent:80;
 }
 
-location ^~ /sonarr/api {
+location ^~ /rutorrent/RPC2 {
     include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_sonarr sonarr;
-    proxy_pass http://$upstream_sonarr:8989;
+    set $upstream_rutorrent rutorrent;
+    rewrite /rutorrent(.*) $1 break;
+    proxy_pass http://$upstream_rutorrent:80;
 }

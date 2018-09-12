@@ -1,9 +1,9 @@
-# make sure that your dns has a cname set for nzbhydra and that your nzbhydra container is not using a base url
+# make sure that your dns has a cname set for deluge and that your deluge container is not using a base url
 
 server {
     listen 443 ssl;
 
-    server_name nzbhydra.*;
+    server_name deluge.*;
 
     include /config/nginx/ssl.conf;
 
@@ -23,14 +23,7 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_nzbhydra hydra2;
-        proxy_pass http://$upstream_nzbhydra:5076;
-    }
-
-    location ~ (/nzbhydra)?/api {
-        include /config/nginx/proxy.conf;
-        resolver 127.0.0.11 valid=30s;
-        set $upstream_nzbhydra hydra2;
-        proxy_pass http://$upstream_nzbhydra:5076;
+        set $upstream_deluge deluge;
+        proxy_pass http://$upstream_deluge:8112;
     }
 }

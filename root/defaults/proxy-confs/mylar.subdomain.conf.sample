@@ -1,9 +1,9 @@
-# make sure that your dns has a cname set for tautulli and that your tautulli container is not using a base url
+# make sure that your dns has a cname set for mylar
 
 server {
     listen 443 ssl;
 
-    server_name tautulli.*;
+    server_name mylar.*;
 
     include /config/nginx/ssl.conf;
 
@@ -23,14 +23,7 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_tautulli tautulli;
-        proxy_pass http://$upstream_tautulli:8181;
-    }
-
-    location ~ (/tautulli)?/api {
-        include /config/nginx/proxy.conf;
-        resolver 127.0.0.11 valid=30s;
-        set $upstream_tautulli tautulli;
-        proxy_pass http://$upstream_tautulli:8181;
+        set $upstream_mylar mylar;
+        proxy_pass http://$upstream_mylar:8090;
     }
 }

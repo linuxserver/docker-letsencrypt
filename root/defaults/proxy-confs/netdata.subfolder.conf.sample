@@ -1,6 +1,6 @@
-# first go into bazarr settings, under "General" set the URL Base to /bazarr and restart the bazarr container
+# rutorrent does not require a base url setting
 
-location ^~ /bazarr {
+location ~ /netdata {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
@@ -11,6 +11,7 @@ location ^~ /bazarr {
 
     include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_bazarr bazarr;
-    proxy_pass http://$upstream_bazarr:6767;
+    set $upstream_netdata netdata;
+    rewrite /netdata(.*) $1 break;
+    proxy_pass http://$upstream_netdata:19999;
 }

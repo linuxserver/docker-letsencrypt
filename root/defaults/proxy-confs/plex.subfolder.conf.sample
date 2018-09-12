@@ -4,6 +4,9 @@
 # in plex server settings, under network, fill in "Custom server access URLs" with your domain (ie. "https://yourdomain.url/plex:443")
 
 location /plex {
+    return 301 $scheme://$host/plex/;
+}
+location ^~ /plex/ {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
