@@ -1,6 +1,9 @@
 # first go into bazarr settings, under "General" set the URL Base to /bazarr and restart the bazarr container
 
-location ^~ /bazarr {
+location /bazarr {
+    return 301 $scheme://$host/bazarr/;
+}
+location ^~ /bazarr/ {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
