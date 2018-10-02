@@ -6,7 +6,7 @@
     delaycompress
     nodateext
     postrotate
-        /usr/bin/fail2ban-client flushlogs
+        /usr/bin/fail2ban-client flushlogs 1>/dev/null || true
     endscript
     su abc abc
 }
