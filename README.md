@@ -120,7 +120,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
 * You can check which jails are active via `docker exec -it letsencrypt fail2ban-client status`
 * You can check the status of a specific jail via `docker exec -it letsencrypt fail2ban-client status <jail name>`
-* You can unban an IP via set `docker exec -it letsencrypt fail2ban-client <jail name> unbanip <IP>`
+* You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
 * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
 
 
