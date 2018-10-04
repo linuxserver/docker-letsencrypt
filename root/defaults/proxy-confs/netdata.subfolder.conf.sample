@@ -1,4 +1,4 @@
-# rutorrent does not require a base url setting
+# netdata does not require a base url setting
 
 location /netdata {
     return 301 $scheme://$host/netdata/;
