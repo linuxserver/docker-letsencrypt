@@ -1,5 +1,4 @@
-# the default context-path is /airsonic. for other cases, use whatever
-# that you have set for =CONTEXT_PATH for the location.
+# set the CONTEXT_PATH variable to /airsonic in airsonic container.
 
 location ^~ /airsonic {
     # enable the next two lines for http auth
