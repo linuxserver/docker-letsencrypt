@@ -1,4 +1,4 @@
-# first go into bazarr settings, under "General" set the URL Base to /bazarr and restart the bazarr container
+# first go into bazarr settings, under "General" set the URL Base to /bazarr/ and restart the bazarr container
 
 location /bazarr {
     return 301 $scheme://$host/bazarr/;
