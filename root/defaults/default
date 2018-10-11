@@ -22,9 +22,9 @@ server {
 
 	# all ssl related config moved to ssl.conf
 	include /config/nginx/ssl.conf;
-	
+
 	# enable for ldap auth
-	#include /config/nginx/ldap.conf;
+	#include /config/nginx/auth-confs/ldap.conf;
 
 	client_max_body_size 0;
 
@@ -69,7 +69,7 @@ server {
 #		auth_basic "Restricted";
 #		auth_basic_user_file /config/nginx/.htpasswd;
 #		include /config/nginx/proxy.conf;
-#		proxy_pass http://192.168.1.50:5050;	
+#		proxy_pass http://192.168.1.50:5050;
 #	}
 #}
 
@@ -86,7 +86,7 @@ server {
 #
 #	include /config/nginx/ssl.conf;
 #
-#	include /config/nginx/ldap.conf;
+#	include /config/nginx/auth-confs/ldap.conf;
 #
 #	client_max_body_size 0;
 #

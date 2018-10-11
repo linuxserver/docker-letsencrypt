@@ -1,5 +1,5 @@
 # plex does not require a base url setting
-# if plex is running in bridge mode, the below config should work as is. 
+# if plex is running in bridge mode, the below config should work as is.
 # for host mode, replace the line "proxy_pass https://$upstream_plex:32400;" with "proxy_pass https://HOSTIP:32400/web;" HOSTIP being the IP address of plex
 # in plex server settings, under network, fill in "Custom server access URLs" with your domain (ie. "https://yourdomain.url/plex:443")
 
@@ -11,7 +11,7 @@ location ^~ /plex/ {
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
 
-    # enable the next two lines for ldap auth, also customize and enable ldap.conf in the default conf
+    # enable the next two lines for ldap auth, also customize and enable auth-confs/ldap.conf in the default conf
     #auth_request /auth;
     #error_page 401 =200 /login;
 

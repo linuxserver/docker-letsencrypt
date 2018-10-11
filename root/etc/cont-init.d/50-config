@@ -35,6 +35,9 @@ mkdir -p \
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
+# copy auth configs
+cp -R /defaults/auth-confs /config/nginx/
+
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf

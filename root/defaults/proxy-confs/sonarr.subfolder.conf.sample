@@ -5,7 +5,7 @@ location ^~ /sonarr {
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
 
-    # enable the next two lines for ldap auth, also customize and enable ldap.conf in the default conf
+    # enable the next two lines for ldap auth, also customize and enable auth-confs/ldap.conf in the default conf
     #auth_request /auth;
     #error_page 401 =200 /login;
 

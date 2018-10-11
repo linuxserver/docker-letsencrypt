@@ -8,9 +8,9 @@ server {
     include /config/nginx/ssl.conf;
 
     client_max_body_size 0;
-    
-    # enable for ldap auth, fill in ldap details in ldap.conf 
-    #include /config/nginx/ldap.conf;
+
+    # enable for ldap auth, fill in ldap details in ldap.conf
+    #include /config/nginx/auth-confs/ldap.conf;
 
     location / {
         # enable the next two lines for http auth
@@ -27,7 +27,7 @@ server {
         proxy_set_header Connection "";
         proxy_http_version 1.1;
     }
-    
+
     location /api/websocket/ {
         # enable the next two lines for http auth
         #auth_basic "Restricted";
