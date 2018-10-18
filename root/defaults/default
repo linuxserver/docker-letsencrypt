@@ -22,7 +22,7 @@ server {
 
 	# all ssl related config moved to ssl.conf
 	include /config/nginx/ssl.conf;
-	
+
 	# enable for ldap auth
 	#include /config/nginx/ldap.conf;
 
@@ -30,13 +30,7 @@ server {
 
 	location / {
 		try_files $uri $uri/ /index.html /index.php?$args =404;
-	}
-
-	location ~ \.php$ {
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass 127.0.0.1:9000;
-		fastcgi_index index.php;
-		include /etc/nginx/fastcgi_params;
+		include /config/nginx/php.conf;
 	}
 
 # sample reverse proxy config for password protected couchpotato running at IP 192.168.1.50 port 5050 with base url "cp"
@@ -69,7 +63,7 @@ server {
 #		auth_basic "Restricted";
 #		auth_basic_user_file /config/nginx/.htpasswd;
 #		include /config/nginx/proxy.conf;
-#		proxy_pass http://192.168.1.50:5050;	
+#		proxy_pass http://192.168.1.50:5050;
 #	}
 #}
 
