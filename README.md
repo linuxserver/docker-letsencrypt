@@ -47,14 +47,15 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 * `-p 80 -p 443` - the port(s)
 * `-v /config` - all the config files including the webroot reside here
 * `-e URL` - the top url you have control over ("customdomain.com" if you own it, or "customsubdomain.ddnsprovider.com" if dynamic dns)
-* `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via dns validation only)
-* `-e VALIDATION` - letsencrypt validation method to use, options are `http`, `tls-sni` or `dns` (dns method also requires `DNSPLUGIN` variable set)
+* `-e SUBDOMAINS` - subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only)
+* `-e VALIDATION` - letsencrypt validation method to use, options are `http`, `tls-sni`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable set to `wildcard`)
 * `-e PGID` for GroupID - see below for explanation
 * `-e PUID` for UserID - see below for explanation
 * `-e TZ` - timezone ie. `America/New_York`  
   
 _Optional settings:_
 * `-e DNSPLUGIN` - required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf` 
+* `-e DUCKDNSTOKEN` - required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org
 * `-e EMAIL` - your e-mail address for cert registration and notifications
 * `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
 * `-p 80` - Port 80 forwarding is required when `VALIDATION` is set to `http`, but not `dns` or `tls-sni`
@@ -88,6 +89,7 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 * For `dns` validation, make sure to enter your credentials into the corresponding ini file under `/config/dns-conf`
   * Cloudflare provides free accounts for managing dns and is very easy to use with this image. Make sure that it is set up for "dns only" instead of "dns + proxy"
   * Google dns plugin is meant to be used with "Google Cloud DNS", a paid enterprise product, and not for "Google Domains DNS"
+* For `duckdns` validation, set the `SUBDOMAINS` variable to `wildcard`, and set the `DUCKDNSTOKEN` variable with your duckdns token. You can use our [duckdns image](https://hub.docker.com/r/linuxserver/duckdns/) to update your IP on duckdns.org. 
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the `URL` will be `yoursubdomain.duckdns.org` and the `SUBDOMAINS` can be `www,ftp,cloud`
 * After setup, navigate to `https://yourdomain.url` to access the default homepage
@@ -139,6 +141,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **19.10.18:** Add support for duckdns wildcard certs via dns validation
 + **02.10.18:** Fix fail2ban instructions and logrotate conf
 + **11.09.18:** Add various preset proxy confs and fix others (thanks @nemchik and @LeoVerto)
 + **04.09.18:** Linting fixes.
