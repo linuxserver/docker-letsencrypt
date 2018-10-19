@@ -119,8 +119,13 @@ fi
 if [ -n "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
   if [ "$SUBDOMAINS" = "wildcard" ]; then
-    export URL_REAL="-d *.${URL} -d ${URL}"
-    echo "Wildcard cert for $URL will be requested"
+    if [ "$ONLY_SUBDOMAINS" = true ]; then
+      export URL_REAL="-d *.${URL}"
+      echo "Wildcard cert for only the subdomains of $URL will be requested"
+    else
+      export URL_REAL="-d *.${URL} -d ${URL}"
+      echo "Wildcard cert for $URL will be requested"
+    fi
   else
     echo "SUBDOMAINS entered, processing"
     for job in $(echo "$SUBDOMAINS" | tr "," " "); do
@@ -176,7 +181,7 @@ fi
 
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
-if [ "$ONLY_SUBDOMAINS" = "true" ]; then
+if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ] ; then
   DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
   ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
