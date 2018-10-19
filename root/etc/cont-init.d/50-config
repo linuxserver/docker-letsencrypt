@@ -176,6 +176,7 @@ elif [ "$VALIDATION" = "tls-sni" ]; then
   echo "tls-sni validation is selected"
 elif [ "$VALIDATION" = "duckdns" ]; then
   PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
+  chmod +x /app/duckdns-txt
   echo "duckdns validation is selected"
 else
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
