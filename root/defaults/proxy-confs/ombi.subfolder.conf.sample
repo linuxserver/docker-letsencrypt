@@ -19,6 +19,12 @@ location ^~ /ombi/ {
     proxy_pass http://$upstream_ombi:3579;
 }
 
-if ($http_referer ~* /ombi/) {
-    rewrite ^/dist/(.*) $scheme://$host/ombi/dist/$1 permanent;
+location ^~ /ombi/swagger {
+    include /config/nginx/proxy.conf;
+    resolver 127.0.0.11 valid=30s;
+    set $upstream_ombi ombi;
+    proxy_pass http://$upstream_ombi:3579;
+}
+if ($http_referer ~* /ombi) {
+    rewrite ^/swagger/(.*) /ombi/swagger/$1? redirect;
 }
