@@ -119,21 +119,21 @@ fi
 if [ -n "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
   if [ "$SUBDOMAINS" = "wildcard" ]; then
-    export URL_REAL="-d *.${URL} -d ${URL}"
+    export SUBDOMAINS_REAL="-d *.${URL}"
     echo "Wildcard cert for $URL will be requested"
   else
     echo "SUBDOMAINS entered, processing"
     for job in $(echo "$SUBDOMAINS" | tr "," " "); do
       export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
     done
-    if [ "$ONLY_SUBDOMAINS" = true ]; then
-      URL_REAL="$SUBDOMAINS_REAL"
-      echo "Only subdomains, no URL in cert"
-    else
-      URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
-    fi
-    echo "Sub-domains processed are: $SUBDOMAINS_REAL"
   fi
+  if [ "$ONLY_SUBDOMAINS" = true ]; then
+    URL_REAL="$SUBDOMAINS_REAL"
+    echo "Only subdomains, no URL in cert"
+  else
+    URL_REAL="-d ${URL} ${SUBDOMAINS_REAL}"
+  fi
+  echo "Sub-domains processed are: $SUBDOMAINS_REAL"
 else
   echo "No subdomains defined"
   URL_REAL="-d $URL"
