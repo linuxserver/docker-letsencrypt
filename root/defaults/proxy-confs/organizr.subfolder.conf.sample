@@ -1,36 +1,33 @@
 # In order to use this location block you need to edit the default file one folder up and comment out the / location
 
-location / {
-    # enable the next two lines for http auth
-    #auth_basic "Restricted";
-    #auth_basic_user_file /config/nginx/.htpasswd;
+# Organizr doesn't work without a slash at the end, so redirect to /organizr/
+location = /organizr {
+    return 301 /organizr/;
+}
 
-    # enable the next two lines for ldap auth, also customize and enable ldap.conf in the default conf
-    #auth_request /auth;
-    #error_page 401 =200 /login;
-
-    include /config/nginx/proxy.conf;
+location /organizr/ {
     resolver 127.0.0.11 valid=30s;
-    set $upstream_organizr organizr;
-    proxy_pass http://$upstream_organizr:80;
+    proxy_pass http://organizr:80/;
+    include /config/nginx/proxy.conf;
 }
 
 location ~ /auth-(admin|user) {
     # This is used for Organizr V1
     internal;
-    include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_organizr organizr;
-    proxy_pass http://$upstream_organizr:80/auth.php?$1;
+    proxy_pass http://organizr:80/auth.php?$1;
     proxy_set_header Content-Length "";
+    include /config/nginx/proxy.conf;
 }
 
-location ~ /auth-([0-9]+) {
-    # This is used for Organizr V2
+location ~ /organizr/auth-([0-9]+) {
     internal;
-    include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_organizr organizr;
-    proxy_pass http://$upstream_organizr:80/api/?v1/auth&group=$1;
+    proxy_pass http://organizr:80/api/?v1/auth&group=$1;
     proxy_set_header Content-Length "";
+    include /config/nginx/proxy.conf;
 }
+
+# Optional: Enable these if you want Organizr to handle error pages
+#error_page 400 403 404 405 408 500 502 503 504 $scheme://$server_name/organizr/?error=$status;
+#error_page 401 $scheme://$server_name/organizr/?error=$status&return=$request_uri;
