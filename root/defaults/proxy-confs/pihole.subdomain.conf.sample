@@ -1,9 +1,9 @@
-# make sure that your dns has a cname set for ombi and that your ombi container is not using a base url
+# make sure that your dns has a cname set for pihole and that your pihole container is not using a base url
 
 server {
     listen 443 ssl;
 
-    server_name ombi.*;
+    server_name pihole.*;
 
     include /config/nginx/ssl.conf;
 
@@ -23,17 +23,22 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_ombi ombi;
-        proxy_pass http://$upstream_ombi:3579;
+        set $upstream_pihole pihole;
+        proxy_pass http://$upstream_pihole:80;
     }
 
-    location ~ (/ombi)?/swagger {
+    location /admin {
+        # enable the next two lines for http auth
+        #auth_basic "Restricted";
+        #auth_basic_user_file /config/nginx/.htpasswd;
+
+        # enable the next two lines for ldap auth
+        #auth_request /auth;
+        #error_page 401 =200 /login;
+
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_ombi ombi;
-        proxy_pass http://$upstream_ombi:3579;
-   }
-   if ($http_referer ~* /ombi) {
-       rewrite ^/swagger/(.*) /ombi/swagger/$1? redirect;
-   }
+        set $upstream_pihole pihole;
+        proxy_pass http://$upstream_pihole:80;
+    }
 }
