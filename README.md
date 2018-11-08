@@ -139,6 +139,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **31.10.18:** Add various preset proxy confs and fix others (thanks @nemchik and @hijxf)
 + **02.10.18:** Fix fail2ban instructions and logrotate conf
 + **11.09.18:** Add various preset proxy confs and fix others (thanks @nemchik and @LeoVerto)
 + **04.09.18:** Linting fixes.
