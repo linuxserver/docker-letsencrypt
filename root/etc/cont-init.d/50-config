@@ -178,6 +178,8 @@ elif [ "$VALIDATION" = "duckdns" ]; then
   PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
   chmod +x /app/duckdns-txt
   echo "duckdns validation is selected"
+  echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
+  export URL_REAL="-d *.${URL}"
 else
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
   echo "http validation is selected"
