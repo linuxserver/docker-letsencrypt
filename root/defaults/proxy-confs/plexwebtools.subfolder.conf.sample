@@ -1,9 +1,9 @@
-# first go into bazarr settings, under "General" set the URL Base to /bazarr/ and restart the bazarr container
+# first go into plexwebtools settings, set the URL Base to /plexwebtools and restart the plex container
 
-location /bazarr {
-    return 301 $scheme://$host/bazarr/;
+location /plexwebtools {
+    return 301 $scheme://$host/plexwebtools/;
 }
-location ^~ /bazarr/ {
+location ^~ /plexwebtools/ {
     # enable the next two lines for http auth
     #auth_basic "Restricted";
     #auth_basic_user_file /config/nginx/.htpasswd;
@@ -14,6 +14,6 @@ location ^~ /bazarr/ {
 
     include /config/nginx/proxy.conf;
     resolver 127.0.0.11 valid=30s;
-    set $upstream_bazarr bazarr;
-    proxy_pass http://$upstream_bazarr:6767;
+    set $upstream_plex plex;
+    proxy_pass http://$upstream_plex:33400;
 }
