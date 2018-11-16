@@ -119,8 +119,13 @@ fi
 if [ -n "$SUBDOMAINS" ]; then
   echo "SUBDOMAINS entered, processing"
   if [ "$SUBDOMAINS" = "wildcard" ]; then
-    export URL_REAL="-d *.${URL} -d ${URL}"
-    echo "Wildcard cert for $URL will be requested"
+    if [ "$ONLY_SUBDOMAINS" = true ]; then
+      export URL_REAL="-d *.${URL}"
+      echo "Wildcard cert for only the subdomains of $URL will be requested"
+    else
+      export URL_REAL="-d *.${URL} -d ${URL}"
+      echo "Wildcard cert for $URL will be requested"
+    fi
   else
     echo "SUBDOMAINS entered, processing"
     for job in $(echo "$SUBDOMAINS" | tr "," " "); do
@@ -169,6 +174,12 @@ if [ "$VALIDATION" = "dns" ]; then
 elif [ "$VALIDATION" = "tls-sni" ]; then
   PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
   echo "tls-sni validation is selected"
+elif [ "$VALIDATION" = "duckdns" ]; then
+  PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
+  chmod +x /app/duckdns-txt
+  echo "duckdns validation is selected"
+  echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
+  export URL_REAL="-d *.${URL}"
 else
   PREFCHAL="--non-interactive --standalone --preferred-challenges http"
   echo "http validation is selected"
@@ -176,7 +187,7 @@ fi
 
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
-if [ "$ONLY_SUBDOMAINS" = "true" ]; then
+if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ] ; then
   DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
   ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
@@ -186,7 +197,7 @@ fi
 # checking for changes in cert variables, revoking certs if necessary
 if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
   echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-  if [ "$ORIGONLY_SUBDOMAINS" = "true" ]; then
+  if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
     ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
     [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
   else
@@ -197,7 +208,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\" DUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
@@ -209,6 +220,8 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
   else
     if [ "$VALIDATION" = "dns" ]; then
       echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${DNSPLUGIN}.ini file."
+    elif [ "$VALIDATION" = "duckdns" ]; then
+      echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
     else
       echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
     fi
