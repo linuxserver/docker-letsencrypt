@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck disable=SC1008
 
 # Display variables for troubleshooting
 echo -e "Variables set:\\n\
@@ -16,22 +17,21 @@ EMAIL=${EMAIL}\\n\
 STAGING=${STAGING}\\n"
 
 # Sanitize variables
-SANED_VARS=( DHLEVEL DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
-for i in "${SANED_VARS[@]}"
-do
-  export echo "$i"="${!i//\"/}"
-  export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
+SANED_VARS=(DHLEVEL DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION)
+for i in "${SANED_VARS[@]}"; do
+    export echo "$i"="${!i//\"/}"
+    export echo "$i"="$(echo "${!i}" | tr '[:upper:]' '[:lower:]')"
 done
 
 # check to make sure that the required variables are set
-[[ -z "$URL" ]] && \
-  echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
-  sleep infinity
+[[ -z $URL ]] && \
+echo "Please pass your URL as an environment variable in your docker run command. See docker info for more details." && \
+sleep infinity
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf} \
-	/var/run/fail2ban
+/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf} \
+/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
@@ -47,12 +47,12 @@ cp -R /defaults/fail2ban/filter.d /config/fail2ban/
 cp -R /defaults/fail2ban/action.d /config/fail2ban/
 # if jail.local is missing in /config, copy default
 [[ ! -f /config/fail2ban/jail.local ]] && \
-	cp /defaults/jail.local /config/fail2ban/jail.local
+cp /defaults/jail.local /config/fail2ban/jail.local
 # Replace fail2ban config with user config
 [[ -d /etc/fail2ban/filter.d ]] && \
-	rm -rf /etc/fail2ban/filter.d
+rm -rf /etc/fail2ban/filter.d
 [[ -d /etc/fail2ban/action.d ]] && \
-	rm -rf /etc/fail2ban/action.d
+rm -rf /etc/fail2ban/action.d
 cp -R /config/fail2ban/filter.d /etc/fail2ban/
 cp -R /config/fail2ban/action.d /etc/fail2ban/
 cp /defaults/fail2ban/fail2ban.local /etc/fail2ban/
@@ -60,18 +60,18 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 
 # copy crontab and proxy defaults if needed
 [[ ! -f /config/crontabs/root ]] && \
-	cp /etc/crontabs/root /config/crontabs/
+cp /etc/crontabs/root /config/crontabs/
 [[ ! -f /config/nginx/proxy.conf ]] && \
-	cp /defaults/proxy.conf /config/nginx/proxy.conf
+cp /defaults/proxy.conf /config/nginx/proxy.conf
 [[ ! -f /config/nginx/ssl.conf ]] && \
-	cp /defaults/ssl.conf /config/nginx/ssl.conf
+cp /defaults/ssl.conf /config/nginx/ssl.conf
 [[ ! -f /config/nginx/ldap.conf ]] && \
-	cp /defaults/ldap.conf /config/nginx/ldap.conf
+cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
-  echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
-  sleep infinity
+[[ $VALIDATION == "dns" ]] && [[ ! $DNSPLUGIN =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|rfc2136|route53)$ ]] && \
+echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
+sleep infinity
 
 # import user crontabs
 rm /etc/crontabs/*
@@ -79,8 +79,8 @@ cp /config/crontabs/* /etc/crontabs/
 
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
-  echo "Created donoteditthisfile.conf"
+    echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGSTAGING=\"$STAGING\"" > /config/donoteditthisfile.conf
+    echo "Created donoteditthisfile.conf"
 fi
 
 # load original config settings
@@ -89,122 +89,122 @@ fi
 
 # set default validation to http
 if [ -z "$VALIDATION" ]; then
-  VALIDATION="http"
-  echo "VALIDATION parameter not set; setting it to http"
+    VALIDATION="http"
+    echo "VALIDATION parameter not set; setting it to http"
 fi
 
 # compare dhparams existence and level, create if necessary
 if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
-  rm -rf /config/nginx/dhparams.pem
-  echo "DH parameters bit setting changed. Deleting old dhparams file."
+    rm -rf /config/nginx/dhparams.pem
+    echo "DH parameters bit setting changed. Deleting old dhparams file."
 fi
 
 # if staging is set to true, use the staging server
 if [ "$STAGING" = "true" ]; then
-  echo "NOTICE: Staging is active"
-  ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
+    echo "NOTICE: Staging is active"
+    ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
 else
-  ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
+    ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
 fi
 
 if [ ! -f "/config/nginx/dhparams.pem" ]; then
-  echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
-  openssl dhparam -out /config/nginx/dhparams.pem "$DHLEVEL"
-  echo "DH parameters successfully created - $DHLEVEL bits"
+    echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
+    openssl dhparam -out /config/nginx/dhparams.pem "$DHLEVEL"
+    echo "DH parameters successfully created - $DHLEVEL bits"
 else
-  echo "$ORIGDHLEVEL bit DH parameters present"
+    echo "$ORIGDHLEVEL bit DH parameters present"
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
 if [ -n "$SUBDOMAINS" ]; then
-  echo "SUBDOMAINS entered, processing"
-  if [ "$SUBDOMAINS" = "wildcard" ]; then
-    if [ "$ONLY_SUBDOMAINS" = true ]; then
-      export URL_REAL="-d *.${URL}"
-      echo "Wildcard cert for only the subdomains of $URL will be requested"
-    else
-      export URL_REAL="-d *.${URL} -d ${URL}"
-      echo "Wildcard cert for $URL will be requested"
-    fi
-  else
     echo "SUBDOMAINS entered, processing"
-    for job in $(echo "$SUBDOMAINS" | tr "," " "); do
-      export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
-    done
-    if [ "$ONLY_SUBDOMAINS" = true ]; then
-      URL_REAL="$SUBDOMAINS_REAL"
-      echo "Only subdomains, no URL in cert"
+    if [ "$SUBDOMAINS" = "wildcard" ]; then
+        if [ "$ONLY_SUBDOMAINS" = true ]; then
+            export URL_REAL="-d *.${URL}"
+            echo "Wildcard cert for only the subdomains of $URL will be requested"
+        else
+            export URL_REAL="-d *.${URL} -d ${URL}"
+            echo "Wildcard cert for $URL will be requested"
+        fi
     else
-      URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
+        echo "SUBDOMAINS entered, processing"
+        for job in $(echo "$SUBDOMAINS" | tr "," " "); do
+            export SUBDOMAINS_REAL="$SUBDOMAINS_REAL -d ${job}.${URL}"
+        done
+        if [ "$ONLY_SUBDOMAINS" = true ]; then
+            URL_REAL="$SUBDOMAINS_REAL"
+            echo "Only subdomains, no URL in cert"
+        else
+            URL_REAL="-d ${URL}${SUBDOMAINS_REAL}"
+        fi
+        echo "Sub-domains processed are: $SUBDOMAINS_REAL"
     fi
-    echo "Sub-domains processed are: $SUBDOMAINS_REAL"
-  fi
 else
-  echo "No subdomains defined"
-  URL_REAL="-d $URL"
+    echo "No subdomains defined"
+    URL_REAL="-d $URL"
 fi
 
 # add extra domains
 if [ -n "$EXTRA_DOMAINS" ]; then
-  echo "EXTRA_DOMAINS entered, processing"
-  for job in $(echo "$EXTRA_DOMAINS" | tr "," " "); do
-    export EXTRA_DOMAINS_REAL="$EXTRA_DOMAINS_REAL -d ${job}"
-  done
-  echo "Extra domains processed are: $EXTRA_DOMAINS_REAL"
-  URL_REAL="$URL_REAL $EXTRA_DOMAINS_REAL"
+    echo "EXTRA_DOMAINS entered, processing"
+    for job in $(echo "$EXTRA_DOMAINS" | tr "," " "); do
+        export EXTRA_DOMAINS_REAL="$EXTRA_DOMAINS_REAL -d ${job}"
+    done
+    echo "Extra domains processed are: $EXTRA_DOMAINS_REAL"
+    URL_REAL="$URL_REAL $EXTRA_DOMAINS_REAL"
 fi
 
 # figuring out whether to use e-mail and which
 if [[ $EMAIL == *@* ]]; then
-  echo "E-mail address entered: ${EMAIL}"
-  EMAILPARAM="-m ${EMAIL} --no-eff-email"
+    echo "E-mail address entered: ${EMAIL}"
+    EMAILPARAM="-m ${EMAIL} --no-eff-email"
 else
-  echo "No e-mail address entered or address invalid"
-  EMAILPARAM="--register-unsafely-without-email"
+    echo "No e-mail address entered or address invalid"
+    EMAILPARAM="--register-unsafely-without-email"
 fi
 
 # setting the validation method to use
 if [ "$VALIDATION" = "dns" ]; then
-  if [ "$DNSPLUGIN" = "route53" ]; then
-    PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
-  else
-    PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
-  fi
-  echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
+    if [ "$DNSPLUGIN" = "route53" ]; then
+        PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
+    else
+        PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
+    fi
+    echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
-  PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
-  echo "tls-sni validation is selected"
+    PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
+    echo "tls-sni validation is selected"
 elif [ "$VALIDATION" = "duckdns" ]; then
-  PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
-  chmod +x /app/duckdns-txt
-  echo "duckdns validation is selected"
-  echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
-  export URL_REAL="-d *.${URL}"
+    PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
+    chmod +x /app/duckdns-txt
+    echo "duckdns validation is selected"
+    echo "the resulting certificate will only cover the subdomains due to a limitation of duckdns, so it is advised to set the root location to use www.subdomain.duckdns.org"
+    export URL_REAL="-d *.${URL}"
 else
-  PREFCHAL="--non-interactive --standalone --preferred-challenges http"
-  echo "http validation is selected"
+    PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+    echo "http validation is selected"
 fi
 
 # setting the symlink for key location
 rm -rf /config/keys/letsencrypt
-if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ] ; then
-  DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
-  ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
+if [ "$ONLY_SUBDOMAINS" = "true" ] && [ ! "$SUBDOMAINS" = "wildcard" ]; then
+    DOMAIN="$(echo "$SUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${URL}"
+    ln -s ../etc/letsencrypt/live/"$DOMAIN" /config/keys/letsencrypt
 else
-  ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
+    ln -s ../etc/letsencrypt/live/"$URL" /config/keys/letsencrypt
 fi
 
 # checking for changes in cert variables, revoking certs if necessary
 if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "$ONLY_SUBDOMAINS" = "$ORIGONLY_SUBDOMAINS" ] || [ ! "$EXTRA_DOMAINS" = "$ORIGEXTRA_DOMAINS" ] || [ ! "$VALIDATION" = "$ORIGVALIDATION" ] || [ ! "$DNSPLUGIN" = "$ORIGDNSPLUGIN" ] || [ ! "$STAGING" = "$ORIGSTAGING" ]; then
-  echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
-  if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
-    ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
-    [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
-  else
-    [[ -f /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
-  fi
-  rm -rf /config/etc
-  mkdir -p /config/etc/letsencrypt
+    echo "Different validation parameters entered than what was used before. Revoking and deleting existing certificate, and an updated one will be created"
+    if [ "$ORIGONLY_SUBDOMAINS" = "true" ] && [ ! "$ORIGSUBDOMAINS" = "wildcard" ]; then
+        ORIGDOMAIN="$(echo "$ORIGSUBDOMAINS" | tr ',' ' ' | awk '{print $1}').${ORIGURL}"
+        [[ -f /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGDOMAIN"/fullchain.pem
+    else
+        [[ -f /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem ]] && certbot revoke --non-interactive --cert-path /config/etc/letsencrypt/live/"$ORIGURL"/fullchain.pem
+    fi
+    rm -rf /config/etc
+    mkdir -p /config/etc/letsencrypt
 fi
 
 # saving new variables
@@ -212,38 +212,38 @@ echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$
 
 # generating certs if necessary
 if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
-  echo "Generating new certificate"
- # shellcheck disable=SC2086
- certbot certonly --renew-by-default --server $ACMESERVER $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
-  if [ -d /config/keys/letsencrypt ]; then
-    cd /config/keys/letsencrypt || exit
-  else
-    if [ "$VALIDATION" = "dns" ]; then
-      echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${DNSPLUGIN}.ini file."
-    elif [ "$VALIDATION" = "duckdns" ]; then
-      echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
+    echo "Generating new certificate"
+    # shellcheck disable=SC2086
+    certbot certonly --renew-by-default --server $ACMESERVER $PREFCHAL --rsa-key-size 4096 $EMAILPARAM --agree-tos $URL_REAL
+    if [ -d /config/keys/letsencrypt ]; then
+        cd /config/keys/letsencrypt || exit
     else
-      echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+        if [ "$VALIDATION" = "dns" ]; then
+            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure you entered correct credentials into the /config/dns-conf/${DNSPLUGIN}.ini file."
+        elif [ "$VALIDATION" = "duckdns" ]; then
+            echo "ERROR: Cert does not exist! Please see the validation error above. Make sure your DUCKDNSTOKEN is correct."
+        else
+            echo "ERROR: Cert does not exist! Please see the validation error above. The issue may be due to incorrect dns or port forwarding settings. Please fix your settings and recreate the container"
+        fi
+        sleep infinity
     fi
-    sleep infinity
-  fi
-  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
-  cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
+    openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+    cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
 else
-  echo "Certificate exists; parameters unchanged; attempting renewal"
-  chmod +x /app/le-renew.sh
-  sleep 1
-  /app/le-renew.sh
+    echo "Certificate exists; parameters unchanged; attempting renewal"
+    chmod +x /app/le-renew.sh
+    sleep 1
+    /app/le-renew.sh
 fi
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
-	touch /config/log/nginx/error.log
+touch /config/log/nginx/error.log
 [[ ! -f /config/log/nginx/access.log ]] && \
-	touch /config/log/nginx/access.log
+touch /config/log/nginx/access.log
 
 # permissions
 chown -R abc:abc \
-	/config
+/config
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log

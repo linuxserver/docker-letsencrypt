@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bash
+# shellcheck disable=SC1008
 
-  exec \
-        fail2ban-client -x -f start
+exec fail2ban-client -x -f start
