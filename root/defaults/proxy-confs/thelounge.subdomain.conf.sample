@@ -1,9 +1,9 @@
-# make sure that your dns has a cname set for ombi and that your ombi container is not using a base url
+# make sure that your dns has a cname set for thelounge
 
 server {
     listen 443 ssl;
 
-    server_name ombi.*;
+    server_name thelounge.*;
 
     include /config/nginx/ssl.conf;
 
@@ -23,17 +23,7 @@ server {
 
         include /config/nginx/proxy.conf;
         resolver 127.0.0.11 valid=30s;
-        set $upstream_ombi ombi;
-        proxy_pass http://$upstream_ombi:3579;
+        set $upstream_thelounge thelounge;
+        proxy_pass http://$upstream_thelounge:9000;
     }
-
-    location ~ (/ombi)?/swagger {
-        include /config/nginx/proxy.conf;
-        resolver 127.0.0.11 valid=30s;
-        set $upstream_ombi ombi;
-        proxy_pass http://$upstream_ombi:3579;
-   }
-   if ($http_referer ~* /ombi) {
-       rewrite ^/swagger/(.*) /ombi/swagger/$1? redirect;
-   }
 }
