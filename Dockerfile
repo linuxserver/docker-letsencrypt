@@ -46,6 +46,7 @@ RUN \
 	php7-memcached \
 	php7-mysqli \
 	php7-mysqlnd \
+	php7-opcache \
 	php7-pdo_mysql \
 	php7-pdo_pgsql \
 	php7-pdo_sqlite \

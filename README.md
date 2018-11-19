@@ -141,6 +141,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **19.11.18:** Add php opcache package.
 + **12.11.18:** Add support for duckdns wildcard certs via dns validation
 + **31.10.18:** Add various preset proxy confs and fix others (thanks @nemchik and @hijxf)
 + **02.10.18:** Fix fail2ban instructions and logrotate conf
