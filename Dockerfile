@@ -92,7 +92,7 @@ RUN \
 	"https://github.com/linuxserver/reverse-proxy-confs/tarball/master" && \
  tar xf \
 	/tmp/proxy.tar.gz -C \
-	/defaults/proxy-confs --strip-components=1 && \
+	/defaults/proxy-confs --strip-components=1 --exclude=.gitattributes --exclude=.github && \
  echo "**** cleanup ****" && \
  rm -rf \
 	/tmp/*
