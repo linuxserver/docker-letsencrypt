@@ -12,11 +12,12 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
  echo "**** install runtime packages ****" && \
- apk add --no-cache \
+ apk add --no-cache --upgrade \
 	certbot \
 	curl \
 	fail2ban \
 	memcached \
+	nginx \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
@@ -83,7 +84,18 @@ RUN \
  echo "**** copy fail2ban default action and filter to /default ****" && \
  mkdir -p /defaults/fail2ban && \
  mv /etc/fail2ban/action.d /defaults/fail2ban/ && \
- mv /etc/fail2ban/filter.d /defaults/fail2ban/
+ mv /etc/fail2ban/filter.d /defaults/fail2ban/ && \
+ echo "**** copy proxy confs to /default ****" && \
+ mkdir -p /defaults/proxy-confs && \
+ curl -o \
+	/tmp/proxy.tar.gz -L \
+	"https://github.com/linuxserver/reverse-proxy-confs/tarball/master" && \
+ tar xf \
+	/tmp/proxy.tar.gz -C \
+	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
+ echo "**** cleanup ****" && \
+ rm -rf \
+	/tmp/*
 
 # add local files
 COPY root/ /
