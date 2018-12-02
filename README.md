@@ -54,7 +54,7 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 * `-e TZ` - timezone ie. `America/New_York`  
   
 _Optional settings:_
-* `-e DNSPLUGIN` - required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf` 
+* `-e DNSPLUGIN` - required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf` 
 * `-e DUCKDNSTOKEN` - required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org
 * `-e EMAIL` - your e-mail address for cert registration and notifications
 * `-e DHLEVEL` - dhparams bit value (default=2048, can be set to `1024` or `4096`)
@@ -141,6 +141,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **02.12.18:** Add dns validation support for ovh.
 + **20.11.18:** Externalize reverse proxy confs to separate github repo `linuxserver/reverse-proxy-confs`, update baseimage packages during build
 + **19.11.18:** Add php opcache package.
 + **12.11.18:** Add support for duckdns wildcard certs via dns validation
