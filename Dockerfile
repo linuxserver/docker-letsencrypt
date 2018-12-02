@@ -66,7 +66,7 @@ RUN \
  pip install -U --no-cache-dir \
 	pip && \
  pip install -U --no-cache-dir \
-	certbot \ 
+	certbot \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-digitalocean \
@@ -75,6 +75,7 @@ RUN \
 	certbot-dns-google \
 	certbot-dns-luadns \
 	certbot-dns-nsone \
+	certbot-dns-ovh \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	requests && \
