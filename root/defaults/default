@@ -1,4 +1,4 @@
-## Version 2018/09/12 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2018/12/05 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # listening on port 80 disabled by default, remove the "#" signs to enable
 # redirect all traffic to https
@@ -11,8 +11,8 @@
 
 # main server block
 server {
-	listen 443 ssl default_server;
-	listen [::]:443 ssl default_server;
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
 
 	root /config/www;
 	index index.html index.htm index.php;
@@ -56,8 +56,8 @@ server {
 # sample reverse proxy config without url base, but as a subdomain "cp", ip and port same as above
 # notice this is a new server block, you need a new server block for each subdomain
 #server {
-#	listen 443 ssl;
-#	listen [::]:443 ssl;
+#	listen 443 ssl http2;
+#	listen [::]:443 ssl http2;
 #
 #	root /config/www;
 #	index index.html index.htm index.php;
@@ -80,8 +80,8 @@ server {
 # ldap-auth container has to be running and the /config/nginx/ldap.conf file should be filled with ldap info
 # notice this is a new server block, you need a new server block for each subdomain
 #server {
-#	listen 443 ssl;
-#	listen [::]:443 ssl;
+#	listen 443 ssl http2;
+#	listen [::]:443 ssl http2;
 #
 #	root /config/www;
 #	index index.html index.htm index.php;
