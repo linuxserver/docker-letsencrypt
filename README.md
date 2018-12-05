@@ -142,6 +142,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 ## Versions
 
 + **05.12.18:** Add ipv6 and http/2 support to default site config.
++ **03.12.18:** Fix silly bug resetting the duckdns token.
 + **02.12.18:** Add dns validation support for ovh.
 + **20.11.18:** Externalize reverse proxy confs to separate github repo `linuxserver/reverse-proxy-confs`, update baseimage packages during build
 + **19.11.18:** Add php opcache package.
