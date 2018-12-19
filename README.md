@@ -141,7 +141,8 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
-+ **05.12.18:** Add ipv6 and http/2 support to default site config.
++ **19.12.18:** Add ipv6 and http/2 support to default site config.
++ **08.12.18:** Had to remove cert renewal during container start due to certbot's new undocumented "feature" of up to 8 minute random delay.
 + **03.12.18:** Fix silly bug resetting the duckdns token.
 + **02.12.18:** Add dns validation support for ovh.
 + **20.11.18:** Externalize reverse proxy confs to separate github repo `linuxserver/reverse-proxy-confs`, update baseimage packages during build
