@@ -125,6 +125,8 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 * You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
 * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
 
+## Renewals
+Renewals happen every day at 2am automatically as long as the docker image is running. You can force one manually via ```docker exec -it letsencrypt /app/le-renew.sh```
 
 ## Info
 
