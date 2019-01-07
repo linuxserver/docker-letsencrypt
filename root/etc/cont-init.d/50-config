@@ -35,6 +35,9 @@ mkdir -p \
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
 
+# copy auth configs
+cp -n /defaults/auth-confs/* /config/auth-confs/
+
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
 chown -R abc:abc /config/dns-conf
@@ -65,8 +68,6 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/proxy.conf /config/nginx/proxy.conf
 [[ ! -f /config/nginx/ssl.conf ]] && \
 	cp /defaults/ssl.conf /config/nginx/ssl.conf
-[[ ! -f /config/nginx/ldap.conf ]] && \
-	cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
 [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|luadns|nsone|ovh|rfc2136|route53)$ ]] && \
