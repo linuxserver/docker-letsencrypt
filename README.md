@@ -141,6 +141,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **09.01.19:** Remove tls v1 and v1.1 from default ssl.conf, update ciphers (existing users need to manually update).
 + **30.12.18:** Fix bundle key generation.
 + **19.12.18:** Add ipv6 and http/2 support to default site config.
 + **08.12.18:** Had to remove cert renewal during container start due to certbot's new undocumented "feature" of up to 8 minute random delay.
