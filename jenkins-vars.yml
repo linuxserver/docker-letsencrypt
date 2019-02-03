@@ -1,0 +1,26 @@
+---
+
+# jenkins variables
+project_name: docker-letsencrypt
+external_type: os
+release_type: stable
+release_tag: latest
+ls_branch: master
+repo_vars:
+  - BUILD_VERSION_ARG = 'LETSENCRYPT_VERSION'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-letsencrypt'
+  - CONTAINER_NAME = 'letsencrypt'
+  - DOCKERHUB_IMAGE = 'linuxserver/letsencrypt'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/letsencrypt'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/letsencrypt'
+  - DIST_IMAGE = 'alpine'
+  - MULTIARCH='true'
+  - CI='true'
+  - CI_WEB='false'
+  - CI_PORT='80'
+  - CI_SSL='false'
+  - CI_DELAY='30'
+  - CI_DOCKERENV='TEST_RUN=1'
+  - CI_AUTH=''
+  - CI_WEBPATH=''
