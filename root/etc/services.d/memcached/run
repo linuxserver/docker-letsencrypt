@@ -1,3 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-exec s6-setuidgid memcached /usr/bin/memcached -l 127.0.0.1
