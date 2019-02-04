@@ -2,12 +2,13 @@
 
 # jenkins variables
 project_name: docker-letsencrypt
-external_type: os
+external_type: pip_version
 release_type: stable
 release_tag: latest
 ls_branch: master
 repo_vars:
-  - BUILD_VERSION_ARG = 'LETSENCRYPT_VERSION'
+  - EXT_PIP = 'certbot'
+  - BUILD_VERSION_ARG = 'CERTBOT_VERSION'
   - LS_USER = 'linuxserver'
   - LS_REPO = 'docker-letsencrypt'
   - CONTAINER_NAME = 'letsencrypt'
