@@ -141,6 +141,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 
 ## Versions
 
++ **03.02.19:** Removed memcached due to seccomp errors. Let us know if you need to re-enable memcached.
 + **28.01.19:** Add pipeline logic and multi arch.
 + **21.01.19:** Remove client_body_max from proxy.conf (existing users need to manually update).
 + **09.01.19:** Remove tls v1 and v1.1 from default ssl.conf, update ciphers (existing users need to manually update).
