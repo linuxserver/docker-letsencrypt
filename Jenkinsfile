@@ -10,7 +10,8 @@ pipeline {
   environment {
     BUILDS_DISCORD=credentials('build_webhook_url')
     GITHUB_TOKEN=credentials('498b4638-2d02-4ce5-832d-8a57d01d97ab')
-    BUILD_VERSION_ARG = 'LETSENCRYPT_VERSION'
+    EXT_PIP = 'certbot'
+    BUILD_VERSION_ARG = 'CERTBOT_VERSION'
     LS_USER = 'linuxserver'
     LS_REPO = 'docker-letsencrypt'
     CONTAINER_NAME = 'letsencrypt'
@@ -91,16 +92,17 @@ pipeline {
     /* ########################
        External Release Tagging
        ######################## */
-    // If this is an os release set release type to none to indicate no external release
-    stage("Set ENV os"){
+    // If this is a pip release set the external tag to the pip version
+    stage("Set ENV pip_version"){
       steps{
         script{
-          env.EXT_RELEASE = env.PACKAGE_TAG
-          env.RELEASE_LINK = 'none'
+          env.EXT_RELEASE = sh(
+            script: '''curl -sL  https://pypi.python.org/pypi/${EXT_PIP}/json |jq -r '. | .info.version' ''',
+            returnStdout: true).trim()
+          env.RELEASE_LINK = 'https://pypi.python.org/pypi/' + env.EXT_PIP
         }
       }
-    }
-    // Sanitize the release tag and strip illegal docker or github characters
+    }    // Sanitize the release tag and strip illegal docker or github characters
     stage("Sanitize tag"){
       steps{
         script{
@@ -528,11 +530,11 @@ pipeline {
              "tagger": {"name": "LinuxServer Jenkins","email": "jenkins@linuxserver.io","date": "'${GITHUB_DATE}'"}}' '''
         echo "Pushing New release for Tag"
         sh '''#! /bin/bash
-              echo "Updating base packages to ${PACKAGE_TAG}" > releasebody.json
+              echo "Updating PIP version of ${EXT_PIP} to ${EXT_RELEASE_CLEAN}" > releasebody.json
               echo '{"tag_name":"'${EXT_RELEASE_CLEAN}'-pkg-'${PACKAGE_TAG}'-ls'${LS_TAG_NUMBER}'",\
                      "target_commitish": "master",\
                      "name": "'${EXT_RELEASE_CLEAN}'-pkg-'${PACKAGE_TAG}'-ls'${LS_TAG_NUMBER}'",\
-                     "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n**OS Changes:**\\n\\n' > start
+                     "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n**PIP Changes:**\\n\\n' > start
               printf '","draft": false,"prerelease": false}' >> releasebody.json
               paste -d'\\0' start releasebody.json > releasebody.json.done
               curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/releases -d @releasebody.json.done'''

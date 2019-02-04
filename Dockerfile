@@ -3,6 +3,7 @@ FROM lsiobase/alpine.nginx:3.8
 # set version label
 ARG BUILD_DATE
 ARG VERSION
+ARG CERTBOT_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="aptalca"
 
@@ -63,10 +64,15 @@ RUN \
 	py2-future \
 	py2-pip && \
  echo "**** install certbot plugins ****" && \
+ if [ -z ${CERTBOT_VERSION+x} ]; then \
+        CERTBOT="certbot"; \
+ else \
+        CERTBOT="certbot==${CERTBOT_VERSION}"; \
+ fi && \
  pip install -U --no-cache-dir \
 	pip && \
  pip install -U --no-cache-dir \
-	certbot \
+	${CERTBOT} \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-digitalocean \
