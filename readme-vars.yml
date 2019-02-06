@@ -123,7 +123,67 @@ app_setup_block: |
 
 app_setup_nginx_reverse_proxy_snippet: false
 app_setup_nginx_reverse_proxy_block: ""
-# changelog
 
+# changelog
 changelogs:
-  - { date: "09.12.17:", desc: "changes description" }
+  - { date: "03.02.19:", desc: "Removed memcached due to seccomp errors. Let us know if you need to re-enable memcached." }
+  - { date: "28.01.19:", desc: "Add pipeline logic and multi arch." }
+  - { date: "21.01.19:", desc: "Remove client_body_max from proxy.conf (existing users need to manually update)." }
+  - { date: "09.01.19:", desc: "Remove tls v1 and v1.1 from default ssl.conf, update ciphers (existing users need to manually update)." }
+  - { date: "30.12.18:", desc: "Fix bundle key generation." }
+  - { date: "19.12.18:", desc: "Add ipv6 and http/2 support to default site config." }
+  - { date: "08.12.18:", desc: "Had to remove cert renewal during container start due to certbot's new undocumented `feature` of up to 8 minute random delay." }
+  - { date: "03.12.18:", desc: "Fix silly bug resetting the duckdns token." }
+  - { date: "02.12.18:", desc: "Add dns validation support for ovh." }
+  - { date: "20.11.18:", desc: "Externalize reverse proxy confs to separate github repo `linuxserver/reverse-proxy-confs`, update baseimage packages during build" }
+  - { date: "19.11.18:", desc: "Add php opcache package." }
+  - { date: "12.11.18:", desc: "Add support for duckdns wildcard certs via dns validation" }
+  - { date: "31.10.18:", desc: "Add various preset proxy confs and fix others (thanks @nemchik and @hijxf)" }
+  - { date: "02.10.18:", desc: "Fix fail2ban instructions and logrotate conf" }
+  - { date: "11.09.18:", desc: "Add various preset proxy confs and fix others (thanks @nemchik and @LeoVerto)" }
+  - { date: "04.09.18:", desc: "Linting fixes." }
+  - { date: "30.08.18:", desc: "Add support for ldap auth, add proxy confs for bazarr, couchpotato, headphones, lidarr and plex subfolder (thanks @nemchik and @jedahan)" }
+  - { date: "21.08.18:", desc: "Rebase to alpine 3.8, add info on search engine de-listing" }
+  - { date: "08.08.18:", desc: "Add subdomain proxy conf for plex, update emby proxy confs" }
+  - { date: "25.07.18:", desc: "Add subdomain proxy conf for syncthing" }
+  - { date: "23.07.18:", desc: "Remove backwards compatibility and set default validation method to http. Update portainer proxy config to fix websockets. Add unifi proxy conf." }
+  - { date: "31.05.18:", desc: "Update ssl.conf and proxy.conf for tighter security (thanks @nemchik)" }
+  - { date: "30.05.18:", desc: "Add reverse proxy configs for jackett, monitorr, nzbget, nzbhydra, organizr, portainer and transmission (thanks @nemchik)" }
+  - { date: "18.05.18:", desc: "Add more info on certs and unraid reverse proxy config" }
+  - { date: "11.05.18:", desc: "Add php pgsql support" }
+  - { date: "24.04.18:", desc: "Auto generate a private key + fullchain bundle pem that is needed by certain apps" }
+  - { date: "20.04.18:", desc: "Add standardized optional reverse proxy conf files" }
+  - { date: "19.04.18:", desc: "Bind memcached to localhost only, add php7-sqlite3" }
+  - { date: "08.04.18:", desc: "Fix renewal hooks" }
+  - { date: "29.03.18:", desc: "Create pfx cert after renewal for dns validation (previous version only created it for http and tls, an oversight)" }
+  - { date: "29.03.18:", desc: "Fix staging for v2 api" }
+  - { date: "13.03.18:", desc: "Support for wildcard cert with dns validation added. Switched to v2 api for ACME." }
+  - { date: "21.02.18:", desc: "Reduce shellcheck directives by renaming secondary variables" }
+  - { date: "20.02.18:", desc: "Sanitize variables, increase log verbosity" }
+  - { date: "01.02.18:", desc: "Big changes. `VALIDATION` parameter added for choosing letsencrypt validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf" }
+  - { date: "13.01.18:", desc: "Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image" }
+  - { date: "11.01.18:", desc: "Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)" }
+  - { date: "10.01.18:", desc: "Add option for http validation on port 80" }
+  - { date: "05.01.18:", desc: "Rebase to alpine 3.7" }
+  - { date: "04.11.17:", desc: "Add php7 soap module" }
+  - { date: "31.10.17:", desc: "Add php7 exif and xmlreader modules" }
+  - { date: "25.09.17:", desc: "Manage fail2ban via s6" }
+  - { date: "24.09.17:", desc: "Add memcached service" }
+  - { date: "01.09.17:", desc: "`--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules" }
+  - { date: "31.08.17:", desc: "Add php7-phar" }
+  - { date: "14.07.17:", desc: "Enable modules dynamically in nginx.conf" }
+  - { date: "06.07.17:", desc: "Add support for multiple domains (thanks @oznu)" }
+  - { date: "22.06.17:", desc: "Add various nginx modules and enable all modules in the default nginx.conf" }
+  - { date: "16.06.17:", desc: "Update deprecated certbot option for https validation, make e-mail entry optional, update readme" }
+  - { date: "05.06.17:", desc: "Add php7-bz2" }
+  - { date: "27.05.17:", desc: "Rebase to alpine 3.6." }
+  - { date: "03.05.17:", desc: "Fix log permissions." }
+  - { date: "18.04.17:", desc: "Add php7-sockets, update fail2ban filter and action defaults" }
+  - { date: "27.02.17:", desc: "Add php7-dom, php7-iconv and php7-pdo_sqlite" }
+  - { date: "21.02.17:", desc: "Add php7-xml" }
+  - { date: "10.02.17:", desc: "Switch to alpine 3.5 base and php7, add php zlib module and all nginx modules" }
+  - { date: "13.01.17:", desc: "Add php5-ctype and php5-openssl" }
+  - { date: "04.01.17:", desc: "Add php5-mysqli and php5-pdo_mysql" }
+  - { date: "22.11.16:", desc: "Add gd and mcrypt packages" }
+  - { date: "21.11.16:", desc: "Add curl package" }
+  - { date: "07.11.16:", desc: "Initial Release" }

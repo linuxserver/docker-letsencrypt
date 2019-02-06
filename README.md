@@ -234,4 +234,64 @@ Below are the instructions for updating containers:
 
 ## Versions
 
-* **09.12.17:** - changes description
+* **03.02.19:** - Removed memcached due to seccomp errors. Let us know if you need to re-enable memcached.
+* **28.01.19:** - Add pipeline logic and multi arch.
+* **21.01.19:** - Remove client_body_max from proxy.conf (existing users need to manually update).
+* **09.01.19:** - Remove tls v1 and v1.1 from default ssl.conf, update ciphers (existing users need to manually update).
+* **30.12.18:** - Fix bundle key generation.
+* **19.12.18:** - Add ipv6 and http/2 support to default site config.
+* **08.12.18:** - Had to remove cert renewal during container start due to certbot's new undocumented `feature` of up to 8 minute random delay.
+* **03.12.18:** - Fix silly bug resetting the duckdns token.
+* **02.12.18:** - Add dns validation support for ovh.
+* **20.11.18:** - Externalize reverse proxy confs to separate github repo `linuxserver/reverse-proxy-confs`, update baseimage packages during build
+* **19.11.18:** - Add php opcache package.
+* **12.11.18:** - Add support for duckdns wildcard certs via dns validation
+* **31.10.18:** - Add various preset proxy confs and fix others (thanks @nemchik and @hijxf)
+* **02.10.18:** - Fix fail2ban instructions and logrotate conf
+* **11.09.18:** - Add various preset proxy confs and fix others (thanks @nemchik and @LeoVerto)
+* **04.09.18:** - Linting fixes.
+* **30.08.18:** - Add support for ldap auth, add proxy confs for bazarr, couchpotato, headphones, lidarr and plex subfolder (thanks @nemchik and @jedahan)
+* **21.08.18:** - Rebase to alpine 3.8, add info on search engine de-listing
+* **08.08.18:** - Add subdomain proxy conf for plex, update emby proxy confs
+* **25.07.18:** - Add subdomain proxy conf for syncthing
+* **23.07.18:** - Remove backwards compatibility and set default validation method to http. Update portainer proxy config to fix websockets. Add unifi proxy conf.
+* **31.05.18:** - Update ssl.conf and proxy.conf for tighter security (thanks @nemchik)
+* **30.05.18:** - Add reverse proxy configs for jackett, monitorr, nzbget, nzbhydra, organizr, portainer and transmission (thanks @nemchik)
+* **18.05.18:** - Add more info on certs and unraid reverse proxy config
+* **11.05.18:** - Add php pgsql support
+* **24.04.18:** - Auto generate a private key + fullchain bundle pem that is needed by certain apps
+* **20.04.18:** - Add standardized optional reverse proxy conf files
+* **19.04.18:** - Bind memcached to localhost only, add php7-sqlite3
+* **08.04.18:** - Fix renewal hooks
+* **29.03.18:** - Create pfx cert after renewal for dns validation (previous version only created it for http and tls, an oversight)
+* **29.03.18:** - Fix staging for v2 api
+* **13.03.18:** - Support for wildcard cert with dns validation added. Switched to v2 api for ACME.
+* **21.02.18:** - Reduce shellcheck directives by renaming secondary variables
+* **20.02.18:** - Sanitize variables, increase log verbosity
+* **01.02.18:** - Big changes. `VALIDATION` parameter added for choosing letsencrypt validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf
+* **13.01.18:** - Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image
+* **11.01.18:** - Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)
+* **10.01.18:** - Add option for http validation on port 80
+* **05.01.18:** - Rebase to alpine 3.7
+* **04.11.17:** - Add php7 soap module
+* **31.10.17:** - Add php7 exif and xmlreader modules
+* **25.09.17:** - Manage fail2ban via s6
+* **24.09.17:** - Add memcached service
+* **01.09.17:** - `--privileged` is no longer required as long as `--cap-add=NET_ADMIN` is added, instructions modified accordingly, disabled fail2ban ipv6 actions due to requiring access to host kernel modules
+* **31.08.17:** - Add php7-phar
+* **14.07.17:** - Enable modules dynamically in nginx.conf
+* **06.07.17:** - Add support for multiple domains (thanks @oznu)
+* **22.06.17:** - Add various nginx modules and enable all modules in the default nginx.conf
+* **16.06.17:** - Update deprecated certbot option for https validation, make e-mail entry optional, update readme
+* **05.06.17:** - Add php7-bz2
+* **27.05.17:** - Rebase to alpine 3.6.
+* **03.05.17:** - Fix log permissions.
+* **18.04.17:** - Add php7-sockets, update fail2ban filter and action defaults
+* **27.02.17:** - Add php7-dom, php7-iconv and php7-pdo_sqlite
+* **21.02.17:** - Add php7-xml
+* **10.02.17:** - Switch to alpine 3.5 base and php7, add php zlib module and all nginx modules
+* **13.01.17:** - Add php5-ctype and php5-openssl
+* **04.01.17:** - Add php5-mysqli and php5-pdo_mysql
+* **22.11.16:** - Add gd and mcrypt packages
+* **21.11.16:** - Add curl package
+* **07.11.16:** - Initial Release
