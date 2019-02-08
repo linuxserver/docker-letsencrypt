@@ -2,7 +2,7 @@
 
 # project information
 project_name: letsencrypt
-project_url: "https://urlletsencrypt.org/"
+project_url: "https://letsencrypt.org/"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/le-logo-wide.png"
 project_blurb: "[{{ project_name|capitalize }}]({{ project_url }}) sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
