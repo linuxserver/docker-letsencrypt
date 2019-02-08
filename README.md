@@ -112,7 +112,6 @@ services:
       - </path/to/appdata/config>:/config
     ports:
       - 443:443
-    ports:
       - 80:80 #optional
     mem_limit: 4096m
     restart: unless-stopped
