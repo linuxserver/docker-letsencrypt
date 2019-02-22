@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx.arm64:3.8
+FROM lsiobase/alpine.nginx.arm64:3.9
 
 # Add qemu to build on x86_64 systems
 COPY qemu-aarch64-static /usr/bin
@@ -17,7 +17,6 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
  echo "**** install runtime packages ****" && \
  apk add --no-cache --upgrade \
-	certbot \
 	curl \
 	fail2ban \
 	memcached \
