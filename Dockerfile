@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx:3.8
+FROM lsiobase/alpine.nginx:3.9
 
 # set version label
 ARG BUILD_DATE
@@ -14,7 +14,6 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
  echo "**** install runtime packages ****" && \
  apk add --no-cache --upgrade \
-	certbot \
 	curl \
 	fail2ban \
 	memcached \
