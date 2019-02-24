@@ -64,7 +64,6 @@ docker create \
   -e URL=yourdomain.url \
   -e SUBDOMAINS=www, \
   -e VALIDATION=http \
-  -e TZ=Europe/London \
   -e DNSPLUGIN=cloudflare `#optional` \
   -e DUCKDNSTOKEN=<token> `#optional` \
   -e EMAIL=<e-mail> `#optional` \
@@ -100,7 +99,6 @@ services:
       - URL=yourdomain.url
       - SUBDOMAINS=www,
       - VALIDATION=http
-      - TZ=Europe/London
       - DNSPLUGIN=cloudflare #optional
       - DUCKDNSTOKEN=<token> #optional
       - EMAIL=<e-mail> #optional
@@ -131,7 +129,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e URL=yourdomain.url` | Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns). |
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only) |
 | `-e VALIDATION=http` | Letsencrypt validation method to use, options are `http`, `tls-sni`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable set to `wildcard`). |
-| `-e TZ=Europe/London` | Specify a timezone to use EG Europe/London. |
 | `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`. |
 | `-e DUCKDNSTOKEN=<token>` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
 | `-e EMAIL=<e-mail>` | Optional e-mail address used for cert expiration notifications. |
