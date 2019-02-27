@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "27.02.19:", desc: "Add gnupg package." }
   - { date: "22.02.19:", desc: "Rebase to alpine 3.9." }
   - { date: "03.02.19:", desc: "Removed memcached due to seccomp errors. Let us know if you need to re-enable memcached." }
   - { date: "28.01.19:", desc: "Add pipeline logic and multi arch." }

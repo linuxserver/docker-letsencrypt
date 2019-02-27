@@ -16,6 +16,7 @@ RUN \
  apk add --no-cache --upgrade \
 	curl \
 	fail2ban \
+	gnupg \
 	memcached \
 	nginx \
 	nginx-mod-http-echo \
