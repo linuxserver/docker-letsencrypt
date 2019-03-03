@@ -235,6 +235,7 @@ Below are the instructions for updating containers:
 
 ## Versions
 
+* **02.03.19:** - Add php intl and posix modules.
 * **27.02.19:** - Add gnupg package.
 * **22.02.19:** - Rebase to alpine 3.9.
 * **03.02.19:** - Removed memcached due to seccomp errors. Let us know if you need to re-enable memcached.

@@ -47,6 +47,7 @@ RUN \
 	php7-exif \
 	php7-gd \
 	php7-iconv \
+	php7-intl \
 	php7-mcrypt \
 	php7-memcached \
 	php7-mysqli \
@@ -57,6 +58,7 @@ RUN \
 	php7-pdo_sqlite \
 	php7-pgsql \
 	php7-phar \
+	php7-posix \
 	php7-soap \
 	php7-sockets \
 	php7-sqlite3 \
