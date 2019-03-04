@@ -109,3 +109,8 @@ RUN \
 
 # add local files
 COPY root/ /
+
+# healthcheck
+RUN chmod +x /healthcheck.sh
+HEALTHCHECK --interval=30s --timeout=30s --start-period=0s --retries=3 \
+	CMD /healthcheck.sh || exit 1
