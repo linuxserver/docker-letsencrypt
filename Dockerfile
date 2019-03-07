@@ -63,18 +63,18 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-zip \
-	py2-cryptography \
-	py2-future \
-	py2-pip && \
+	py3-cryptography \
+	py3-future \
+	py3-pip && \
  echo "**** install certbot plugins ****" && \
  if [ -z ${CERTBOT_VERSION+x} ]; then \
         CERTBOT="certbot"; \
  else \
         CERTBOT="certbot==${CERTBOT_VERSION}"; \
  fi && \
- pip install -U \
+ pip3 install -U \
 	pip && \
- pip install -U \
+ pip3 install -U \
 	${CERTBOT} \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
@@ -104,8 +104,15 @@ RUN \
 	/tmp/proxy.tar.gz -C \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
  echo "**** cleanup ****" && \
+ for cleanfiles in *.la *.pyc *.pyo; \
+	do \
+	find /usr/lib/ -iname "${cleanfiles}" -exec rm -f '{}' + \
+	; done && \
  rm -rf \
-	/tmp/*
+	/tmp/* \
+	/root && \
+ mkdir -p \
+	/root
 
 # add local files
 COPY root/ /
