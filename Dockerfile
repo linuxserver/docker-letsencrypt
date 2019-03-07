@@ -104,9 +104,9 @@ RUN \
 	/tmp/proxy.tar.gz -C \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
  echo "**** cleanup ****" && \
- for cleanfiles in *.la *.pyc *.pyo; \
+ for cleanfiles in *.pyc *.pyo; \
 	do \
-	find /usr/lib/ -iname "${cleanfiles}" -exec rm -f '{}' + \
+	find /usr/lib/python3.*  -iname "${cleanfiles}" -exec rm -f '{}' + \
 	; done && \
  rm -rf \
 	/tmp/* \
