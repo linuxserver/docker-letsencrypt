@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "08.03.19:", desc: "Move everything over to python3, shrink image by removing py cache and byte code." }
   - { date: "02.03.19:", desc: "Add php intl and posix modules." }
   - { date: "27.02.19:", desc: "Add gnupg package." }
   - { date: "22.02.19:", desc: "Rebase to alpine 3.9." }

@@ -110,9 +110,7 @@ RUN \
 	; done && \
  rm -rf \
 	/tmp/* \
-	/root && \
- mkdir -p \
-	/root
+	/root/.cache
 
 # add local files
 COPY root/ /

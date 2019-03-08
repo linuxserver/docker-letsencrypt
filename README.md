@@ -235,6 +235,7 @@ Below are the instructions for updating containers:
 
 ## Versions
 
+* **08.03.19:** - Move everything over to python3, shrink image by removing py cache and byte code.
 * **02.03.19:** - Add php intl and posix modules.
 * **27.02.19:** - Add gnupg package.
 * **22.02.19:** - Rebase to alpine 3.9.
