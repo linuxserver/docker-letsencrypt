@@ -72,9 +72,9 @@ RUN \
  else \
         CERTBOT="certbot==${CERTBOT_VERSION}"; \
  fi && \
- pip install -U \
+ pip3 install -U \
 	pip && \
- pip install -U \
+ pip3 install -U \
 	${CERTBOT} \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
