@@ -235,6 +235,7 @@ Below are the instructions for updating containers:
 
 ## Versions
 
+* **13.03.19:** - Rebase aarch64 image back to 3.8 due to python issues (specifically with fail2ban), switch packages to python 3 on amd64 and armhf, clean up pip/python cache to shrink image size.
 * **10.03.19:** - Add TLSv1.3 to ssl.conf.
 * **02.03.19:** - Add php intl and posix modules.
 * **27.02.19:** - Add gnupg package.

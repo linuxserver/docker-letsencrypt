@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.nginx.arm64:3.9
+FROM lsiobase/alpine.nginx.arm64:3.8
 
 # Add qemu to build on x86_64 systems
 COPY qemu-aarch64-static /usr/bin
@@ -108,7 +108,8 @@ RUN \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
  echo "**** cleanup ****" && \
  rm -rf \
-	/tmp/*
+	/tmp/* \
+	/root/.cache
 
 # add local files
 COPY root/ /

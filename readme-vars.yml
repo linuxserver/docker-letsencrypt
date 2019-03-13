@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "13.03.19:", desc: "Rebase aarch64 image back to 3.8 due to python issues (specifically with fail2ban), switch packages to python 3 on amd64 and armhf, clean up pip/python cache to shrink image size." }
   - { date: "10.03.19:", desc: "Add TLSv1.3 to ssl.conf." }
   - { date: "02.03.19:", desc: "Add php intl and posix modules." }
   - { date: "27.02.19:", desc: "Add gnupg package." }

@@ -63,9 +63,9 @@ RUN \
 	php7-xml \
 	php7-xmlreader \
 	php7-zip \
-	py2-cryptography \
-	py2-future \
-	py2-pip && \
+	py3-cryptography \
+	py3-future \
+	py3-pip && \
  echo "**** install certbot plugins ****" && \
  if [ -z ${CERTBOT_VERSION+x} ]; then \
         CERTBOT="certbot"; \
@@ -104,8 +104,13 @@ RUN \
 	/tmp/proxy.tar.gz -C \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
  echo "**** cleanup ****" && \
+ for cleanfiles in *.pyc *.pyo; \
+	do \
+	find /usr/lib/python3.*  -iname "${cleanfiles}" -exec rm -f '{}' + \
+	; done && \
  rm -rf \
-	/tmp/*
+	/tmp/* \
+	/root/.cache
 
 # add local files
 COPY root/ /
