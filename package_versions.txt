@@ -2,8 +2,8 @@ musl musl-1.1.20-r3
 busybox busybox-1.29.3-r10
 alpine-baselayout alpine-baselayout-3.1.0-r3
 alpine-keys alpine-keys-2.1-r1
-libcrypto1.1 libcrypto1.1-1.1.1a-r1
-libssl1.1 libssl1.1-1.1.1a-r1
+libcrypto1.1 libcrypto1.1-1.1.1b-r1
+libssl1.1 libssl1.1-1.1.1b-r1
 ca-certificates-cacert ca-certificates-cacert-20190108-r0
 libtls-standalone libtls-standalone-2.7.4-r6
 ssl_client ssl_client-1.29.3-r10
@@ -44,7 +44,7 @@ libmagic libmagic-5.35-r0
 nano nano-3.2-r0
 pcre pcre-8.42-r1
 nginx nginx-1.14.2-r0
-openssl openssl-1.1.1a-r1
+openssl openssl-1.1.1b-r1
 php7-common php7-common-7.2.14-r0
 libedit libedit-20181209.3.1-r0
 libxml2 libxml2-2.9.9-r1
