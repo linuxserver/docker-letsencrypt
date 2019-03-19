@@ -111,6 +111,5 @@ RUN \
 COPY root/ /
 
 # healthcheck
-RUN chmod +x /healthcheck.sh
 HEALTHCHECK --interval=30s --timeout=30s --start-period=1ms --retries=3 \
 	CMD /healthcheck.sh || exit 1
