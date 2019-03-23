@@ -32,7 +32,6 @@ expat expat-2.2.6-r0
 apr-util apr-util-1.6.1-r5
 apache2-utils apache2-utils-2.4.38-r2
 nghttp2-libs nghttp2-libs-1.35.1-r0
-libssh2 libssh2-1.8.0-r4
 libcurl libcurl-7.64.0-r1
 pcre2 pcre2-10.32-r1
 git git-2.20.1-r0
@@ -58,6 +57,7 @@ php7-session php7-session-7.2.14-r0
 php7-simplexml php7-simplexml-7.2.14-r0
 php7-xml php7-xml-7.2.14-r0
 php7-xmlwriter php7-xmlwriter-7.2.14-r0
+libssh2 libssh2-1.8.1-r0
 curl curl-7.64.0-r1
 libbz2 libbz2-1.0.6-r6
 libffi libffi-3.2.1-r6
