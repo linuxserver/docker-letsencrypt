@@ -1,4 +1,4 @@
-FROM lsiobase/nginx:arm64v8-3.9
+FROM lsiobase/nginx:arm64v8-3.8
 
 # set version label
 ARG BUILD_DATE
@@ -105,7 +105,8 @@ RUN \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
  echo "**** cleanup ****" && \
  rm -rf \
-	/tmp/*
+	/tmp/* \
+	/root/.cache
 
 # add local files
 COPY root/ /
