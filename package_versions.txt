@@ -56,7 +56,7 @@ libressl2.7-libssl-2.7.5-r0
 libsasl-2.1.27-r1
 libseccomp-2.3.3-r1
 libsm-1.2.2-r2
-libssh2-1.8.1-r0
+libssh2-1.8.2-r0
 libssl1.1-1.1.1b-r1
 libstdc++-8.2.0-r2
 libtasn1-4.13-r0
