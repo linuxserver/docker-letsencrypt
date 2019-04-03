@@ -50,7 +50,7 @@ libmemcached-libs-1.0.18-r3
 libmnl-1.0.4-r0
 libnftnl-libs-1.1.1-r0
 libpng-1.6.35-r0
-libpq-11.1-r0
+libpq-11.2-r0
 libressl2.7-libcrypto-2.7.5-r0
 libressl2.7-libssl-2.7.5-r0
 libsasl-2.1.27-r1
