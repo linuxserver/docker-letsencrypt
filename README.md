@@ -234,7 +234,6 @@ Below are the instructions for updating containers:
 
 ## Versions
 
-* **07.04.19:** - Add `proxy_headers_hash_bucket_size 128;` & `proxy_headers_hash_max_size 1024;` to `proxy.conf` & `variables_hash_max_size 2048;` to `nginx.conf`  (existing users need to manually update).
 * **25.03.19:** - Rebase aarch64 image back to 3.8 due to python issues (specifically with fail2ban), switch packages to python 3 on amd64 and armhf, clean up pip/python cache to shrink image size.
 * **23.03.19:** - Switching to new Base images, shift to arm32v7 tag.
 * **10.03.19:** - Add TLSv1.3 to ssl.conf.
