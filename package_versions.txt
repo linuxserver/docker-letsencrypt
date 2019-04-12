@@ -19,7 +19,7 @@ geoip-1.6.12-r1
 git-2.20.1-r0
 gmp-6.1.2-r1
 gnupg-2.2.12-r0
-gnutls-3.6.4-r0
+gnutls-3.6.7-r0
 icu-libs-62.1-r0
 ip6tables-1.6.2-r1
 iptables-1.6.2-r1
@@ -36,9 +36,9 @@ libcurl-7.64.0-r1
 libedit-20181209.3.1-r0
 libevent-2.1.8-r6
 libffi-3.2.1-r6
-libgcc-8.2.0-r2
+libgcc-8.3.0-r0
 libgcrypt-1.8.4-r0
-libgd-2.2.5-r1
+libgd-2.2.5-r3
 libgpg-error-1.33-r0
 libice-1.0.9-r3
 libjpeg-turbo-1.5.3-r4
@@ -58,7 +58,7 @@ libseccomp-2.3.3-r1
 libsm-1.2.2-r2
 libssh2-1.8.2-r0
 libssl1.1-1.1.1b-r1
-libstdc++-8.2.0-r2
+libstdc++-8.3.0-r0
 libtasn1-4.13-r0
 libtls-standalone-2.7.4-r6
 libunistring-0.9.10-r0
@@ -159,7 +159,7 @@ py3-cryptography-2.4.2-r2
 py3-future-0.17.0-r0
 py3-idna-2.7-r0
 py3-six-1.11.0-r0
-python3-3.6.8-r1
+python3-3.6.8-r2
 readline-7.0.003-r1
 scanelf-1.2.3-r0
 shadow-4.5-r0
