@@ -137,6 +137,7 @@ php7-pdo_sqlite-7.2.17-r0
 php7-pecl-igbinary-2.0.8-r1
 php7-pecl-mcrypt-1.0.1-r1
 php7-pecl-memcached-3.1.3-r1
+php7-pecl-redis-4.2.0-r1
 php7-pgsql-7.2.17-r0
 php7-phar-7.2.17-r0
 php7-posix-7.2.17-r0
