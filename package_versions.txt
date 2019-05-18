@@ -50,7 +50,7 @@ libmemcached-libs-1.0.18-r3
 libmnl-1.0.4-r0
 libnftnl-libs-1.1.1-r0
 libpng-1.6.37-r0
-libpq-11.2-r0
+libpq-11.3-r0
 libressl2.7-libcrypto-2.7.5-r0
 libressl2.7-libssl-2.7.5-r0
 libsasl-2.1.27-r1
@@ -163,7 +163,7 @@ py3-six-1.11.0-r0
 python3-3.6.8-r2
 readline-7.0.003-r1
 scanelf-1.2.3-r0
-shadow-4.5-r0
+shadow-4.5-r1
 sqlite-libs-3.26.0-r3
 ssl_client-1.29.3-r10
 tzdata-2019a-r0
