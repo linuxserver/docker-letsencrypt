@@ -254,7 +254,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **05.26.19:** - Remove botocore/urllib patch.
+* **26.05.19:** - Remove botocore/urllib patch.
 * **08.05.19:** - Remove default.conf when nginx is upgraded in downstream image.
 * **30.04.19:** - Add php-redis.
 * **12.04.19:** - Rebase aarch64 image to 3.9.
