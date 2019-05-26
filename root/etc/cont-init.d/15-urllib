@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-# Fix urllib3 package
-URLLIB=$(pip show urllib3 | grep Version | cut -d' ' -f2)
-if [ ${URLLIB} != 1.24.3 ]; then
-    pip install urllib3==1.24.3 --force-reinstall
-fi

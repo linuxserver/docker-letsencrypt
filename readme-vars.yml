@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "05.26.19:", desc: "Remove botocore/urllib patch." }
   - { date: "08.05.19:", desc: "Remove default.conf when nginx is upgraded in downstream image." }
   - { date: "30.04.19:", desc: "Add php-redis." }
   - { date: "12.04.19:", desc: "Rebase aarch64 image to 3.9." }
