@@ -46,6 +46,8 @@ chown -R abc:abc /config/dns-conf
 
 # copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
+# remove outdated files (remove this action after 2019/08/29)
+rm -f /config/nginx/proxy-confs/_readme /config/nginx/proxy-confs/mytinytodo.subfolder.conf.example
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
