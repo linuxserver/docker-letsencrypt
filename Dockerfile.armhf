@@ -103,7 +103,7 @@ RUN \
 	"https://github.com/linuxserver/reverse-proxy-confs/tarball/master" && \
  tar xf \
 	/tmp/proxy.tar.gz -C \
-	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github && \
+	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
  echo "**** configure nginx ****" && \
  rm -f /etc/nginx/conf.d/default.conf && \
  echo "**** cleanup ****" && \

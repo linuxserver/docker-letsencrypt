@@ -166,7 +166,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 * You can also use ldap auth for security and access control. A sample, user configurable ldap.conf is provided, and it requires the separate image [linuxserver/ldap-auth](https://hub.docker.com/r/linuxserver/ldap-auth/) to communicate with an ldap server.
 ### Site config and reverse proxy
 * The default site config resides at `/config/nginx/site-confs/default`. Feel free to modify this file, and you can add other conf files to this directory. However, if you delete the `default` file, a new default will be created on container start.
-* Preset reverse proxy config files are added for popular apps. See the `_readme` file under `/config/nginx/proxy_confs` for instructions on how to enable them
+* Preset reverse proxy config files are added for popular apps. See the `README.md` file under `/config/nginx/proxy_confs` for instructions on how to enable them. The preset confs reside in and get imported from [this repo](https://github.com/linuxserver/reverse-proxy-confs).
 * If you wish to hide your site from search engine crawlers, you may find it useful to add this configuration line to your site config, within the server block, above the line where ssl.conf is included
 `add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";`
 This will *ask* Google et al not to index and list your site. Be careful with this, as you will eventually be de-listed if you leave this line in on a site you wish to be present on search engines
@@ -254,6 +254,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **29.05.19:** - Compensate for changes to the reverse-proxy-confs repo.
 * **26.05.19:** - Remove botocore/urllib patch.
 * **08.05.19:** - Remove default.conf when nginx is upgraded in downstream image.
 * **30.04.19:** - Add php-redis.
