@@ -13,8 +13,8 @@ DHLEVEL=${DHLEVEL}\\n\
 VALIDATION=${VALIDATION}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
-STAGING=${STAGING}\\
-CERT_PASSWORD=${CERT_PASSWORD}\\nn"
+STAGING=${STAGING}\\n\
+CERT_PASSWORD=${CERT_PASSWORD}\\n"
 
 # Echo init finish for test runs
 if [ -n "${TEST_RUN}" ]; then
