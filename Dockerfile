@@ -10,6 +10,7 @@ LABEL maintainer="aptalca"
 # environment settings
 ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.ini
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+ENV CERT_PASSWORD=""
 
 RUN \
  echo "**** install runtime packages ****" && \

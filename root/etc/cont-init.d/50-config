@@ -13,7 +13,8 @@ DHLEVEL=${DHLEVEL}\\n\
 VALIDATION=${VALIDATION}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
-STAGING=${STAGING}\\n"
+STAGING=${STAGING}\\
+CERT_PASSWORD=${CERT_PASSWORD}\\nn"
 
 # Echo init finish for test runs
 if [ -n "${TEST_RUN}" ]; then
@@ -234,7 +235,7 @@ if [ ! -f "/config/keys/letsencrypt/fullchain.pem" ]; then
     fi
     sleep infinity
   fi
-  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:
+  openssl pkcs12 -export -out privkey.pfx -inkey privkey.pem -in cert.pem -certfile chain.pem -passout pass:${CERT_PASSWORD}
   sleep 1
   cat {privkey,fullchain}.pem > priv-fullchain-bundle.pem
   echo "New certificate generated; starting nginx"
