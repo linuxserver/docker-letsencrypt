@@ -9,7 +9,7 @@ busybox-1.29.3-r10
 ca-certificates-20190108-r0
 ca-certificates-cacert-20190108-r0
 coreutils-8.30-r0
-curl-7.64.0-r1
+curl-7.64.0-r2
 db-5.3.28-r1
 expat-2.2.6-r0
 fail2ban-0.10.3.1-r2
@@ -32,7 +32,7 @@ libbz2-1.0.6-r6
 libc-utils-0.7.1-r0
 libcap-2.26-r0
 libcrypto1.1-1.1.1b-r1
-libcurl-7.64.0-r1
+libcurl-7.64.0-r2
 libedit-20181209.3.1-r0
 libevent-2.1.8-r6
 libffi-3.2.1-r6
@@ -164,7 +164,7 @@ python3-3.6.8-r2
 readline-7.0.003-r1
 scanelf-1.2.3-r0
 shadow-4.5-r1
-sqlite-libs-3.26.0-r3
+sqlite-libs-3.28.0-r0
 ssl_client-1.29.3-r10
 tzdata-2019a-r0
 xz-5.2.4-r0
