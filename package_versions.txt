@@ -163,7 +163,7 @@ py3-six-1.11.0-r0
 python3-3.6.8-r2
 readline-7.0.003-r1
 scanelf-1.2.3-r0
-shadow-4.5-r1
+shadow-4.5-r2
 sqlite-libs-3.28.0-r0
 ssl_client-1.29.3-r10
 tzdata-2019a-r0
