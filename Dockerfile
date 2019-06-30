@@ -22,6 +22,7 @@ RUN \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
+	nginx-mod-http-geoip2 \
 	nginx-mod-http-headers-more \
 	nginx-mod-http-image-filter \
 	nginx-mod-http-lua \
@@ -66,7 +67,8 @@ RUN \
 	php7-zip \
 	py3-cryptography \
 	py3-future \
-	py3-pip && \
+	py3-pip \
+	libmaxminddb && \
  echo "**** install certbot plugins ****" && \
  if [ -z ${CERTBOT_VERSION+x} ]; then \
         CERTBOT="certbot"; \
