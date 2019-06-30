@@ -254,6 +254,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **30.06.19:** - Add geoip2 module.
 * **28.06.19:** - Rebasing to alpine 3.10.
 * **19.06.19:** - Set resolver to docker dns in ssl.conf.
 * **29.05.19:** - Compensate for changes to the reverse-proxy-confs repo.

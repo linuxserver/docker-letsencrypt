@@ -67,8 +67,7 @@ RUN \
 	php7-zip \
 	py3-cryptography \
 	py3-future \
-	py3-pip \
-	libmaxminddb && \
+	py3-pip && \
  echo "**** install certbot plugins ****" && \
  if [ -z ${CERTBOT_VERSION+x} ]; then \
         CERTBOT="certbot"; \
