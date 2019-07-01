@@ -22,6 +22,7 @@ RUN \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
 	nginx-mod-http-geoip \
+	nginx-mod-http-geoip2 \
 	nginx-mod-http-headers-more \
 	nginx-mod-http-image-filter \
 	nginx-mod-http-lua \

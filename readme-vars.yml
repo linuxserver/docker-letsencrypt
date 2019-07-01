@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.07.19:", desc: "Patch geoip2 module until upstream is fixed." }
   - { date: "30.06.19:", desc: "Add geoip2 module." }
   - { date: "28.06.19:", desc: "Rebasing to alpine 3.10." }
   - { date: "19.06.19:", desc: "Set resolver to docker dns in ssl.conf." }
