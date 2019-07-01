@@ -48,6 +48,7 @@ libjpeg-turbo-2.0.2-r0
 libksba-1.3.5-r0
 libldap-2.4.47-r2
 libmagic-5.37-r0
+libmaxminddb-1.3.2-r0
 libmcrypt-2.5.8-r7
 libmemcached-libs-1.0.18-r3
 libmnl-1.0.4-r0
@@ -95,6 +96,7 @@ nginx-mod-devel-kit-1.16.0-r2
 nginx-mod-http-echo-1.16.0-r2
 nginx-mod-http-fancyindex-1.16.0-r2
 nginx-mod-http-geoip-1.16.0-r2
+nginx-mod-http-geoip2-1.16.0-r2
 nginx-mod-http-headers-more-1.16.0-r2
 nginx-mod-http-image-filter-1.16.0-r2
 nginx-mod-http-lua-1.16.0-r2
