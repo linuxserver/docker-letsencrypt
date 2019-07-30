@@ -257,6 +257,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **29.07.19:** - Enable http to https redirect by default (effective only for new installs).
 * **01.07.19:** - Patch geoip2 module until upstream is fixed.
 * **30.06.19:** - Add geoip2 module.
 * **28.06.19:** - Rebasing to alpine 3.10.
