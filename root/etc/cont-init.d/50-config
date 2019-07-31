@@ -247,6 +247,11 @@ else
   echo "Certificate exists; parameters unchanged; starting nginx"
 fi
 
+# check GeoIP2 database
+[[ ! -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]] && \
+  echo "creating GeoIP2 database" && \
+  /etc/periodic/weekly/libmaxminddb
+
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
 	touch /config/log/nginx/error.log
