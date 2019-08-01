@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.08.19:", desc: "Mark https redirect block as default_server (effective only for new installs)." }
   - { date: "31.07.19:", desc: "Create GeoIP2 databse (libmaxminddb) during container start if it doesn't exist." }
   - { date: "30.07.19:", desc: "Support main domain via duckdns validation." }
   - { date: "29.07.19:", desc: "Enable http to https redirect by default (effective only for new installs)." }
