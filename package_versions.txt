@@ -16,7 +16,6 @@ expat-2.2.7-r0
 fail2ban-0.10.4-r1
 freetype-2.10.0-r0
 gdbm-1.13-r1
-geoip-1.6.12-r1
 git-2.22.0-r0
 git-perl-2.22.0-r0
 glib-2.60.4-r0
@@ -96,7 +95,6 @@ nginx-1.16.0-r2
 nginx-mod-devel-kit-1.16.0-r2
 nginx-mod-http-echo-1.16.0-r2
 nginx-mod-http-fancyindex-1.16.0-r2
-nginx-mod-http-geoip-1.16.0-r2
 nginx-mod-http-geoip2-1.16.0-r2
 nginx-mod-http-headers-more-1.16.0-r2
 nginx-mod-http-image-filter-1.16.0-r2
@@ -111,7 +109,6 @@ nginx-mod-http-xslt-filter-1.16.0-r2
 nginx-mod-mail-1.16.0-r2
 nginx-mod-rtmp-1.16.0-r2
 nginx-mod-stream-1.16.0-r2
-nginx-mod-stream-geoip-1.16.0-r2
 nginx-vim-1.16.0-r2
 npth-1.6-r0
 openssl-1.1.1c-r0
@@ -134,6 +131,7 @@ php7-gd-7.3.7-r0
 php7-iconv-7.3.7-r0
 php7-intl-7.3.7-r0
 php7-json-7.3.6-r0
+php7-ldap-7.3.7-r0
 php7-mbstring-7.3.7-r0
 php7-mysqli-7.3.7-r0
 php7-mysqlnd-7.3.7-r0
