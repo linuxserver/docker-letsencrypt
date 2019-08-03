@@ -21,7 +21,6 @@ RUN \
 	nginx \
 	nginx-mod-http-echo \
 	nginx-mod-http-fancyindex \
-	nginx-mod-http-geoip \
 	nginx-mod-http-geoip2 \
 	nginx-mod-http-headers-more \
 	nginx-mod-http-image-filter \
@@ -36,7 +35,6 @@ RUN \
 	nginx-mod-mail \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
-	nginx-mod-stream-geoip \
 	nginx-vim \
 	php7-bz2 \
 	php7-ctype \
@@ -46,6 +44,7 @@ RUN \
 	php7-gd \
 	php7-iconv \
 	php7-intl \
+	php7-ldap \
 	php7-mcrypt \
 	php7-memcached \
 	php7-mysqli \
