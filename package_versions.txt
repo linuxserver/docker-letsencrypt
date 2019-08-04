@@ -119,6 +119,7 @@ perl-5.28.2-r1
 perl-error-0.17027-r0
 perl-git-2.22.0-r0
 php7-7.3.7-r0
+php7-bcmath-7.3.7-r0
 php7-bz2-7.3.7-r0
 php7-common-7.3.7-r0
 php7-ctype-7.3.7-r0
@@ -141,6 +142,7 @@ php7-pdo-7.3.7-r0
 php7-pdo_mysql-7.3.7-r0
 php7-pdo_pgsql-7.3.7-r0
 php7-pdo_sqlite-7.3.7-r0
+php7-pear-7.3.7-r0
 php7-pecl-igbinary-3.0.1-r1
 php7-pecl-mcrypt-1.0.2-r1
 php7-pecl-memcached-3.1.3-r2
@@ -156,6 +158,7 @@ php7-sqlite3-7.3.7-r0
 php7-tokenizer-7.3.7-r0
 php7-xml-7.3.7-r0
 php7-xmlreader-7.3.7-r0
+php7-xmlrpc-7.3.7-r0
 php7-xmlwriter-7.3.6-r0
 php7-zip-7.3.7-r0
 pinentry-1.1.0-r1
