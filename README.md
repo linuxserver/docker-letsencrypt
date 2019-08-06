@@ -257,6 +257,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **06.08.19:** - Add php7-ftp.
 * **04.08.19:** - Add php7-bcmath, php7-pear, php7-xmlrpc.
 * **02.08.19:** - Add php7-ldap, remove geoip v1(deprecated).
 * **01.08.19:** - Mark https redirect block as default_server (effective only for new installs).
