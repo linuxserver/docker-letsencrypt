@@ -42,6 +42,7 @@ RUN \
 	php7-curl \
 	php7-dom \
 	php7-exif \
+	php7-ftp \
 	php7-gd \
 	php7-iconv \
 	php7-intl \

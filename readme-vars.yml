@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "06.08.19:", desc: "Add php7-ftp." }
   - { date: "04.08.19:", desc: "Add php7-bcmath, php7-pear, php7-xmlrpc." }
   - { date: "02.08.19:", desc: "Add php7-ldap, remove geoip v1(deprecated)." }
   - { date: "01.08.19:", desc: "Mark https redirect block as default_server (effective only for new installs)." }
