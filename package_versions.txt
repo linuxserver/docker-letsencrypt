@@ -55,7 +55,7 @@ libmnl-1.0.4-r0
 libmount-2.33.2-r0
 libnftnl-libs-1.1.3-r0
 libpng-1.6.37-r1
-libpq-11.4-r0
+libpq-11.5-r0
 libressl2.7-libcrypto-2.7.5-r0
 libressl2.7-libssl-2.7.5-r0
 libsasl-2.1.27-r3
