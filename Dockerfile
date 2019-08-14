@@ -87,12 +87,12 @@ RUN \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
 	certbot-dns-google \
+	certbot-dns-inwx \
 	certbot-dns-luadns \
 	certbot-dns-nsone \
 	certbot-dns-ovh \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
-	certbot-dns-inwx \
 	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
