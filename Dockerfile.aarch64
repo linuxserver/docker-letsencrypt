@@ -92,6 +92,7 @@ RUN \
 	certbot-dns-ovh \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
+	certbot-dns-inwx \
 	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
