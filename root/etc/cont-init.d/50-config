@@ -174,7 +174,7 @@ fi
 if [ "$VALIDATION" = "dns" ]; then
   if [ "$DNSPLUGIN" = "route53" ]; then
     PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
-  else if [ "$DNSPLUGIN" = "inwx" ]; then
+  elif [ "$DNSPLUGIN" = "inwx" ]; then
     PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
