@@ -51,7 +51,7 @@ cap_add_param_vars:
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`." }
+  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `inwx`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`." }
   - { env_var: "DUCKDNSTOKEN", env_value: "<token>", desc: "Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org" }
   - { env_var: "EMAIL", env_value: "<e-mail>", desc: "Optional e-mail address used for cert expiration notifications." }
   - { env_var: "DHLEVEL", env_value: "2048", desc: "Dhparams bit value (default=2048, can be set to `1024` or `4096`)." }
