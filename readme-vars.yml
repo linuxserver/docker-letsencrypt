@@ -51,7 +51,7 @@ cap_add_param_vars:
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`." }
+  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `inwx`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`." }
   - { env_var: "DUCKDNSTOKEN", env_value: "<token>", desc: "Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org" }
   - { env_var: "EMAIL", env_value: "<e-mail>", desc: "Optional e-mail address used for cert expiration notifications." }
   - { env_var: "DHLEVEL", env_value: "2048", desc: "Dhparams bit value (default=2048, can be set to `1024` or `4096`)." }
@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "14.08.19:", desc: "Add inwx dns validation plugin." }
   - { date: "06.08.19:", desc: "Add php7-ftp." }
   - { date: "04.08.19:", desc: "Add php7-bcmath, php7-pear, php7-xmlrpc." }
   - { date: "02.08.19:", desc: "Add php7-ldap, remove geoip v1(deprecated)." }

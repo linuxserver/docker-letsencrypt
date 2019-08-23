@@ -87,6 +87,7 @@ RUN \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
 	certbot-dns-google \
+	certbot-dns-inwx \
 	certbot-dns-luadns \
 	certbot-dns-nsone \
 	certbot-dns-ovh \
