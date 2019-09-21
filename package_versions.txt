@@ -1,6 +1,6 @@
 alpine-baselayout-3.1.2-r0
 alpine-keys-2.1-r2
-apache2-utils-2.4.39-r0
+apache2-utils-2.4.41-r0
 apk-tools-2.10.4-r2
 apr-1.6.5-r0
 apr-util-1.6.1-r6
@@ -10,9 +10,9 @@ busybox-1.30.1-r2
 ca-certificates-20190108-r0
 ca-certificates-cacert-20190108-r0
 coreutils-8.31-r0
-curl-7.65.1-r0
+curl-7.66.0-r0
 db-5.3.28-r1
-expat-2.2.7-r1
+expat-2.2.8-r0
 fail2ban-0.10.4-r1
 freetype-2.10.0-r0
 gdbm-1.13-r1
@@ -34,7 +34,7 @@ libbz2-1.0.6-r7
 libc-utils-0.7.1-r0
 libcap-2.27-r0
 libcrypto1.1-1.1.1d-r0
-libcurl-7.65.1-r0
+libcurl-7.66.0-r0
 libedit-20190324.3.1-r0
 libevent-2.1.10-r0
 libffi-3.2.1-r6
@@ -111,7 +111,7 @@ nginx-mod-rtmp-1.16.1-r0
 nginx-mod-stream-1.16.1-r0
 nginx-vim-1.16.1-r0
 npth-1.6-r0
-openssl-1.1.1c-r0
+openssl-1.1.1d-r0
 p11-kit-0.23.16.1-r0
 pcre-8.43-r0
 pcre2-10.33-r0
@@ -126,13 +126,13 @@ php7-ctype-7.3.9-r0
 php7-curl-7.3.9-r0
 php7-dom-7.3.9-r0
 php7-exif-7.3.9-r0
-php7-fileinfo-7.3.8-r0
-php7-fpm-7.3.8-r0
+php7-fileinfo-7.3.9-r0
+php7-fpm-7.3.9-r0
 php7-ftp-7.3.9-r0
 php7-gd-7.3.9-r0
 php7-iconv-7.3.9-r0
 php7-intl-7.3.9-r0
-php7-json-7.3.8-r0
+php7-json-7.3.9-r0
 php7-ldap-7.3.9-r0
 php7-mbstring-7.3.9-r0
 php7-mysqli-7.3.9-r0
@@ -152,7 +152,7 @@ php7-pgsql-7.3.9-r0
 php7-phar-7.3.9-r0
 php7-posix-7.3.9-r0
 php7-session-7.3.9-r0
-php7-simplexml-7.3.8-r0
+php7-simplexml-7.3.9-r0
 php7-soap-7.3.9-r0
 php7-sockets-7.3.9-r0
 php7-sqlite3-7.3.9-r0
@@ -160,7 +160,7 @@ php7-tokenizer-7.3.9-r0
 php7-xml-7.3.9-r0
 php7-xmlreader-7.3.9-r0
 php7-xmlrpc-7.3.9-r0
-php7-xmlwriter-7.3.8-r0
+php7-xmlwriter-7.3.9-r0
 php7-zip-7.3.9-r0
 pinentry-1.1.0-r1
 popt-1.16-r7
@@ -177,7 +177,7 @@ scanelf-1.2.3-r0
 shadow-4.6-r2
 sqlite-libs-3.28.0-r0
 ssl_client-1.30.1-r2
-tzdata-2019a-r0
+tzdata-2019b-r0
 xz-5.2.4-r0
 xz-libs-5.2.4-r0
 zlib-1.2.11-r1
