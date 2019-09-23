@@ -35,7 +35,7 @@ done
 
 # make our folders and links
 mkdir -p \
-	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf} \
+	/config/{log/letsencrypt,log/fail2ban,etc/letsencrypt,fail2ban,crontabs,dns-conf,geoip2db} \
 	/var/run/fail2ban
 rm -rf /etc/letsencrypt
 ln -s /config/etc/letsencrypt /etc/letsencrypt
@@ -249,6 +249,11 @@ else
   echo "Certificate exists; parameters unchanged; starting nginx"
 fi
 
+# create GeoIP2 folder symlink
+[[ -d /var/lib/libmaxminddb ]] && [[ ! -L /var/lib/libmaxminddb ]] && \
+  rm -rf /var/lib/libmaxminddb
+[[ ! -d /var/lib/libmaxminddb ]] && \
+  ln -s /config/geoip2db /var/lib/libmaxminddb
 # check GeoIP2 database
 [[ ! -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]] && \
   echo "creating GeoIP2 database" && \
