@@ -267,6 +267,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **12.10.19:** - Add linode dns validation plugin.
 * **23.09.19:** - Move GeoIP2 db to /config to make it persistent.
 * **14.08.19:** - Add inwx dns validation plugin.
 * **06.08.19:** - Add php7-ftp.
