@@ -131,7 +131,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e URL=yourdomain.url` | Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns). |
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only) |
 | `-e VALIDATION=http` | Letsencrypt validation method to use, options are `http`, `tls-sni`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`). |
-| `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `inwx`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`. |
+| `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136` and `route53`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`. |
 | `-e DUCKDNSTOKEN=<token>` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
 | `-e EMAIL=<e-mail>` | Optional e-mail address used for cert expiration notifications. |
 | `-e DHLEVEL=2048` | Dhparams bit value (default=2048, can be set to `1024` or `4096`). |
