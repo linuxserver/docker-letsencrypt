@@ -30,6 +30,9 @@ server {
 	client_max_body_size 0;
 
 	location / {
+		# enable rootfolder method reverse proxy confs
+		include /config/nginx/proxy-confs/*.rootfolder.conf;
+
 		try_files $uri $uri/ /index.html /index.php?$args =404;
 	}
 
