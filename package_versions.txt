@@ -171,7 +171,7 @@ py3-cryptography-2.6.1-r1
 py3-future-0.17.1-r0
 py3-idna-2.8-r1
 py3-six-1.12.0-r1
-python3-3.7.4-r0
+python3-3.7.5-r1
 readline-8.0.0-r0
 scanelf-1.2.3-r0
 shadow-4.6-r2
