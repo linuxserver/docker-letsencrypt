@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "23.10.19:", desc: "Update Host header in `proxy.conf` to fix CSRF issues." }
   - { date: "12.10.19:", desc: "Add linode dns validation plugin." }
   - { date: "23.09.19:", desc: "Move GeoIP2 db to /config to make it persistent." }
   - { date: "14.08.19:", desc: "Add inwx dns validation plugin." }
