@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "26.10.19:", desc: "Add new package for stream-geoip2, remove geoip2 module patch." }
   - { date: "24.10.19:", desc: "Add php7-pecl-imagick." }
   - { date: "23.10.19:", desc: "Update Host header in `proxy.conf` to fix CSRF issues." }
   - { date: "12.10.19:", desc: "Add linode dns validation plugin." }
