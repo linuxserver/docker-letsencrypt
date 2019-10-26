@@ -267,6 +267,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.10.19:** - Add new package for stream-geoip2, remove geoip2 module patch.
 * **24.10.19:** - Add php7-pecl-imagick.
 * **23.10.19:** - Update Host header in `proxy.conf` to fix CSRF issues.
 * **12.10.19:** - Add linode dns validation plugin.

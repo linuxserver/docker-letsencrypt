@@ -35,6 +35,7 @@ RUN \
 	nginx-mod-mail \
 	nginx-mod-rtmp \
 	nginx-mod-stream \
+	nginx-mod-stream-geoip2 \
 	nginx-vim \
 	php7-bcmath \
 	php7-bz2 \
