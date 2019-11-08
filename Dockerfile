@@ -37,6 +37,7 @@ RUN \
 	nginx-mod-stream \
 	nginx-mod-stream-geoip2 \
 	nginx-vim \
+	php7-apcu \
 	php7-bcmath \
 	php7-bz2 \
 	php7-ctype \
@@ -45,6 +46,7 @@ RUN \
 	php7-exif \
 	php7-ftp \
 	php7-gd \
+	php7-gmp \
 	php7-iconv \
 	php7-intl \
 	php7-ldap \
@@ -72,7 +74,8 @@ RUN \
 	php7-zip \
 	py3-cryptography \
 	py3-future \
-	py3-pip && \
+	py3-pip \
+	sudo && \
  echo "**** install certbot plugins ****" && \
  if [ -z ${CERTBOT_VERSION+x} ]; then \
         CERTBOT="certbot"; \
