@@ -54,6 +54,7 @@ RUN \
 	php7-mysqlnd \
 	php7-opcache \
 	php7-pdo_mysql \
+	php7-pdo_odbc \
 	php7-pdo_pgsql \
 	php7-pdo_sqlite \
 	php7-pear \
