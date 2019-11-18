@@ -273,6 +273,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **17.11.19:** - Add transip dns validation plugin.
 * **27.10.19:** - Turn off lua resty core to get rid of error message in the log (existing users will have to delete `/config/nginx/nginx.conf` and restart the container).
 * **26.10.19:** - Add new package for stream-geoip2, remove geoip2 module patch.
 * **24.10.19:** - Add php7-pecl-imagick.
