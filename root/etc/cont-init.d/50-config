@@ -76,7 +76,7 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
   sleep infinity
 
@@ -174,7 +174,7 @@ fi
 if [ "$VALIDATION" = "dns" ]; then
   if [ "$DNSPLUGIN" = "route53" ]; then
     PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
-  elif [ "$DNSPLUGIN" = "inwx" ]; then
+  elif [[ "$DNSPLUGIN" =~ ^(inwx|transip)$ ]]; then
     PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
