@@ -105,6 +105,7 @@ RUN \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	certbot-dns-transip \
+	cryptography \
 	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
