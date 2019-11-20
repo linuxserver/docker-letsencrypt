@@ -273,6 +273,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.11.19:** - Fix cryptography version mismatch due to pip issue.
 * **17.11.19:** - Add php7-pdo_odbc.
 * **17.11.19:** - Add transip dns validation plugin.
 * **27.10.19:** - Turn off lua resty core to get rid of error message in the log (existing users will have to delete `/config/nginx/nginx.conf` and restart the container).

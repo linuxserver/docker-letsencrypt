@@ -12,6 +12,13 @@ ENV DHLEVEL=2048 ONLY_SUBDOMAINS=false AWS_CONFIG_FILE=/config/dns-conf/route53.
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
+ echo "**** install build packages ****" && \
+ apk add --no-cache --virtual=build-dependencies \
+	g++ \
+	gcc \
+	libffi-dev \
+	openssl-dev \
+	python3-dev && \
  echo "**** install runtime packages ****" && \
  apk add --no-cache --upgrade \
 	curl \
@@ -98,6 +105,7 @@ RUN \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	certbot-dns-transip \
+	cryptography \
 	requests && \
  echo "**** remove unnecessary fail2ban filters ****" && \
  rm \
@@ -117,6 +125,8 @@ RUN \
  echo "**** configure nginx ****" && \
  rm -f /etc/nginx/conf.d/default.conf && \
  echo "**** cleanup ****" && \
+ apk del --purge \
+	build-dependencies && \
  for cleanfiles in *.pyc *.pyo; \
 	do \
 	find /usr/lib/python3.*  -iname "${cleanfiles}" -exec rm -f '{}' + \
