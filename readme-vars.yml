@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "20.11.19:", desc: "Fix cryptography version mismatch due to pip issue." }
   - { date: "17.11.19:", desc: "Add php7-pdo_odbc." }
   - { date: "17.11.19:", desc: "Add transip dns validation plugin." }
   - { date: "27.10.19:", desc: "Turn off lua resty core to get rid of error message in the log (existing users will have to delete `/config/nginx/nginx.conf` and restart the container)." }
