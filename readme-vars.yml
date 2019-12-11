@@ -51,7 +51,7 @@ cap_add_param_vars:
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini file under `/config/dns-conf`." }
+  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
   - { env_var: "DUCKDNSTOKEN", env_value: "<token>", desc: "Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org" }
   - { env_var: "EMAIL", env_value: "<e-mail>", desc: "Optional e-mail address used for cert expiration notifications." }
   - { env_var: "DHLEVEL", env_value: "2048", desc: "Dhparams bit value (default=2048, can be set to `1024` or `4096`)." }
@@ -81,7 +81,7 @@ app_setup_block: |
   * Before running this container, make sure that the url and subdomains are properly forwarded to this container's host, and that port 443 (and/or 80) is not being used by another service on the host (NAS gui, another webserver, etc.).
   * For `http` validation, port 80 on the internet side of the router should be forwarded to this container's port 80
   * For `tls-sni` validation, port 443 on the internet side of the router should be forwarded to this container's port 443
-  * For `dns` validation, make sure to enter your credentials into the corresponding ini file under `/config/dns-conf`
+  * For `dns` validation, make sure to enter your credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`
     * Cloudflare provides free accounts for managing dns and is very easy to use with this image. Make sure that it is set up for "dns only" instead of "dns + proxy"
     * Google dns plugin is meant to be used with "Google Cloud DNS", a paid enterprise product, and not for "Google Domains DNS"
   * For `duckdns` validation, either leave the `SUBDOMAINS` variable empty or set it to `wildcard`, and set the `DUCKDNSTOKEN` variable with your duckdns token. Due to a limitation of duckdns, the resulting cert will only cover either main subdomain (ie. `yoursubdomain.duckdns.org`), or sub-subdomains (ie. `*.yoursubdomain.duckdns.org`), but will not both at the same time. You can use our [duckdns image](https://hub.docker.com/r/linuxserver/duckdns/) to update your IP on duckdns.org.
