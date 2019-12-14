@@ -42,7 +42,7 @@ ln -s /config/etc/letsencrypt /etc/letsencrypt
 
 # copy dns default configs
 cp -n /defaults/dns-conf/* /config/dns-conf/
-chown -R abc:abc /config/dns-conf
+find /config/dns-conf \! -user abc -group abc -print | xargs chown abc:abc
 
 # copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
@@ -275,8 +275,7 @@ fi
 	touch /config/log/nginx/access.log
 
 # permissions
-chown -R abc:abc \
-	/config
+find /config \! -user abc -group abc -print | xargs chown abc:abc
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
 chmod +x /app/le-renew.sh
