@@ -283,6 +283,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **18.12.19:** - Add php7-imap and php7-pecl-apcu.
 * **11.12.19:** - Fix Google Cloud DNS to use .json file for authentication.
 * **20.11.19:** - Fix cryptography version mismatch due to pip issue.
 * **17.11.19:** - Add php7-pdo_odbc.

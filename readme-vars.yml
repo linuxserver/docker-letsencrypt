@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "18.12.19:", desc: "Add php7-imap and php7-pecl-apcu." }
   - { date: "11.12.19:", desc: "Fix Google Cloud DNS to use .json file for authentication." }
   - { date: "20.11.19:", desc: "Fix cryptography version mismatch due to pip issue." }
   - { date: "17.11.19:", desc: "Add php7-pdo_odbc." }
