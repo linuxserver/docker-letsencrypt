@@ -283,6 +283,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **19.12.19:** - Increase large_client_header_buffers in nginx.conf to prevent 414 errors.
 * **18.12.19:** - Add php7-imap and php7-pecl-apcu.
 * **11.12.19:** - Fix Google Cloud DNS to use .json file for authentication.
 * **20.11.19:** - Fix cryptography version mismatch due to pip issue.
