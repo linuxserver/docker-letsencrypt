@@ -7,6 +7,7 @@ apr-util-1.6.1-r6
 argon2-libs-20171227-r2
 bash-5.0.0-r0
 busybox-1.30.1-r3
+c-client-2007f-r10
 ca-certificates-20190108-r0
 ca-certificates-cacert-20190108-r0
 coreutils-8.31-r0
@@ -21,10 +22,10 @@ git-2.22.2-r0
 git-perl-2.22.2-r0
 glib-2.60.4-r0
 gmp-6.1.2-r1
-gnupg-2.2.16-r0
+gnupg-2.2.19-r0
 gnutls-3.6.8-r0
 icu-libs-64.2-r0
-imagemagick-libs-7.0.8.58-r0
+imagemagick-libs-7.0.8.68-r0
 ip6tables-1.8.3-r0
 iptables-1.8.3-r0
 lcms2-2.9-r1
@@ -136,6 +137,7 @@ php7-fpm-7.3.11-r0
 php7-ftp-7.3.11-r0
 php7-gd-7.3.11-r0
 php7-iconv-7.3.11-r0
+php7-imap-7.3.11-r0
 php7-intl-7.3.11-r0
 php7-json-7.3.11-r0
 php7-ldap-7.3.11-r0
@@ -150,6 +152,7 @@ php7-pdo_odbc-7.3.11-r0
 php7-pdo_pgsql-7.3.11-r0
 php7-pdo_sqlite-7.3.11-r0
 php7-pear-7.3.11-r0
+php7-pecl-apcu-5.1.17-r1
 php7-pecl-igbinary-3.0.1-r1
 php7-pecl-imagick-3.4.4-r1
 php7-pecl-mcrypt-1.0.2-r1
@@ -182,7 +185,7 @@ python3-3.7.5-r1
 readline-8.0.0-r0
 scanelf-1.2.3-r0
 shadow-4.6-r2
-sqlite-libs-3.28.0-r1
+sqlite-libs-3.28.0-r2
 ssl_client-1.30.1-r3
 tzdata-2019c-r0
 unixodbc-2.3.7-r1
