@@ -53,6 +53,7 @@ RUN \
 	php7-ftp \
 	php7-gd \
 	php7-iconv \
+	php7-imap \
 	php7-intl \
 	php7-ldap \
 	php7-mcrypt \
@@ -65,6 +66,7 @@ RUN \
 	php7-pdo_pgsql \
 	php7-pdo_sqlite \
 	php7-pear \
+	php7-pecl-apcu \
 	php7-pecl-imagick \
 	php7-pecl-redis \
 	php7-pgsql \
