@@ -146,7 +146,7 @@ Container images are configured using parameters passed at runtime (such as thos
 
 ## Environment variables from files (Docker secrets)
 
-You can set any environment variable from a file by using a special prepend `FILE__`.
+You can set any environment variable from a file by using a special prepend `FILE__`. 
 
 As an example:
 
@@ -215,7 +215,7 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 * You can check which jails are active via `docker exec -it letsencrypt fail2ban-client status`
 * You can check the status of a specific jail via `docker exec -it letsencrypt fail2ban-client status <jail name>`
 * You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
-* A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
+* A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands  
 
 
 
@@ -283,6 +283,8 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.01.20:** - Add support for gandi dns validation.
+* **31.12.19:** - GeoIP2 databases now require personal license keys to download. Auto download is disabled and log message is added.
 * **19.12.19:** - Rebasing to alpine 3.11.
 * **19.12.19:** - Increase large_client_header_buffers in nginx.conf to prevent 414 errors.
 * **18.12.19:** - Add php7-imap and php7-pecl-apcu.

@@ -126,6 +126,8 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.01.20:", desc: "Add support for gandi dns validation." }
+  - { date: "31.12.19:", desc: "GeoIP2 databases now require personal license keys to download. Auto download is disabled and log message is added." }
   - { date: "19.12.19:", desc: "Rebasing to alpine 3.11." }
   - { date: "19.12.19:", desc: "Increase large_client_header_buffers in nginx.conf to prevent 414 errors." }
   - { date: "18.12.19:", desc: "Add php7-imap and php7-pecl-apcu." }
