@@ -76,7 +76,7 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|digitalocean|dnsimple|dnsmadeeasy|gandi|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
   sleep infinity
 
@@ -174,6 +174,8 @@ fi
 if [ "$VALIDATION" = "dns" ]; then
   if [ "$DNSPLUGIN" = "route53" ]; then
     PREFCHAL="--dns-${DNSPLUGIN} --manual-public-ip-logging-ok"
+  elif [[ "$DNSPLUGIN" =~ ^(gandi)$ ]]; then
+    PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json --manual-public-ip-logging-ok --dns-${DNSPLUGIN}-propagation-seconds 120"
   elif [[ "$DNSPLUGIN" =~ ^(inwx|transip)$ ]]; then
@@ -265,8 +267,7 @@ fi
   ln -s /config/geoip2db /var/lib/libmaxminddb
 # check GeoIP2 database
 [[ ! -f /var/lib/libmaxminddb/GeoLite2-City.mmdb ]] && \
-  echo "creating GeoIP2 database" && \
-  /etc/periodic/weekly/libmaxminddb
+  echo "Starting 2019/12/30, GeoIP2 databases require personal license key to download. Please manually download/update the GeoIP2 db and save as /config/geoip2db/GeoLite2-City.mmdb"
 
 # logfiles needed by fail2ban
 [[ ! -f /config/log/nginx/error.log ]] && \
