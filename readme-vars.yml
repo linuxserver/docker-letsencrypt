@@ -119,13 +119,14 @@ app_setup_block: |
   * You can check which jails are active via `docker exec -it letsencrypt fail2ban-client status`
   * You can check the status of a specific jail via `docker exec -it letsencrypt fail2ban-client status <jail name>`
   * You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
-  * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands  
+  * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
 
 app_setup_nginx_reverse_proxy_snippet: false
 app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "07.01.20:", desc: "Update ciphers from Mozilla ssl-config recommendations." }
   - { date: "01.01.20:", desc: "Add support for gandi dns validation." }
   - { date: "31.12.19:", desc: "GeoIP2 databases now require personal license keys to download. Auto download is disabled and log message is added." }
   - { date: "19.12.19:", desc: "Rebasing to alpine 3.11." }
