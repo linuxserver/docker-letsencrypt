@@ -48,7 +48,7 @@ libgd-2.2.5-r2
 libgpg-error-1.36-r2
 libice-1.0.10-r0
 libintl-0.20.1-r2
-libjpeg-turbo-2.0.3-r0
+libjpeg-turbo-2.0.4-r0
 libksba-1.3.5-r0
 libldap-2.4.48-r1
 libltdl-2.4.6-r7
