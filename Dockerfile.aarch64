@@ -98,6 +98,7 @@ RUN \
 	certbot-dns-digitalocean \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
+	certbot-dns-domeneshop \
 	certbot-dns-google \
 	certbot-dns-inwx \
 	certbot-dns-linode \
