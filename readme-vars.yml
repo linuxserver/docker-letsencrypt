@@ -19,8 +19,8 @@ available_architectures:
 # development version
 development_versions: false
 development_versions_items:
-  - { tag: "latest", desc: "Stable Ombi releases" }
-  - { tag: "development", desc: "Releases from the `develop` branch of Ombi" }
+  - { tag: "latest", desc: "Stable releases" }
+  - { tag: "development", desc: "Releases from the `develop` branch" }
 
 
 # container parameters
@@ -51,7 +51,7 @@ cap_add_param_vars:
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
+  - { env_var: "DNSPLUGIN", env_value: "cloudflare", desc: "Required if `VALIDATION` is set to `dns`. Options are `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`." }
   - { env_var: "DUCKDNSTOKEN", env_value: "<token>", desc: "Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org" }
   - { env_var: "EMAIL", env_value: "<e-mail>", desc: "Optional e-mail address used for cert expiration notifications." }
   - { env_var: "DHLEVEL", env_value: "2048", desc: "Dhparams bit value (default=2048, can be set to `1024` or `4096`)." }
@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "27.01.20:", desc: "Add support for cpanel dns validation." }
   - { date: "10.01.20:", desc: "Add support for domeneshop dns validation." }
   - { date: "07.01.20:", desc: "Update ciphers from Mozilla ssl-config recommendations." }
   - { date: "01.01.20:", desc: "Add support for gandi dns validation." }

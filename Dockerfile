@@ -95,6 +95,7 @@ RUN \
 	${CERTBOT} \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
+	certbot-dns-cpanel \
 	certbot-dns-digitalocean \
 	certbot-dns-dnsimple \
 	certbot-dns-dnsmadeeasy \
