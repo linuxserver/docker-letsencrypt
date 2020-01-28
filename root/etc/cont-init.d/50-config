@@ -187,8 +187,8 @@ if [ "$VALIDATION" = "dns" ]; then
   fi
   echo "${VALIDATION} validation via ${DNSPLUGIN} plugin is selected"
 elif [ "$VALIDATION" = "tls-sni" ]; then
-  PREFCHAL="--non-interactive --standalone --preferred-challenges tls-sni"
-  echo "tls-sni validation is selected"
+  PREFCHAL="--non-interactive --standalone --preferred-challenges http"
+  echo "*****tls-sni validation has been deprecated, attempting http validation instead"
 elif [ "$VALIDATION" = "duckdns" ]; then
   PREFCHAL="--non-interactive --manual --preferred-challenges dns --manual-public-ip-logging-ok --manual-auth-hook /app/duckdns-txt"
   chmod +x /app/duckdns-txt
