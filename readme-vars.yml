@@ -125,6 +125,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "18.02.20:", desc: "Use port and proto upstream variables for ldap and default sample confs." }
   - { date: "28.01.20:", desc: "Deprecate tls-sni validation method, remove from docs." }
   - { date: "27.01.20:", desc: "Add support for cpanel dns validation." }
   - { date: "10.01.20:", desc: "Add support for domeneshop dns validation." }
