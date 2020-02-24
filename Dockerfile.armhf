@@ -93,6 +93,7 @@ RUN \
 	pip && \
  pip3 install -U \
 	${CERTBOT} \
+	certbot-dns-aliyun \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-cpanel \
