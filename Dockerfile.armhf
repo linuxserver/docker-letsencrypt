@@ -93,6 +93,7 @@ RUN \
 	pip && \
  pip3 install -U \
 	${CERTBOT} \
+	certbot-dns-aliyun \
 	certbot-dns-cloudflare \
 	certbot-dns-cloudxns \
 	certbot-dns-cpanel \
@@ -109,7 +110,6 @@ RUN \
 	certbot-dns-rfc2136 \
 	certbot-dns-route53 \
 	certbot-dns-transip \
-	certbot-dns-aliyun \
 	certbot-plugin-gandi \
 	cryptography \
 	requests && \
