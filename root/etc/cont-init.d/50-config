@@ -283,3 +283,5 @@ chown -R abc:abc \
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
 chmod +x /app/le-renew.sh
+chmod 700 /defaults/dns-conf
+chmod 600 /defaults/dns-conf/*
