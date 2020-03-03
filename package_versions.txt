@@ -180,7 +180,7 @@ py3-cryptography-2.8-r1
 py3-future-0.18.2-r0
 py3-idna-2.8-r3
 py3-six-1.13.0-r0
-python3-3.8.1-r0
+python3-3.8.2-r0
 readline-8.0.1-r0
 scanelf-1.2.4-r0
 shadow-4.7-r1
