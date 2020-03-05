@@ -125,6 +125,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "05.03.20:", desc: "Use port and proto upstream variables for ldap and default sample confs." }
   - { date: "24.02.20:", desc: "Remove world/group read permissions in dns-conf." }
   - { date: "23.02.20:", desc: "Add aliyun dns validation plugin." }
   - { date: "28.01.20:", desc: "Deprecate tls-sni validation method, remove from docs." }
