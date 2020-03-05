@@ -282,6 +282,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.03.20:** - Use port and proto upstream variables for ldap and default sample confs.
 * **24.02.20:** - Remove world/group read permissions in dns-conf.
 * **23.02.20:** - Add aliyun dns validation plugin.
 * **28.01.20:** - Deprecate tls-sni validation method, remove from docs.
