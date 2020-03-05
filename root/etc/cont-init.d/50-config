@@ -76,7 +76,7 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/ldap.conf /config/nginx/ldap.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
-[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
+[[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
   sleep infinity
 
@@ -180,7 +180,7 @@ if [ "$VALIDATION" = "dns" ]; then
     PREFCHAL="-a certbot-plugin-${DNSPLUGIN}:dns --certbot-plugin-${DNSPLUGIN}:dns-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
   elif [[ "$DNSPLUGIN" =~ ^(google)$ ]]; then
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.json --manual-public-ip-logging-ok --dns-${DNSPLUGIN}-propagation-seconds 120"
-  elif [[ "$DNSPLUGIN" =~ ^(domeneshop|inwx|transip)$ ]]; then
+  elif [[ "$DNSPLUGIN" =~ ^(aliyun|domeneshop|inwx|transip)$ ]]; then
     PREFCHAL="-a certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN} --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok --certbot-dns-${DNSPLUGIN}:dns-${DNSPLUGIN}-propagation-seconds 180"
   else
     PREFCHAL="--dns-${DNSPLUGIN} --dns-${DNSPLUGIN}-credentials /config/dns-conf/${DNSPLUGIN}.ini --manual-public-ip-logging-ok"
@@ -283,3 +283,5 @@ chown -R abc:abc \
 chmod -R 0644 /etc/logrotate.d
 chmod -R +r /config/log
 chmod +x /app/le-renew.sh
+chmod 700 /defaults/dns-conf
+chmod 600 /defaults/dns-conf/*
