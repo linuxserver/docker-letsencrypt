@@ -74,6 +74,7 @@ RUN \
 	php7-posix \
 	php7-soap \
 	php7-sockets \
+	php7-sodium \
 	php7-sqlite3 \
 	php7-tokenizer \
 	php7-xml \

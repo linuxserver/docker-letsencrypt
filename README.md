@@ -282,6 +282,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **11.03.20:** - Add php7-sodium.
 * **06.03.20:** - Implement cert renewal attempt during container start (only if the cert is already expired or will expire within the next 24 hours, otherwise it will be attempted at 2:08am).
 * **05.03.20:** - Use port and proto upstream variables for ldap and default sample confs.
 * **24.02.20:** - Remove world/group read permissions in dns-conf.
