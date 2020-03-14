@@ -26,8 +26,8 @@ gnupg-2.2.19-r0
 gnutls-3.6.10-r0
 icu-libs-64.2-r0
 imagemagick-libs-7.0.9.7-r0
-ip6tables-1.8.3-r1
-iptables-1.8.3-r1
+ip6tables-1.8.3-r2
+iptables-1.8.3-r2
 lcms2-2.9-r1
 libacl-2.2.53-r0
 libassuan-2.5.3-r0
