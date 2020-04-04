@@ -1,7 +1,7 @@
 alpine-baselayout-3.2.0-r3
 alpine-keys-2.1-r2
 apache2-utils-2.4.41-r0
-apk-tools-2.10.4-r3
+apk-tools-2.10.5-r0
 apr-1.7.0-r0
 apr-util-1.6.1-r6
 argon2-libs-20190702-r1
@@ -23,7 +23,7 @@ git-perl-2.24.1-r0
 glib-2.62.6-r0
 gmp-6.1.2-r1
 gnupg-2.2.19-r0
-gnutls-3.6.10-r0
+gnutls-3.6.10-r1
 icu-libs-64.2-r1
 imagemagick-libs-7.0.9.7-r0
 ip6tables-1.8.3-r2
@@ -90,7 +90,7 @@ logrotate-3.15.1-r0
 luajit-2.1.0_beta3-r6
 memcached-1.5.20-r0
 musl-1.1.24-r2
-musl-utils-1.1.24-r1
+musl-utils-1.1.24-r2
 nano-4.6-r0
 ncurses-libs-6.1_p20200118-r2
 ncurses-terminfo-base-6.1_p20200118-r2
