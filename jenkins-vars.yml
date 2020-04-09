@@ -25,3 +25,5 @@ repo_vars:
   - CI_DOCKERENV='TEST_RUN=1'
   - CI_AUTH=''
   - CI_WEBPATH=''
+sponsor_links:
+  - { name: "Let's Encrypt", url: "https://letsencrypt.org/donate/" }
