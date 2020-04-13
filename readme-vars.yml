@@ -125,6 +125,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "13.04.20:", desc: "Update cloudflare.ini with token info." }
   - { date: "11.03.20:", desc: "Add php7-sodium." }
   - { date: "06.03.20:", desc: "Implement cert renewal attempt during container start (only if the cert is already expired or will expire within the next 24 hours, otherwise it will be attempted at 2:08am)." }
   - { date: "05.03.20:", desc: "Use port and proto upstream variables for ldap and default sample confs." }
