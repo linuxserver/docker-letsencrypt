@@ -18,8 +18,8 @@ fail2ban-0.10.4-r2
 fontconfig-2.13.1-r2
 freetype-2.10.1-r0
 gdbm-1.13-r1
-git-2.24.2-r0
-git-perl-2.24.2-r0
+git-2.24.3-r0
+git-perl-2.24.3-r0
 glib-2.62.6-r0
 gmp-6.1.2-r1
 gnupg-2.2.19-r0
@@ -37,7 +37,7 @@ libbsd-0.10.0-r0
 libbz2-1.0.8-r1
 libc-utils-0.7.2-r0
 libcap-2.27-r0
-libcrypto1.1-1.1.1d-r3
+libcrypto1.1-1.1.1g-r0
 libcurl-7.67.0-r0
 libedit-20191211.3.1-r0
 libevent-2.1.11-r0
@@ -68,7 +68,7 @@ libseccomp-2.4.2-r2
 libsecret-0.19.1-r0
 libsm-1.2.3-r0
 libsodium-1.0.18-r0
-libssl1.1-1.1.1d-r3
+libssl1.1-1.1.1g-r0
 libstdc++-9.2.0-r4
 libtasn1-4.15.0-r0
 libtls-standalone-2.9.1-r0
@@ -117,13 +117,13 @@ nginx-mod-stream-1.16.1-r6
 nginx-mod-stream-geoip2-1.16.1-r6
 nginx-vim-1.16.1-r6
 npth-1.6-r0
-openssl-1.1.1d-r3
+openssl-1.1.1g-r0
 p11-kit-0.23.18.1-r0
 pcre-8.43-r0
 pcre2-10.34-r1
 perl-5.30.1-r0
 perl-error-0.17028-r0
-perl-git-2.24.2-r0
+perl-git-2.24.3-r0
 php7-7.3.17-r0
 php7-bcmath-7.3.17-r0
 php7-bz2-7.3.17-r0
@@ -132,8 +132,8 @@ php7-ctype-7.3.17-r0
 php7-curl-7.3.17-r0
 php7-dom-7.3.17-r0
 php7-exif-7.3.17-r0
-php7-fileinfo-7.3.16-r0
-php7-fpm-7.3.16-r0
+php7-fileinfo-7.3.17-r0
+php7-fpm-7.3.17-r0
 php7-ftp-7.3.17-r0
 php7-gd-7.3.17-r0
 php7-iconv-7.3.17-r0
@@ -162,7 +162,7 @@ php7-pgsql-7.3.17-r0
 php7-phar-7.3.17-r0
 php7-posix-7.3.17-r0
 php7-session-7.3.17-r0
-php7-simplexml-7.3.16-r0
+php7-simplexml-7.3.17-r0
 php7-soap-7.3.17-r0
 php7-sockets-7.3.17-r0
 php7-sodium-7.3.17-r0
@@ -171,7 +171,7 @@ php7-tokenizer-7.3.17-r0
 php7-xml-7.3.17-r0
 php7-xmlreader-7.3.17-r0
 php7-xmlrpc-7.3.17-r0
-php7-xmlwriter-7.3.16-r0
+php7-xmlwriter-7.3.17-r0
 php7-zip-7.3.17-r0
 pinentry-1.1.0-r2
 popt-1.16-r7
