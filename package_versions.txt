@@ -92,8 +92,8 @@ memcached-1.5.20-r0
 musl-1.1.24-r2
 musl-utils-1.1.24-r2
 nano-4.6-r0
-ncurses-libs-6.1_p20200118-r3
-ncurses-terminfo-base-6.1_p20200118-r3
+ncurses-libs-6.1_p20200118-r4
+ncurses-terminfo-base-6.1_p20200118-r4
 nettle-3.5.1-r0
 nghttp2-libs-1.40.0-r0
 nginx-1.16.1-r6
