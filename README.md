@@ -290,7 +290,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **04.05.20:** - Allow for optionally setting propagation time for dns plugins.
+* **04.05.20:** - Allow for optionally setting propagation time for dns plugins. Add repo version of `whois` to replace the built-in busybox version.
 * **13.04.20:** - Update cloudflare.ini with token info.
 * **11.03.20:** - Add php7-sodium.
 * **06.03.20:** - Implement cert renewal attempt during container start (only if the cert is already expired or will expire within the next 24 hours, otherwise it will be attempted at 2:08am).
