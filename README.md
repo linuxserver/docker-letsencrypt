@@ -72,11 +72,12 @@ docker create \
   -e SUBDOMAINS=www, \
   -e VALIDATION=http \
   -e DNSPLUGIN=cloudflare `#optional` \
-  -e DUCKDNSTOKEN=<token> `#optional` \
-  -e EMAIL=<e-mail> `#optional` \
+  -e PROPAGATION= `#optional` \
+  -e DUCKDNSTOKEN= `#optional` \
+  -e EMAIL= `#optional` \
   -e DHLEVEL=2048 `#optional` \
   -e ONLY_SUBDOMAINS=false `#optional` \
-  -e EXTRA_DOMAINS=<extradomains> `#optional` \
+  -e EXTRA_DOMAINS= `#optional` \
   -e STAGING=false `#optional` \
   -p 443:443 \
   -p 80:80 `#optional` \
@@ -107,11 +108,12 @@ services:
       - SUBDOMAINS=www,
       - VALIDATION=http
       - DNSPLUGIN=cloudflare #optional
-      - DUCKDNSTOKEN=<token> #optional
-      - EMAIL=<e-mail> #optional
+      - PROPAGATION= #optional
+      - DUCKDNSTOKEN= #optional
+      - EMAIL= #optional
       - DHLEVEL=2048 #optional
       - ONLY_SUBDOMAINS=false #optional
-      - EXTRA_DOMAINS=<extradomains> #optional
+      - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
     volumes:
       - </path/to/appdata/config>:/config
@@ -136,11 +138,12 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only) |
 | `-e VALIDATION=http` | Letsencrypt validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`). |
 | `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `aliyun`, `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`. |
-| `-e DUCKDNSTOKEN=<token>` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
-| `-e EMAIL=<e-mail>` | Optional e-mail address used for cert expiration notifications. |
+| `-e PROPAGATION=` | Optionally override (in seconds) the default propagation time for the dns plugins. |
+| `-e DUCKDNSTOKEN=` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
+| `-e EMAIL=` | Optional e-mail address used for cert expiration notifications. |
 | `-e DHLEVEL=2048` | Dhparams bit value (default=2048, can be set to `1024` or `4096`). |
 | `-e ONLY_SUBDOMAINS=false` | If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true` |
-| `-e EXTRA_DOMAINS=<extradomains>` | Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org` |
+| `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
 | `-v /config` | All the config files including the webroot reside here. |
 
@@ -287,6 +290,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **04.05.20:** - Allow for optionally setting propagation time for dns plugins.
 * **13.04.20:** - Update cloudflare.ini with token info.
 * **11.03.20:** - Add php7-sodium.
 * **06.03.20:** - Implement cert renewal attempt during container start (only if the cert is already expired or will expire within the next 24 hours, otherwise it will be attempted at 2:08am).
