@@ -1,4 +1,4 @@
-## Version 2020/03/05 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
+## Version 2020/05/23 - Changelog: https://github.com/linuxserver/docker-letsencrypt/commits/master/root/defaults/default
 
 # redirect all traffic to https
 server {
@@ -26,6 +26,9 @@ server {
 
 	# enable for ldap auth
 	#include /config/nginx/ldap.conf;
+
+	# enable for Authelia
+	include /config/nginx/authelia.conf;
 
 	client_max_body_size 0;
 
@@ -97,6 +100,37 @@ server {
 #		# the next two lines will enable ldap auth along with the included ldap.conf in the server block
 #		auth_request /auth;
 #		error_page 401 =200 /login;
+#
+#		include /config/nginx/proxy.conf;
+#		resolver 127.0.0.11 valid=30s;
+#		set $upstream_app heimdall;
+#		set $upstream_port 443;
+#		set $upstream_proto https;
+#		proxy_pass $upstream_proto://$upstream_app:$upstream_port;
+#	}
+#}
+
+# sample reverse proxy config for "heimdall" via subdomain, with Authelia
+# Authelia container has to be running, the /config/nginx/authelia.conf file should be filled with relevant info and authelia.subdomain.conf proxy conf should be enabled
+# notice this is a new server block, you need a new server block for each subdomain
+#server {
+#	listen 443 ssl http2;
+#	listen [::]:443 ssl http2;
+#
+#	root /config/www;
+#	index index.html index.htm index.php;
+#
+#	server_name heimdall.*;
+#
+#	include /config/nginx/ssl.conf;
+#
+#	include /config/nginx/authelia-server.conf;
+#
+#	client_max_body_size 0;
+#
+#	location / {
+#		# the next line will enable Authelia along with the included authelia-server.conf in the server block
+#		include /config/nginx/authelia-location.conf;
 #
 #		include /config/nginx/proxy.conf;
 #		resolver 127.0.0.11 valid=30s;
