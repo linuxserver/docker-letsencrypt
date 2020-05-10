@@ -48,3 +48,10 @@ enabled  = true
 port     = http,https
 filter   = nginx-botsearch
 logpath  = /config/log/nginx/access.log
+
+[nginx-deny]
+
+enabled  = true
+port     = http,https
+filter   = nginx-deny
+logpath  = /config/log/nginx/error.log
