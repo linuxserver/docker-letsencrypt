@@ -67,7 +67,6 @@ RUN \
 	php7-pdo_sqlite \
 	php7-pear \
 	php7-pecl-apcu \
-	php7-pecl-imagick \
 	php7-pecl-redis \
 	php7-pgsql \
 	php7-phar \
