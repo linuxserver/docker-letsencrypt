@@ -15,7 +15,6 @@ curl-7.67.0-r0
 db-5.3.28-r1
 expat-2.2.9-r1
 fail2ban-0.10.4-r2
-fontconfig-2.13.1-r2
 freetype-2.10.1-r0
 gdbm-1.13-r1
 git-2.24.3-r0
@@ -25,10 +24,8 @@ gmp-6.1.2-r1
 gnupg-2.2.19-r0
 gnutls-3.6.10-r1
 icu-libs-64.2-r1
-imagemagick-libs-7.0.9.7-r0
 ip6tables-1.8.3-r2
 iptables-1.8.3-r2
-lcms2-2.9-r1
 libacl-2.2.53-r0
 libassuan-2.5.3-r0
 libattr-2.4.48-r0
@@ -52,9 +49,8 @@ libintl-0.20.1-r2
 libjpeg-turbo-2.0.4-r0
 libksba-1.3.5-r0
 libldap-2.4.48-r2
-libltdl-2.4.6-r7
 libmagic-5.37-r1
-libmaxminddb-1.4.2-r0
+libmaxminddb-1.4.2-r1
 libmcrypt-2.5.8-r7
 libmemcached-libs-1.0.18-r4
 libmnl-1.0.4-r0
@@ -155,7 +151,6 @@ php7-pdo_sqlite-7.3.17-r0
 php7-pear-7.3.17-r0
 php7-pecl-apcu-5.1.18-r0
 php7-pecl-igbinary-3.0.1-r1
-php7-pecl-imagick-3.4.4-r2
 php7-pecl-mcrypt-1.0.3-r0
 php7-pecl-memcached-3.1.5-r0
 php7-pecl-redis-5.1.1-r0
