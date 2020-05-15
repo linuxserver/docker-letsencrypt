@@ -126,6 +126,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "15.05.20:", desc: "Remove `php7-pecl-imagick` due to upstream issues. Add support for `Geoip2` auto db retrieval." }
   - { date: "10.05.20:", desc: "Added support for fail2ban deny statements." }
   - { date: "04.05.20:", desc: "Allow for optionally setting propagation time for dns plugins. Add repo version of `whois` to replace the built-in busybox version. Update `jail.local` to change default fail2ban ban action to more widely supported `iptables-allports`." }
   - { date: "13.04.20:", desc: "Update cloudflare.ini with token info." }
