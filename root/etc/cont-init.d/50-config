@@ -74,6 +74,10 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 	cp /defaults/ssl.conf /config/nginx/ssl.conf
 [[ ! -f /config/nginx/ldap.conf ]] && \
 	cp /defaults/ldap.conf /config/nginx/ldap.conf
+[[ ! -f /config/nginx/authelia-server.conf ]] && \
+	cp /defaults/authelia-server.conf /config/nginx/authelia-server.conf
+[[ ! -f /config/nginx/authelia-location.conf ]] && \
+	cp /defaults/authelia-location.conf /config/nginx/authelia-location.conf
 
 # check to make sure DNSPLUGIN is selected if dns validation is used
 [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \

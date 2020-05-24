@@ -290,6 +290,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.05.20:** - Add support for Authelia.
 * **15.05.20:** - Remove `php7-pecl-imagick` due to upstream issues. Add support for `Geoip2` auto db retrieval.
 * **10.05.20:** - Added support for fail2ban deny statements.
 * **04.05.20:** - Allow for optionally setting propagation time for dns plugins. Add repo version of `whois` to replace the built-in busybox version. Update `jail.local` to change default fail2ban ban action to more widely supported `iptables-allports`.
