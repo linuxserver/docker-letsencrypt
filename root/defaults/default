@@ -111,7 +111,7 @@ server {
 #}
 
 # sample reverse proxy config for "heimdall" via subdomain, with Authelia
-# Authelia container has to be running, the /config/nginx/authelia.conf file should be filled with relevant info and authelia.subdomain.conf proxy conf should be enabled
+# Authelia container has to be running in the same user defined bridge network, with container name "authelia", and with 'path: "authelia"' set in its configuration.yml
 # notice this is a new server block, you need a new server block for each subdomain
 #server {
 #	listen 443 ssl http2;
