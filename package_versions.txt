@@ -58,6 +58,7 @@ libmount-2.34-r1
 libnftnl-libs-1.1.5-r0
 libpng-1.6.37-r1
 libpq-12.2-r0
+libproc-3.3.16-r0
 libressl3.0-libcrypto-3.0.2-r0
 libressl3.0-libssl-3.0.2-r0
 libsasl-2.1.27-r5
@@ -171,6 +172,7 @@ php7-xmlwriter-7.3.18-r0
 php7-zip-7.3.18-r0
 pinentry-1.1.0-r2
 popt-1.16-r7
+procps-3.3.16-r0
 py3-asn1crypto-1.2.0-r1
 py3-cffi-1.13.2-r0
 py3-cparser-2.19-r4
