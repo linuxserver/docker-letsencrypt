@@ -127,6 +127,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.06.20:", desc: "Rebasing to alpine 3.12." }
   - { date: "31.05.20:", desc: "Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update)." }
   - { date: "23.05.20:", desc: "Add support for Authelia." }
   - { date: "15.05.20:", desc: "Remove `php7-pecl-imagick` due to upstream issues. Add support for `Geoip2` auto db retrieval." }
