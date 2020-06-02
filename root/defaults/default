@@ -99,7 +99,7 @@ server {
 #	location / {
 #		# the next two lines will enable ldap auth along with the included ldap.conf in the server block
 #		auth_request /auth;
-#		error_page 401 =200 /login;
+#		error_page 401 =200 /ldaplogin;
 #
 #		include /config/nginx/proxy.conf;
 #		resolver 127.0.0.11 valid=30s;

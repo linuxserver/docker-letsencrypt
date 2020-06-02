@@ -37,7 +37,7 @@ param_env_vars:
   - { env_var: "VALIDATION", env_value: "http", desc: "Letsencrypt validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`)." }
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "</path/to/appdata/config>", desc: "All the config files including the webroot reside here." }
+  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "All the config files including the webroot reside here." }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "443", internal_port: "443", port_desc: "Https port" }
@@ -127,6 +127,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "01.06.20:", desc: "Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update)." }
   - { date: "31.05.20:", desc: "Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update)." }
   - { date: "23.05.20:", desc: "Add support for Authelia." }
   - { date: "15.05.20:", desc: "Remove `php7-pecl-imagick` due to upstream issues. Add support for `Geoip2` auto db retrieval." }
