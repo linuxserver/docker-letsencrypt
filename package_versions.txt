@@ -9,8 +9,8 @@ bash-5.0.17-r0
 brotli-libs-1.0.7-r5
 busybox-1.31.1-r16
 c-client-2007f-r11
-ca-certificates-20191127-r2
-ca-certificates-bundle-20191127-r2
+ca-certificates-20191127-r3
+ca-certificates-bundle-20191127-r3
 coreutils-8.32-r0
 curl-7.69.1-r0
 db-5.3.28-r1
@@ -23,7 +23,7 @@ git-perl-2.26.2-r0
 glib-2.64.3-r0
 gmp-6.2.0-r0
 gnupg-2.2.20-r0
-gnutls-3.6.13-r1
+gnutls-3.6.14-r0
 icu-libs-67.1-r0
 ip6tables-1.8.4-r1
 iptables-1.8.4-r1
@@ -94,7 +94,7 @@ nano-4.9.3-r0
 ncurses-libs-6.2_p20200523-r0
 ncurses-terminfo-base-6.2_p20200523-r0
 nettle-3.5.1-r1
-nghttp2-libs-1.40.0-r0
+nghttp2-libs-1.41.0-r0
 nginx-1.18.0-r0
 nginx-mod-devel-kit-1.18.0-r0
 nginx-mod-http-echo-1.18.0-r0
