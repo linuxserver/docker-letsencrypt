@@ -127,6 +127,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "17.06.20:", desc: "Reformat ssl.conf." }
   - { date: "01.06.20:", desc: "Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update)." }
   - { date: "31.05.20:", desc: "Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update)." }
   - { date: "23.05.20:", desc: "Add support for Authelia." }
