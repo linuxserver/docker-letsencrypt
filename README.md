@@ -74,7 +74,6 @@ docker create \
   -e PROPAGATION= `#optional` \
   -e DUCKDNSTOKEN= `#optional` \
   -e EMAIL= `#optional` \
-  -e DHLEVEL=2048 `#optional` \
   -e ONLY_SUBDOMAINS=false `#optional` \
   -e EXTRA_DOMAINS= `#optional` \
   -e STAGING=false `#optional` \
@@ -110,7 +109,6 @@ services:
       - PROPAGATION= #optional
       - DUCKDNSTOKEN= #optional
       - EMAIL= #optional
-      - DHLEVEL=2048 #optional
       - ONLY_SUBDOMAINS=false #optional
       - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
@@ -140,7 +138,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PROPAGATION=` | Optionally override (in seconds) the default propagation time for the dns plugins. |
 | `-e DUCKDNSTOKEN=` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
 | `-e EMAIL=` | Optional e-mail address used for cert expiration notifications. |
-| `-e DHLEVEL=2048` | Dhparams bit value (default=2048, can be set to `1024` or `4096`). |
 | `-e ONLY_SUBDOMAINS=false` | If you wish to get certs only for certain subdomains, but not the main domain (main domain may be hosted on another machine and cannot be validated), set this to `true` |
 | `-e EXTRA_DOMAINS=` | Additional fully qualified domain names (comma separated, no spaces) ie. `extradomain.com,subdomain.anotherdomain.org` |
 | `-e STAGING=false` | Set to `true` to retrieve certs in staging mode. Rate limits will be much higher, but the resulting cert will not pass the browser's security test. Only to be used for testing purposes. |
@@ -192,7 +189,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default`).
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from letsencrypt in those circumstances.
 ### Security and password protection
-* The container detects changes to url and subdomains, revokes existing certs and generates new ones during start. It also detects changes to the DHLEVEL parameter and replaces the dhparams file.
+* The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
 * You can add multiple user:pass to `.htpasswd`. For the first user, use the above command, for others, use the above command without the `-c` flag, as it will force deletion of the existing `.htpasswd` and creation of a new one
 * You can also use ldap auth for security and access control. A sample, user configurable ldap.conf is provided, and it requires the separate image [linuxserver/ldap-auth](https://hub.docker.com/r/linuxserver/ldap-auth/) to communicate with an ldap server.
@@ -295,6 +292,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **17.06.20:** - Reformat ssl.conf. Pull in pre-generated 4096-bit dhparams.pem from DO Spaces (rotated weekly via Jenkins job: https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity for use in new instances); deprecate `DHLEVEL` param.
 * **01.06.20:** - Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update).
 * **31.05.20:** - Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update).
 * **23.05.20:** - Add support for Authelia.

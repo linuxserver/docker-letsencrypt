@@ -9,7 +9,6 @@ URL=${URL}\\n\
 SUBDOMAINS=${SUBDOMAINS}\\n\
 EXTRA_DOMAINS=${EXTRA_DOMAINS}\\n\
 ONLY_SUBDOMAINS=${ONLY_SUBDOMAINS}\\n\
-DHLEVEL=${DHLEVEL}\\n\
 VALIDATION=${VALIDATION}\\n\
 DNSPLUGIN=${DNSPLUGIN}\\n\
 EMAIL=${EMAIL}\\n\
@@ -21,7 +20,7 @@ if [ -n "${TEST_RUN}" ]; then
 fi
 
 # Sanitize variables
-SANED_VARS=( DHLEVEL DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
+SANED_VARS=( DNSPLUGIN EMAIL EXTRA_DOMAINS ONLY_SUBDOMAINS STAGING SUBDOMAINS URL VALIDATION )
 for i in "${SANED_VARS[@]}"
 do
   export echo "$i"="${!i//\"/}"
@@ -46,8 +45,8 @@ chown -R abc:abc /config/dns-conf
 
 # copy reverse proxy configs
 cp -R /defaults/proxy-confs /config/nginx/
-# remove outdated files (remove this action after 2019/08/29)
-rm -f /config/nginx/proxy-confs/_readme /config/nginx/proxy-confs/mytinytodo.subfolder.conf.example
+# remove outdated files (remove this action after 2020/10/17)
+rm -f /config/nginx/proxy-confs/seafile.subdomain.config.sample /config/nginx/proxy-confs/librespeed.subdomain.com.sample
 
 # copy/update the fail2ban config defaults to/in /config
 cp -R /defaults/fail2ban/filter.d /config/fail2ban/
@@ -79,6 +78,17 @@ cp /config/fail2ban/jail.local /etc/fail2ban/jail.local
 [[ ! -f /config/nginx/authelia-location.conf ]] && \
 	cp /defaults/authelia-location.conf /config/nginx/authelia-location.conf
 
+# copy pre-generated dhparams or generate if needed
+[[ ! -f /config/nginx/dhparams.pem ]] && \
+  cp /defaults/dhparams.pem /config/nginx/dhparams.pem
+if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
+  curl -o /config/nginx/dhparams.pem -L "https://lsio.ams3.digitaloceanspaces.com/dhparams.pem"
+fi
+if ! grep -q 'PARAMETERS' "/config/nginx/dhparams.pem"; then
+  echo "Generating dhparams.pem. This will take a long time. Do not stop the container until this process is completed."
+  openssl dhparam -out /config/nginx/dhparams.pem 4096
+fi
+
 # check to make sure DNSPLUGIN is selected if dns validation is used
 [[ "$VALIDATION" = "dns" ]] && [[ ! "$DNSPLUGIN" =~ ^(aliyun|cloudflare|cloudxns|cpanel|digitalocean|dnsimple|dnsmadeeasy|domeneshop|gandi|google|inwx|linode|luadns|nsone|ovh|rfc2136|route53|transip)$ ]] && \
   echo "Please set the DNSPLUGIN variable to a valid plugin name. See docker info for more details." && \
@@ -90,7 +100,7 @@ cp /config/crontabs/* /etc/crontabs/
 
 # create original config file if it doesn't exist
 if [ ! -f "/config/donoteditthisfile.conf" ]; then
-  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
+  echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
   echo "Created donoteditthisfile.conf"
 fi
 
@@ -104,26 +114,12 @@ if [ -z "$VALIDATION" ]; then
   echo "VALIDATION parameter not set; setting it to http"
 fi
 
-# compare dhparams existence and level, create if necessary
-if [ ! "$DHLEVEL" = "$ORIGDHLEVEL" ]; then
-  rm -rf /config/nginx/dhparams.pem
-  echo "DH parameters bit setting changed. Deleting old dhparams file."
-fi
-
 # if staging is set to true, use the staging server
 if [ "$STAGING" = "true" ]; then
   echo "NOTICE: Staging is active"
   ACMESERVER="https://acme-staging-v02.api.letsencrypt.org/directory"
 else
   ACMESERVER="https://acme-v02.api.letsencrypt.org/directory"
-fi
-
-if [ ! -f "/config/nginx/dhparams.pem" ]; then
-  echo "Creating DH parameters for additional security. This may take a very long time. There will be another message once this process is completed"
-  openssl dhparam -out /config/nginx/dhparams.pem "$DHLEVEL"
-  echo "DH parameters successfully created - $DHLEVEL bits"
-else
-  echo "$ORIGDHLEVEL bit DH parameters present"
 fi
 
 # figuring out url only vs url & subdomains vs subdomains only
@@ -238,7 +234,7 @@ if [ ! "$URL" = "$ORIGURL" ] || [ ! "$SUBDOMAINS" = "$ORIGSUBDOMAINS" ] || [ ! "
 fi
 
 # saving new variables
-echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGDHLEVEL=\"$DHLEVEL\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
+echo -e "ORIGURL=\"$URL\" ORIGSUBDOMAINS=\"$SUBDOMAINS\" ORIGONLY_SUBDOMAINS=\"$ONLY_SUBDOMAINS\" ORIGEXTRA_DOMAINS=\"$EXTRA_DOMAINS\" ORIGVALIDATION=\"$VALIDATION\" ORIGDNSPLUGIN=\"$DNSPLUGIN\" ORIGPROPAGATION=\"$PROPAGATION\" ORIGSTAGING=\"$STAGING\" ORIGDUCKDNSTOKEN=\"$DUCKDNSTOKEN\"" > /config/donoteditthisfile.conf
 
 # alter extension for error message
 if [ "$DNSPLUGIN" = "google" ]; then
