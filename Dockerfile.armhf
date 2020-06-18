@@ -131,6 +131,9 @@ RUN \
 	/defaults/proxy-confs --strip-components=1 --exclude=linux*/.gitattributes --exclude=linux*/.github --exclude=linux*/.gitignore --exclude=linux*/LICENSE && \
  echo "**** configure nginx ****" && \
  rm -f /etc/nginx/conf.d/default.conf && \
+ curl -o \
+	/defaults/dhparams.pem -L \
+	"https://lsio.ams3.digitaloceanspaces.com/dhparams.pem" && \
  echo "**** cleanup ****" && \
  apk del --purge \
 	build-dependencies && \
