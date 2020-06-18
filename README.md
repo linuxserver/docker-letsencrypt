@@ -190,6 +190,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from letsencrypt in those circumstances.
 ### Security and password protection
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
+* The container provides a pre-generated 4096-bit dhparams.pem (rotated weekly via [Jenkins job](https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity)) for new instances, however you may generate your own by running `docker exec letsencrypt openssl dhparam -out /config/nginx/dhparams.pem 4096` WARNING: This takes a very long time
 * If you'd like to password protect your sites, you can use htpasswd. Run the following command on your host to generate the htpasswd file `docker exec -it letsencrypt htpasswd -c /config/nginx/.htpasswd <username>`
 * You can add multiple user:pass to `.htpasswd`. For the first user, use the above command, for others, use the above command without the `-c` flag, as it will force deletion of the existing `.htpasswd` and creation of a new one
 * You can also use ldap auth for security and access control. A sample, user configurable ldap.conf is provided, and it requires the separate image [linuxserver/ldap-auth](https://hub.docker.com/r/linuxserver/ldap-auth/) to communicate with an ldap server.
@@ -292,7 +293,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **17.06.20:** - Reformat ssl.conf. Pull in pre-generated 4096-bit dhparams.pem from DO Spaces (rotated weekly via Jenkins job: https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity for use in new instances); deprecate `DHLEVEL` param.
+* **17.06.20:** - Reformat ssl.conf. Pull in pre-generated dhparams.pem from DO Spaces. Deprecate `DHLEVEL` param.
 * **01.06.20:** - Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update).
 * **31.05.20:** - Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update).
 * **23.05.20:** - Add support for Authelia.
