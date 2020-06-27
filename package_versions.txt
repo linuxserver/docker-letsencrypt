@@ -47,7 +47,7 @@ libgpg-error-1.37-r0
 libice-1.0.10-r0
 libidn-1.35-r0
 libintl-0.20.2-r0
-libjpeg-turbo-2.0.4-r1
+libjpeg-turbo-2.0.5-r0
 libksba-1.4.0-r0
 libldap-2.4.50-r0
 libmagic-5.38-r0
@@ -89,7 +89,7 @@ logrotate-3.16.0-r0
 luajit-5.1.20190925-r0
 memcached-1.6.6-r0
 musl-1.1.24-r9
-musl-utils-1.1.24-r8
+musl-utils-1.1.24-r9
 nano-4.9.3-r0
 ncurses-libs-6.2_p20200523-r0
 ncurses-terminfo-base-6.2_p20200523-r0
