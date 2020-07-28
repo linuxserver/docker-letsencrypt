@@ -26,4 +26,4 @@ repo_vars:
   - CI_AUTH=''
   - CI_WEBPATH=''
 sponsor_links:
-  - { name: "Let's Encrypt", url: "https://letsencrypt.org/donate/" }
+  - { name: "Certbot", url: "https://supporters.eff.org/donate/support-work-on-certbot" }
