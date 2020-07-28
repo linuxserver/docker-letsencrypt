@@ -9,11 +9,11 @@
 
 The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring:
 
- * regular and timely application updates
- * easy user mappings (PGID, PUID)
- * custom base image with s6 overlay
- * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
- * regular security updates
+* regular and timely application updates
+* easy user mappings (PGID, PUID)
+* custom base image with s6 overlay
+* weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
+* regular security updates
 
 Find us at:
 * [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
@@ -23,7 +23,7 @@ Find us at:
 * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
 * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
-# [linuxserver/letsencrypt](https://github.com/linuxserver/docker-letsencrypt)
+# [linuxserver/swag](https://github.com/linuxserver/docker-letsencrypt)
 
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt/releases)
@@ -36,9 +36,9 @@ Find us at:
 [![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Flsio-ci.ams3.digitaloceanspaces.com%2Flinuxserver%2Fletsencrypt%2Flatest%2Fci-status.yml)](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/letsencrypt/latest/index.html)
 
 ## IMPORTANT NOTICE - BREAKING CHANGES AHEAD
-_Due to a trademark related request, this image will move to a new repo soon. The image name and address will be changed. We are working on making the transition as smooth as possible so as not to break current implementations used in production. But be warned that there will be breaking changes ahead, which will require user intervention. Check back here frequently for more updates. Apologies for the the disruptions._
+_Due to a trademark related request, this image will move to a new repo soon. The image name and address will be changed. We are working on making the transition as smooth as possible so as not to break current implementations used in production. But be warned that there will be breaking changes ahead, which will require user intervention. Check back here frequently for more updates. Apologies for the the disruption._
 
-SWAG - Secure Web-server And Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
+**SWAG - Secure Web-server And Gateway** (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
 
 [![letsencrypt](https://raw.githubusercontent.com/aptalca/testing/testing/swag.gif)](https://linuxserver.io)
 
@@ -65,7 +65,7 @@ Here are some example snippets to help you get started creating a container.
 
 ```
 docker create \
-  --name=letsencrypt \
+  --name=swag \
   --cap-add=NET_ADMIN \
   -e PUID=1000 \
   -e PGID=1000 \
@@ -96,9 +96,9 @@ Compatible with docker-compose v2 schemas.
 ---
 version: "2.1"
 services:
-  letsencrypt:
+  swag:
     image: linuxserver/letsencrypt
-    container_name: letsencrypt
+    container_name: swag
     cap_add:
       - NET_ADMIN
     environment:
@@ -220,9 +220,9 @@ This will *ask* Google et al not to index and list your site. Be careful with th
   3. nginx-botsearch
 * To enable or disable other jails, modify the file `/config/fail2ban/jail.local`
 * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
-* You can check which jails are active via `docker exec -it letsencrypt fail2ban-client status`
-* You can check the status of a specific jail via `docker exec -it letsencrypt fail2ban-client status <jail name>`
-* You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
+* You can check which jails are active via `docker exec -it swag fail2ban-client status`
+* You can check the status of a specific jail via `docker exec -it swag fail2ban-client status <jail name>`
+* You can unban an IP via `docker exec -it swag fail2ban-client set <jail name> unbanip <IP>`
 * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
 
 
@@ -234,10 +234,10 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 
 ## Support Info
 
-* Shell access whilst the container is running: `docker exec -it letsencrypt /bin/bash`
-* To monitor the logs of the container in realtime: `docker logs -f letsencrypt`
+* Shell access whilst the container is running: `docker exec -it swag /bin/bash`
+* To monitor the logs of the container in realtime: `docker logs -f swag`
 * container version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' letsencrypt`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' swag`
 * image version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/letsencrypt`
 
@@ -249,17 +249,17 @@ Below are the instructions for updating containers:
 
 ### Via Docker Run/Create
 * Update the image: `docker pull linuxserver/letsencrypt`
-* Stop the running container: `docker stop letsencrypt`
-* Delete the container: `docker rm letsencrypt`
+* Stop the running container: `docker stop swag`
+* Delete the container: `docker rm swag`
 * Recreate a new container with the same docker create parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
-* Start the new container: `docker start letsencrypt`
+* Start the new container: `docker start swag`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Compose
 * Update all images: `docker-compose pull`
-  * or update a single image: `docker-compose pull letsencrypt`
+  * or update a single image: `docker-compose pull swag`
 * Let compose update all containers as necessary: `docker-compose up -d`
-  * or update a single container: `docker-compose up -d letsencrypt`
+  * or update a single container: `docker-compose up -d swag`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Watchtower auto-updater (especially useful if you don't remember the original parameters)
@@ -268,7 +268,7 @@ Below are the instructions for updating containers:
   docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   containrrr/watchtower \
-  --run-once letsencrypt
+  --run-once swag
   ```
 
 **Note:** We do not endorse the use of Watchtower as a solution to automated updates of existing Docker containers. In fact we generally discourage automated updates. However, this is a useful tool for one-time manual updates of containers where you have forgotten the original parameters. In the long term, we highly recommend using Docker Compose.
