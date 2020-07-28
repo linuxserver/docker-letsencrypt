@@ -2,9 +2,14 @@
 
 # project information
 project_name: letsencrypt
-project_url: "https://letsencrypt.org/"
-project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/le-logo-wide.png"
-project_blurb: "[{{ project_name|capitalize }}]({{ project_url }}) sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention."
+project_url: "https://linuxserver.io"
+project_logo: "https://raw.githubusercontent.com/aptalca/testing/testing/swag.gif"
+project_blurb: "## IMPORTANT NOTICE - BREAKING CHANGES AHEAD
+  
+  _Due to a trademark related request, this image will move to a new repo soon. The image name and address will be changed. We are working on making the transition as smooth as possible so as not to break current implementations used in production. But be warned that there will be breaking changes ahead, which will require user intervention. Check back here frequently for more updates. Apologies for the the disruptions._ 
+  
+
+  SWAG - Secure Web-server And Gateway (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 
 project_blurb_optional_extras_enabled: false
@@ -34,7 +39,7 @@ param_env_vars:
   - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London." }
   - { env_var: "URL", env_value: "yourdomain.url", desc: "Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns)." }
   - { env_var: "SUBDOMAINS", env_value: "www,", desc: "Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only)" }
-  - { env_var: "VALIDATION", env_value: "http", desc: "Letsencrypt validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`)." }
+  - { env_var: "VALIDATION", env_value: "http", desc: "Certbot validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`)." }
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "All the config files including the webroot reside here." }
@@ -87,7 +92,7 @@ app_setup_block: |
   * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
   * If you need a dynamic dns provider, you can use the free provider duckdns.org where the `URL` will be `yoursubdomain.duckdns.org` and the `SUBDOMAINS` can be `www,ftp,cloud` with http validation, or `wildcard` with dns validation.
   * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default`).
-  * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from letsencrypt in those circumstances.
+  * Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
   ### Security and password protection
   * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
   * The container provides a pre-generated 4096-bit dhparams.pem (rotated weekly via [Jenkins job](https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity)) for new instances, however you may generate your own by running `docker exec letsencrypt openssl dhparam -out /config/nginx/dhparams.pem 4096` WARNING: This takes a very long time
@@ -104,10 +109,10 @@ app_setup_block: |
   ### Using certs in other containers
   * This container includes auto-generated pfx and private-fullchain-bundle pem certs that are needed by other apps like Emby and Znc.
     * To use these certs in other containers, do either of the following:
-    1. *(Easier)* Mount the letsencrypt config folder in other containers (ie. `-v /path-to-le-config:/le-ssl`) and in the other containers, use the cert location `/le-ssl/keys/letsencrypt/`
+    1. *(Easier)* Mount the container's config folder in other containers (ie. `-v /path-to-le-config:/le-ssl`) and in the other containers, use the cert location `/le-ssl/keys/letsencrypt/`
     2. *(More secure)* Mount the letsencrypt folder `etc/letsencrypt` that resides under `/config` in other containers (ie. `-v /path-to-le-config/etc/letsencrypt:/le-ssl`) and in the other containers, use the cert location `/le-ssl/live/<your.domain.url>/` (This is more secure because the first method shares the entire letsencrypt config folder with other containers, including the www files, whereas the second method only shares the ssl certs)
     * These certs include:
-    1. `cert.pem`, `chain.pem`, `fullchain.pem` and `privkey.pem`, which are generated by letsencrypt and used by nginx and various other apps
+    1. `cert.pem`, `chain.pem`, `fullchain.pem` and `privkey.pem`, which are generated by Let's Encrypt and used by nginx and various other apps
     2. `privkey.pfx`, a format supported by Microsoft and commonly used by dotnet apps such as Emby Server (no password)
     3. `priv-fullchain-bundle.pem`, a pem cert that bundles the private key and the fullchain, used by apps like ZNC
   ### Using fail2ban
@@ -127,6 +132,7 @@ app_setup_nginx_reverse_proxy_block: ""
 
 # changelog
 changelogs:
+  - { date: "28.07.20:", desc: "Start transition to new name, SWAG." }
   - { date: "17.06.20:", desc: "Reformat ssl.conf. Pull in pre-generated dhparams.pem from DO Spaces. Deprecate `DHLEVEL` param." }
   - { date: "01.06.20:", desc: "Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update)." }
   - { date: "31.05.20:", desc: "Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update)." }
@@ -216,9 +222,9 @@ changelogs:
   - { date: "13.03.18:", desc: "Support for wildcard cert with dns validation added. Switched to v2 api for ACME." }
   - { date: "21.02.18:", desc: "Reduce shellcheck directives by renaming secondary variables" }
   - { date: "20.02.18:", desc: "Sanitize variables, increase log verbosity" }
-  - { date: "01.02.18:", desc: "Big changes. `VALIDATION` parameter added for choosing letsencrypt validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf" }
+  - { date: "01.02.18:", desc: "Big changes. `VALIDATION` parameter added for choosing certbot validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf" }
   - { date: "13.01.18:", desc: "Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image" }
-  - { date: "11.01.18:", desc: "Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)" }
+  - { date: "11.01.18:", desc: "Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with Let's Encrypt)" }
   - { date: "10.01.18:", desc: "Add option for http validation on port 80" }
   - { date: "05.01.18:", desc: "Rebase to alpine 3.7" }
   - { date: "04.11.17:", desc: "Add php7 soap module" }
