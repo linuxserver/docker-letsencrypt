@@ -9,11 +9,11 @@
 
 The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring:
 
- * regular and timely application updates
- * easy user mappings (PGID, PUID)
- * custom base image with s6 overlay
- * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
- * regular security updates
+* regular and timely application updates
+* easy user mappings (PGID, PUID)
+* custom base image with s6 overlay
+* weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
+* regular security updates
 
 Find us at:
 * [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
@@ -23,7 +23,7 @@ Find us at:
 * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
 * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
-# [linuxserver/letsencrypt](https://github.com/linuxserver/docker-letsencrypt)
+# [linuxserver/swag](https://github.com/linuxserver/docker-letsencrypt)
 
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt/releases)
@@ -35,9 +35,12 @@ Find us at:
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-letsencrypt%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-letsencrypt/job/master/)
 [![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Flsio-ci.ams3.digitaloceanspaces.com%2Flinuxserver%2Fletsencrypt%2Flatest%2Fci-status.yml)](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/letsencrypt/latest/index.html)
 
-[Letsencrypt](https://letsencrypt.org/) sets up an Nginx webserver and reverse proxy with php support and a built-in letsencrypt client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
+## IMPORTANT NOTICE - BREAKING CHANGES AHEAD
+_Due to a trademark related request, this image will move to a new repo soon. The image name and address will be changed. We are working on making the transition as smooth as possible so as not to break current implementations used in production. But be warned that there will be breaking changes ahead, which will require user intervention. Check back here frequently for more updates. Apologies for the the disruption._
 
-[![letsencrypt](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/le-logo-wide.png)](https://letsencrypt.org/)
+**SWAG - Secure Web-server And Gateway** (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
+
+[![letsencrypt](https://raw.githubusercontent.com/aptalca/testing/testing/swag.gif)](https://linuxserver.io)
 
 ## Supported Architectures
 
@@ -62,7 +65,7 @@ Here are some example snippets to help you get started creating a container.
 
 ```
 docker create \
-  --name=letsencrypt \
+  --name=swag \
   --cap-add=NET_ADMIN \
   -e PUID=1000 \
   -e PGID=1000 \
@@ -93,9 +96,9 @@ Compatible with docker-compose v2 schemas.
 ---
 version: "2.1"
 services:
-  letsencrypt:
+  swag:
     image: linuxserver/letsencrypt
-    container_name: letsencrypt
+    container_name: swag
     cap_add:
       - NET_ADMIN
     environment:
@@ -133,7 +136,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e TZ=Europe/London` | Specify a timezone to use EG Europe/London. |
 | `-e URL=yourdomain.url` | Top url you have control over (`customdomain.com` if you own it, or `customsubdomain.ddnsprovider.com` if dynamic dns). |
 | `-e SUBDOMAINS=www,` | Subdomains you'd like the cert to cover (comma separated, no spaces) ie. `www,ftp,cloud`. For a wildcard cert, set this _exactly_ to `wildcard` (wildcard cert is available via `dns` and `duckdns` validation only) |
-| `-e VALIDATION=http` | Letsencrypt validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`). |
+| `-e VALIDATION=http` | Certbot validation method to use, options are `http`, `dns` or `duckdns` (`dns` method also requires `DNSPLUGIN` variable set) (`duckdns` method requires `DUCKDNSTOKEN` variable set, and the `SUBDOMAINS` variable must be either empty or set to `wildcard`). |
 | `-e DNSPLUGIN=cloudflare` | Required if `VALIDATION` is set to `dns`. Options are `aliyun`, `cloudflare`, `cloudxns`, `cpanel`, `digitalocean`, `dnsimple`, `dnsmadeeasy`, `domeneshop`, `gandi`, `google`, `inwx`, `linode`, `luadns`, `nsone`, `ovh`, `rfc2136`, `route53` and `transip`. Also need to enter the credentials into the corresponding ini (or json for some plugins) file under `/config/dns-conf`. |
 | `-e PROPAGATION=` | Optionally override (in seconds) the default propagation time for the dns plugins. |
 | `-e DUCKDNSTOKEN=` | Required if `VALIDATION` is set to `duckdns`. Retrieve your token from https://www.duckdns.org |
@@ -187,7 +190,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 * `--cap-add=NET_ADMIN` is required for fail2ban to modify iptables
 * If you need a dynamic dns provider, you can use the free provider duckdns.org where the `URL` will be `yoursubdomain.duckdns.org` and the `SUBDOMAINS` can be `www,ftp,cloud` with http validation, or `wildcard` with dns validation.
 * After setup, navigate to `https://yourdomain.url` to access the default homepage (http access through port 80 is disabled by default, you can enable it by editing the default site config at `/config/nginx/site-confs/default`).
-* Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from letsencrypt in those circumstances.
+* Certs are checked nightly and if expiration is within 30 days, renewal is attempted. If your cert is about to expire in less than 30 days, check the logs under `/config/log/letsencrypt` to see why the renewals have been failing. It is recommended to input your e-mail in docker parameters so you receive expiration notices from Let's Encrypt in those circumstances.
 ### Security and password protection
 * The container detects changes to url and subdomains, revokes existing certs and generates new ones during start.
 * The container provides a pre-generated 4096-bit dhparams.pem (rotated weekly via [Jenkins job](https://ci.linuxserver.io/blue/organizations/jenkins/Xtras-Builders-Etc%2Fdhparams-uploader/activity)) for new instances, however you may generate your own by running `docker exec letsencrypt openssl dhparam -out /config/nginx/dhparams.pem 4096` WARNING: This takes a very long time
@@ -204,10 +207,10 @@ This will *ask* Google et al not to index and list your site. Be careful with th
 ### Using certs in other containers
 * This container includes auto-generated pfx and private-fullchain-bundle pem certs that are needed by other apps like Emby and Znc.
   * To use these certs in other containers, do either of the following:
-  1. *(Easier)* Mount the letsencrypt config folder in other containers (ie. `-v /path-to-le-config:/le-ssl`) and in the other containers, use the cert location `/le-ssl/keys/letsencrypt/`
+  1. *(Easier)* Mount the container's config folder in other containers (ie. `-v /path-to-le-config:/le-ssl`) and in the other containers, use the cert location `/le-ssl/keys/letsencrypt/`
   2. *(More secure)* Mount the letsencrypt folder `etc/letsencrypt` that resides under `/config` in other containers (ie. `-v /path-to-le-config/etc/letsencrypt:/le-ssl`) and in the other containers, use the cert location `/le-ssl/live/<your.domain.url>/` (This is more secure because the first method shares the entire letsencrypt config folder with other containers, including the www files, whereas the second method only shares the ssl certs)
   * These certs include:
-  1. `cert.pem`, `chain.pem`, `fullchain.pem` and `privkey.pem`, which are generated by letsencrypt and used by nginx and various other apps
+  1. `cert.pem`, `chain.pem`, `fullchain.pem` and `privkey.pem`, which are generated by Let's Encrypt and used by nginx and various other apps
   2. `privkey.pfx`, a format supported by Microsoft and commonly used by dotnet apps such as Emby Server (no password)
   3. `priv-fullchain-bundle.pem`, a pem cert that bundles the private key and the fullchain, used by apps like ZNC
 ### Using fail2ban
@@ -217,9 +220,9 @@ This will *ask* Google et al not to index and list your site. Be careful with th
   3. nginx-botsearch
 * To enable or disable other jails, modify the file `/config/fail2ban/jail.local`
 * To modify filters and actions, instead of editing the `.conf` files, create `.local` files with the same name and edit those because .conf files get overwritten when the actions and filters are updated. `.local` files will append whatever's in the `.conf` files (ie. `nginx-http-auth.conf` --> `nginx-http-auth.local`)
-* You can check which jails are active via `docker exec -it letsencrypt fail2ban-client status`
-* You can check the status of a specific jail via `docker exec -it letsencrypt fail2ban-client status <jail name>`
-* You can unban an IP via `docker exec -it letsencrypt fail2ban-client set <jail name> unbanip <IP>`
+* You can check which jails are active via `docker exec -it swag fail2ban-client status`
+* You can check the status of a specific jail via `docker exec -it swag fail2ban-client status <jail name>`
+* You can unban an IP via `docker exec -it swag fail2ban-client set <jail name> unbanip <IP>`
 * A list of commands can be found here: https://www.fail2ban.org/wiki/index.php/Commands
 
 
@@ -231,10 +234,10 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 
 ## Support Info
 
-* Shell access whilst the container is running: `docker exec -it letsencrypt /bin/bash`
-* To monitor the logs of the container in realtime: `docker logs -f letsencrypt`
+* Shell access whilst the container is running: `docker exec -it swag /bin/bash`
+* To monitor the logs of the container in realtime: `docker logs -f swag`
 * container version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' letsencrypt`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' swag`
 * image version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/letsencrypt`
 
@@ -246,17 +249,17 @@ Below are the instructions for updating containers:
 
 ### Via Docker Run/Create
 * Update the image: `docker pull linuxserver/letsencrypt`
-* Stop the running container: `docker stop letsencrypt`
-* Delete the container: `docker rm letsencrypt`
+* Stop the running container: `docker stop swag`
+* Delete the container: `docker rm swag`
 * Recreate a new container with the same docker create parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
-* Start the new container: `docker start letsencrypt`
+* Start the new container: `docker start swag`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Compose
 * Update all images: `docker-compose pull`
-  * or update a single image: `docker-compose pull letsencrypt`
+  * or update a single image: `docker-compose pull swag`
 * Let compose update all containers as necessary: `docker-compose up -d`
-  * or update a single container: `docker-compose up -d letsencrypt`
+  * or update a single container: `docker-compose up -d swag`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Watchtower auto-updater (especially useful if you don't remember the original parameters)
@@ -265,7 +268,7 @@ Below are the instructions for updating containers:
   docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   containrrr/watchtower \
-  --run-once letsencrypt
+  --run-once swag
   ```
 
 **Note:** We do not endorse the use of Watchtower as a solution to automated updates of existing Docker containers. In fact we generally discourage automated updates. However, this is a useful tool for one-time manual updates of containers where you have forgotten the original parameters. In the long term, we highly recommend using Docker Compose.
@@ -293,6 +296,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **28.07.20:** - Start transition to new name, SWAG.
 * **17.06.20:** - Reformat ssl.conf. Pull in pre-generated dhparams.pem from DO Spaces. Deprecate `DHLEVEL` param.
 * **01.06.20:** - Rebasing to alpine 3.12, change ldap login address to `/ldaplogin` to avoid clashes (existing users need to manually update).
 * **31.05.20:** - Tweak Authelia confs (existing users can delete `authelia-server.conf` and `authelia-location.conf`, and restart to update).
@@ -382,9 +386,9 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 * **13.03.18:** - Support for wildcard cert with dns validation added. Switched to v2 api for ACME.
 * **21.02.18:** - Reduce shellcheck directives by renaming secondary variables
 * **20.02.18:** - Sanitize variables, increase log verbosity
-* **01.02.18:** - Big changes. `VALIDATION` parameter added for choosing letsencrypt validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf
+* **01.02.18:** - Big changes. `VALIDATION` parameter added for choosing certbot validation methods, including dns through official plugins. `HTTPVAL` is deprecated. `STAGING` parameter added for testing. Backwards compatibility for the short term. Since tls-sni is disabled by letsencrypt, most users will have to change their settings and adopt the new parameters within the next 90 days. Reorganized the nginx default config, split ssl settings into new ssl.conf
 * **13.01.18:** - Re-enable ipv6 due to update to fail2ban 0.10.1. Existing users can enable ipv6 by deleting `/config/fail2ban/action.d/iptables-common.local` and restarting the container after updating the image
-* **11.01.18:** - Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with letsencrypt)
+* **11.01.18:** - Halt the container if validation fails instead of a stop (so restart=always doesn't get users throttled with Let's Encrypt)
 * **10.01.18:** - Add option for http validation on port 80
 * **05.01.18:** - Rebase to alpine 3.7
 * **04.11.17:** - Add php7 soap module
