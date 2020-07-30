@@ -2,6 +2,7 @@
 
 # project information
 project_name: letsencrypt
+project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 full_custom_readme: |
   {% raw -%}
   [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
