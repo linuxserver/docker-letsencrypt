@@ -1,3 +1,8 @@
+# IMPORTANT NOTICE: THIS IMAGE HAS BEEN DEPRECATED AND THE PROJECT IS MOVED TO A NEW REPO
+Due to a trademark related request, this image is moved to a new repo on [Docker Hub](https://hub.docker.com/r/linuxserver/swag) and [GitHub](https://github.com/linuxserver/docker-swag). This is a breaking change and you need to manually update. Apologies for the the disruption.
+
+Switching existing implementations over to the new image is very easy, just follow these simple steps: https://github.com/linuxserver/docker-swag#migrating-from-the-old-linuxserverletsencrypt-image
+
 [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
 
 [![Blog](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Blog)](https://blog.linuxserver.io "all the things you can do with our containers including How-To guides, opinions and much more!")
@@ -34,9 +39,6 @@ Find us at:
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/letsencrypt)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-letsencrypt%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-letsencrypt/job/master/)
 [![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Flsio-ci.ams3.digitaloceanspaces.com%2Flinuxserver%2Fletsencrypt%2Flatest%2Fci-status.yml)](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/letsencrypt/latest/index.html)
-
-## IMPORTANT NOTICE - BREAKING CHANGES AHEAD
-_Due to a trademark related request, this image will move to a new repo soon. The image name and address will be changed. We are working on making the transition as smooth as possible so as not to break current implementations used in production. But be warned that there will be breaking changes ahead, which will require user intervention. Check back here frequently for more updates. Apologies for the the disruption._
 
 **SWAG - Secure Web-server And Gateway** (formerly known as letsencrypt, no relation to Let's Encrypt™) sets up an Nginx webserver and reverse proxy with php support and a built-in certbot client that automates free SSL server certificate generation and renewal processes. It also contains fail2ban for intrusion prevention.
 
