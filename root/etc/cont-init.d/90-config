@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bash
+
+echo '
+******************************************************
+******************************************************
+*                                                    *
+*                                                    *
+*          This image has been deprecated            *
+*                                                    *
+*              Use the new image at                  *
+*                                                    *
+*                linuxserver/swag                    *
+*                                                    *
+*    https://hub.docker.com/r/linuxserver/swag       *
+*                                                    *
+*   https://github.com/linuxserver/docker-swag       *
+*                                                    *
+*                                                    *
+*                                                    *
+******************************************************
+******************************************************'
