@@ -9,6 +9,8 @@ full_custom_readme: |
 
   Switching existing implementations over to the new image is very easy, just follow these simple steps: https://github.com/linuxserver/docker-swag#migrating-from-the-old-linuxserverletsencrypt-image
   
+  ## This repository will be archived and builds for the image will no longer be created at the end of 2020 
+  
   [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
 
   [![Blog](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Blog)](https://blog.linuxserver.io "all the things you can do with our containers including How-To guides, opinions and much more!")
