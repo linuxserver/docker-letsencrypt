@@ -1,0 +1,15 @@
+name: Deprecated
+
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request_target:
+    types: [opened, reopened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/${{ github.event.issue.number || github.event.pull_request.number }}/comments" \
+        -d '{"body": "# IMPORTANT NOTICE: THIS IMAGE HAS BEEN DEPRECATED AND THE PROJECT IS MOVED TO A NEW REPO\nDue to a trademark related request, this image is moved to a new repo on [Docker Hub](https://hub.docker.com/r/linuxserver/swag) and [GitHub](https://github.com/linuxserver/docker-swag). This is a breaking change and you need to manually update. Apologies for the the disruption."}'
