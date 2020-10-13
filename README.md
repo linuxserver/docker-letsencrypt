@@ -31,7 +31,7 @@ Find us at:
 * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
 * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
-# [linuxserver/swag](https://github.com/linuxserver/docker-letsencrypt)
+# [linuxserver/swag](https://github.com/linuxserver/docker-swag)
 
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-letsencrypt.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-letsencrypt/releases)
